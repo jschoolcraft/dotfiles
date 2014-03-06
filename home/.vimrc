@@ -16,36 +16,9 @@ endif
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 
-" let Vundle manage Vundle
-" required!
-Bundle 'gmarik/vundle'
-
-Bundle 'tpope/vim-fugitive'
-Bundle 'tpope/vim-rails'
-Bundle 'tpope/vim-haml'
-Bundle 'chrismetcalf/vim-yankring'
-Bundle 'kien/ctrlp.vim'
-Bundle 'xolox/vim-notes'
-Bundle 'xolox/vim-misc'
-Bundle 'altercation/vim-colors-solarized'
-Bundle 'tpope/vim-surround'
-Bundle 'weierophinney/vimwiki'
-Bundle 'mileszs/ack.vim'
-Bundle 'jsahlen/vim-ir_black'
-Bundle 'ervandew/supertab'
-Bundle 'vim-scripts/scratch.vim'
-Bundle 'godlygeek/tabular'
-Bundle 'kchmck/vim-coffee-script'
-Bundle 'Lokaltog/vim-powerline'
-Bundle 'plasticboy/vim-markdown'
-Bundle 'majutsushi/tagbar'
-Bundle 'scrooloose/syntastic'
-Bundle 'roman/golden-ratio'
-Bundle 'Gundo'
-Bundle 'yankstack'
-
-Bundle 'taglist.vim'
-Bundle 'rails.vim'
+if filereadable(expand("~/.vim/vundles.vim"))
+  source ~/.vim/vundles.vim
+endif
 
 filetype plugin on
 filetype indent on
