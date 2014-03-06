@@ -13,3 +13,15 @@ fi
 # Customize to your needs...
 
 if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
+
+
+# Aliases
+
+# git
+alias gs='git status -s'
+alias gc='git commit'
+alias gd='git diff'
+
+# Quick way to rebuild the Launch Services database and get rid
+# of duplicates in the Open With submenu.
+alias fixopenwith='/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -kill -r -domain local -domain system -domain user'
