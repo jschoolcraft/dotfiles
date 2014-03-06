@@ -27,3 +27,9 @@ You can ignore the HOMEBREW_CASK_OPTS but I'm using it to make sure the symlinks
 ### Iterm Colors
 
 Live in `~/.iterm-colors`, inside iTerm2 preferences "import colors"
+
+### OS X Things
+
+    .~/.osx
+
+Might have to make it `chmod +x`
