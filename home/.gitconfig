@@ -1,0 +1,78 @@
+[alias]
+  # adding
+  a = add
+  aa = add --all
+
+  # branch
+  b = branch -v
+
+  # commit
+  c      = commit -m
+  ca     = commit -am
+  ci     = commit
+  amend  = commit --amend
+  ammend = commit --amend
+
+  # checkout
+  co = checkout
+
+  # cherry-pick
+  cp = cherry-pick -x
+
+  # diff
+  di = diff
+  dc = diff --cached
+  last = diff HEAD^
+
+  # log
+  l = log --graph --abbrev-commit --date=relative
+  la = !git l --all
+  lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
+  lc = log ORIG_HEAD.. --stat --no-merges datetag = "tag `date '+%Y%m%d%H%M'`"
+  changes = log --pretty=format:\"%h %cr %cn %Cgreen%s%Creset\" --name-status
+  short = log --pretty=format:\"%h %cr %cn %Cgreen%s%Creset\"
+  changelog = log --pretty=format:\" * %s\"
+  shortnocolor = log --pretty=format:\"%h %cr %cn %s\"
+
+  # remote
+  r = remote -v
+
+  # reset
+  unstage = reset HEAD              # remove files from index (tracking)
+  uncommit = reset --soft HEAD^     # go back before last commit, with files in uncommitted state
+  filelog = log -u                  # show changes to a file
+  mt = mergetool                    # fire up the merge tool
+
+  # stash
+  ss = stash                        # stash changes
+  sl = stash list                   # list stashes
+  sa = stash apply                  # apply stash (restore changes)
+  sd = stash drop                   # drop stashes (destory changes)
+
+  # status
+  s        = status -sb             # status
+  st       = status -sb             # status
+  stat     = status -sb             # status
+
+  # tag
+  t = tag -n                        # show tags with <n> lines of each tag message
+
+  # svn helpers
+  svnr = svn rebase
+  svnd = svn dcommit
+  svnl = svn log --oneline --show-commit
+[color]
+  diff = auto
+  status = auto
+  branch = auto
+  ui = auto
+[core]
+  excludesfile = ~/.gitignore
+  editor = /usr/bin/vim
+[merge]
+  summary = true
+  verbosity = 1
+[apply]
+  whitespace = nowarn
+[format]
+    pretty=format:%C(yellow)%h%Creset -%C(red)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset
