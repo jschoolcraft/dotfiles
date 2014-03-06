@@ -30,7 +30,7 @@ cask install alfred
 cask install dropbox
 cask install google-chrome
 cask install iterm2
-cask install jq
+# cask install jq
 cask install launchrocket
 cask install sizeup
 cask install skitch
