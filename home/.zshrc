@@ -17,6 +17,11 @@ if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 
 # Aliases
 
+alias ack='ag'  # prefer ag
+
+# ruby
+alias irb='pry' # prefer pry
+
 # git
 alias gs='git status -s'
 alias gc='git commit'
