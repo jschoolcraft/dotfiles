@@ -18,14 +18,18 @@ if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 # Aliases
 
 alias ack='ag'  # prefer ag
+alias hu='homesick pull dotfiles && homesick symlink dotfiles'
 
 # ruby
 alias irb='pry' # prefer pry
 
 # git
-alias gs='git status -s'
 alias gc='git commit'
 alias gd='git diff'
+alias gp='git push'
+alias gpom='git push origin master'
+alias gr='git pull --rebase'
+alias gs='git status -s'
 
 # Quick way to rebuild the Launch Services database and get rid
 # of duplicates in the Open With submenu.
