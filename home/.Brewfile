@@ -7,6 +7,7 @@ install bash
 install ctags
 install freetds
 install git
+install git-extras
 install htop-osx
 install lnav
 install memcached
