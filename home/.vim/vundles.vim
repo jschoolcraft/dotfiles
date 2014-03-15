@@ -28,3 +28,4 @@ Bundle 'yankstack'
 
 Bundle 'taglist.vim'
 Bundle 'rails.vim'
+Bundle 'VimRepress'
