@@ -3,6 +3,7 @@ update
 
 # Now the goodies
 install ack
+install ansible
 install bash
 install ctags
 install freetds
