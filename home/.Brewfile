@@ -1,7 +1,3 @@
-# to help CLANG especially with ansible
-export CFLAGS=-Qunused-arguments
-export CPPFLAGS=-Qunused-arguments
-
 # Latest Homebrew
 update
 
