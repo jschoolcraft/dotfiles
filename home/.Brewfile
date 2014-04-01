@@ -14,6 +14,7 @@ install lnav
 install memcached
 install mercurial
 install node
+install nginx --with-passenger
 install passenger
 install rbenv
 install ruby-build
