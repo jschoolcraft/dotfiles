@@ -14,6 +14,7 @@ install lnav
 install memcached
 install mercurial
 install node
+install passenger
 install rbenv
 install ruby-build
 install the_silver_searcher
