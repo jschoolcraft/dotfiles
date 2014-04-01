@@ -61,6 +61,8 @@ if (( $+commands[lesspipe.sh] )); then
   export LESSOPEN='| /usr/bin/env lesspipe.sh %s 2>&-'
 fi
 
+export HOMEBREW_CASK_OPTS="--appdir=/Applications"
+
 #
 # Temporary Files
 #
