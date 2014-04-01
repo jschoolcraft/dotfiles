@@ -31,6 +31,7 @@ install phinze/cask/brew-cask
 cask install alfred
 cask install chromium
 cask install dropbox
+cask install chromium
 cask install google-chrome
 cask install iterm2
 # cask install jq
