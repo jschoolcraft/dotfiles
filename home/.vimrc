@@ -13,11 +13,13 @@ if filereadable(expand("~/.vimrc.before"))
 endif
 
 " ================ Vundle Config =====================
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
 
 if filereadable(expand("~/.vim/vundles.vim"))
+  call vundle#begin()
   source ~/.vim/vundles.vim
+  call vundle#end()            " required
 endif
 
 filetype plugin on

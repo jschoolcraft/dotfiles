@@ -77,5 +77,8 @@
 [format]
     pretty=format:%C(yellow)%h%Creset -%C(red)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset
 [user]
-  name = Jeff Schoolcraft
-  email = jeff@thequeue.net
+	name = Jeff Schoolcraft
+	email = jeff@thequeue.net
+[filter "media"]
+	clean = git-media-clean %f
+	smudge = git-media-smudge %f
