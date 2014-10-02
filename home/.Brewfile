@@ -18,6 +18,7 @@ install nginx --with-passenger
 install passenger
 install rbenv
 install ruby-build
+install reattach-to-user-namespace
 install the_silver_searcher
 install tmux
 install tree
