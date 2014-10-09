@@ -24,8 +24,6 @@ Plugin 'majutsushi/tagbar'
 Plugin 'scrooloose/syntastic'
 Plugin 'roman/golden-ratio'
 Plugin 'Gundo'
-Plugin 'yankstack'
-
 Plugin 'taglist.vim'
 Plugin 'rails.vim'
 Plugin 'VimRepress'
