@@ -179,22 +179,18 @@ set statusline=[%l,%v\ %P%M]\ %f\ %r%h%w\ (%{&ff})\ %{fugitive#statusline()}
 set showcmd
 set number
 
-" make powerline a bit faster
-let g:ctrlp_custom_ignore = {
-      \ 'dir':  '\.git$\|\.hg$\|\.svn$|vendor',
-      \ 'file': '\.exe$\|\.so$\|\.dll$',
-      \ 'link': 'some_bad_symbolic_links',
-      \ }
-
-" let g:ctrlp_user_command = {
-"       \ 'types': {
-"       \ 1: ['.git/', 'cd %s && git ls-files'],
-"       \ },
-"       \ 'fallback': 'find %s -type f'   \ }
-
+" make ctrlp a bit faster
+let g:ctrlp_user_command = 'ag %s -i --nocolor --nogroup --hidden
+      \ --ignore .git
+      \ --ignore .svn
+      \ --ignore .hg
+      \ --ignore .DS_Store
+      \ --ignore "**/*.pyc"
+      \ -g ""'
 
 " cool status line
-let g:Powerline_symbols = 'fancy'
+let g:airline#extensions#tabline#enabled = 1
+let g:airline_powerline_fonts = 0
 
 " shut up vim
 set shortmess=atI
