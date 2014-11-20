@@ -6,6 +6,14 @@
 
     homesick symlink dotfiles
 
+### Vim Things
+
+Need to clone the [powerline-fonts repository](https://github.com/Lokaltog/powerline-fonts) with:
+
+    git clone git@github.com:Lokaltog/powerline-fonts.git
+
+Then install them system-wide fonts with FontBook
+
 ### Home Brewing
 
 Install homebrew:
