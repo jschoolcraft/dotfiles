@@ -14,6 +14,8 @@ Need to clone the [powerline-fonts repository](https://github.com/Lokaltog/power
 
 Then install them system-wide fonts with FontBook
 
+Might also need to copy in some of this [.vimrc](https://github.com/wimstefan/dotfiles/blob/master/vim/vimrc#L630)
+
 ### Home Brewing
 
 Install homebrew:
