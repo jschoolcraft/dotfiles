@@ -179,14 +179,20 @@ set statusline=[%l,%v\ %P%M]\ %f\ %r%h%w\ (%{&ff})\ %{fugitive#statusline()}
 set showcmd
 set number
 
-" make ctrlp a bit faster
-let g:ctrlp_user_command = 'ag %s -i --nocolor --nogroup --hidden
-      \ --ignore .git
-      \ --ignore .svn
-      \ --ignore .hg
-      \ --ignore .DS_Store
-      \ --ignore "**/*.pyc"
-      \ -g ""'
+" The Silver Searcher
+if executable('ag')
+  " make ctrlp a bit faster
+  let g:ctrlp_user_command = 'ag %s -l --nocolor --nogroup --hidden
+        \ --ignore .git
+        \ --ignore .svn
+        \ --ignore .hg
+        \ --ignore .DS_Store
+        \ --ignore "**/*.pyc"
+        \ -g ""'
+
+  " ag is fast enough
+  let g:ctrlp_use_caching = 0
+endif
 
 " cool status line
 let g:airline#extensions#tabline#enabled = 1
