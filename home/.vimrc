@@ -181,6 +181,9 @@ set number
 
 " The Silver Searcher
 if executable('ag')
+  " Use ag instead of grep
+  set grepprg=ag\ --nogroup\ --nocolor
+
   " make ctrlp a bit faster
   let g:ctrlp_user_command = 'ag %s -l --nocolor --nogroup --hidden
         \ --ignore .git
@@ -193,6 +196,9 @@ if executable('ag')
   " ag is fast enough
   let g:ctrlp_use_caching = 0
 endif
+
+" bind K to grep word under cursor
+nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
 
 " cool status line
 let g:airline#extensions#tabline#enabled = 1
