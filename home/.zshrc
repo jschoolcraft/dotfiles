@@ -1,4 +1,7 @@
-#
+source "$HOME/.homesick/repos/homeshick/homeshick.sh"
+source "$HOME/.homesick/repos/homeshick/homeshick.sh"
+fpath=($HOME/.homesick/repos/homeshick/completions $fpath)
+
 # Executes commands at the start of an interactive session.
 #
 # Authors:
@@ -14,11 +17,14 @@ fi
 
 if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 
-
 # Aliases
 
 alias ack='ag'  # prefer ag
-alias hu='homesick pull dotfiles && homesick symlink dotfiles'
+alias hu='homeshick pull dotfiles && homeshick symlink dotfiles'
+
+# homebrew
+alias bupd='brew update'
+alias bupg='brew upgrade --all && brew cleanup'
 
 # ruby
 alias irb='pry' # prefer pry
@@ -39,3 +45,5 @@ alias tmk='tmux kill-session -t $1'
 # Quick way to rebuild the Launch Services database and get rid
 # of duplicates in the Open With submenu.
 alias fixopenwith='/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -kill -r -domain local -domain system -domain user'
+
+eval "$(direnv hook zsh)"
