@@ -23,7 +23,7 @@ alias ack='ag'  # prefer ag
 alias hu='homeshick pull dotfiles && homeshick symlink dotfiles'
 
 # homebrew
-alias bupd='brew update'
+alias bupd='brew update && echo "outdated:" && brew outdated'
 alias bupg='brew upgrade --all && brew cleanup'
 
 # ruby
