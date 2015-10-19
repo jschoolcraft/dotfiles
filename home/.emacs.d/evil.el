@@ -68,7 +68,8 @@
 (evil-leader/set-leader ";")
 (evil-leader/set-key
   "." 'find-tag
-  "t" 'projectile-find-file
+  "t" 'helm-projectile-find-file
+  "f" 'helm-projectile-find-file
   "b" 'ido-switch-buffer
   "cc" 'evilnc-comment-or-uncomment-lines
   "ag" 'projectile-ag

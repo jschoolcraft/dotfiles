@@ -53,6 +53,8 @@
                       ;writeroom-mode
                       yaml-mode
                       yasnippet
+                      ; themes
+                      color-theme-sanityinc-solarized
                       ))
 
 (dolist (p my-packages)
@@ -73,7 +75,6 @@
 (setq projectile-sort-order (quote recently-active))
 
 (add-to-list 'load-path (expand-file-name "lib" user-emacs-directory))
-(add-to-list 'custom-theme-load-path (expand-file-name "themes" user-emacs-directory))
 
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 (when (file-exists-p custom-file)
@@ -105,7 +106,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (helm-ag yasnippet yaml-mode web-mode smooth-scrolling smex smartparens powerline pbcopy markdown-mode magit key-chord jsx-mode helm-projectile flx-ido evil-visualstar evil-surround evil-nerd-commenter evil-leader company ag))))
+    (color-theme-sanityinc-solarized yasnippet yaml-mode web-mode smooth-scrolling smex smartparens powerline pbcopy markdown-mode magit key-chord jsx-mode helm-projectile helm-ag helm flx-ido evil-visualstar evil-surround evil-nerd-commenter evil-leader evil ag))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
