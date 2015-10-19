@@ -149,10 +149,6 @@ nmap <silent> <leader>sv :so $MYVIMRC<CR>
 nmap <silent> <leader>f :CtrlP<CR>
 nmap <silent> <leader>be :CtrlPBuffer<CR>
 
-" Make Tagbar happy
-let g:tagbar_ctags_bin='/usr/local/bin/ctags'
-let g:tagbar_width=26
-noremap <leader>tt :TagbarToggle<cr>
 " Let's make it easy to find files I use all the time
 map <leader>jv :CtrlP app/views<cr>
 map <leader>jc :CtrlP app/controllers<cr>
@@ -219,6 +215,11 @@ let g:airline#extensions#whitespace#enabled = 0
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#buffer_idx_mode = 1
 
+" trying Ultisnips, again
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+
 " shut up vim
 set shortmess=atI
 
@@ -232,3 +233,17 @@ function TrimTrailingWhiteSpace()
 
 "kill whitespace and highlight
 nnoremap <silent> <F5> :call TrimTrailingWhiteSpace()<CR>
+
+" YankRing plugin to manage yanked/deleted buffers
+nnoremap <silent> <F7> :YRShow<CR>
+let g:yankring_history_file = '.yankring-history'
+let g:yankring_zap_keys = 'f F t T / ?'
+
+" Toggle Paste Mode
+set pastetoggle=<F2>
+
+" Dig through the tree of undo possibilities for your current file
+nnoremap <F3> :GundoToggle<CR>
+let g:gundo_right = 1
+let g:gundo_preview_bottom=1
+let g:gundo_preview_height = 40
