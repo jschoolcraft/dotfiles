@@ -3,12 +3,13 @@
 
 ;(require 'cl)
 (require 'package)
-                                        ; places to look for config options
-                                        ; https://github.com/aaronbieber/dotfiles/tree/master/configs/emacs.d
-                                        ; https://github.com/chrismccord/dot_emacs
-                                        ; https://github.com/syl20bnr/evil-tutor
-                                        ; http://doc.rix.si/projects/fsem.html
-                                        ; https://github.com/joedicastro/dotfiles/tree/master/emacs
+
+; places to look for config options
+; https://github.com/aaronbieber/dotfiles/tree/master/configs/emacs.d
+; https://github.com/chrismccord/dot_emacs
+; https://github.com/syl20bnr/evil-tutor
+; http://doc.rix.si/projects/fsem.html
+; https://github.com/joedicastro/dotfiles/tree/master/emacs
 
 ;;; Code:
 
@@ -16,14 +17,7 @@
                          ("melpa" . "http://melpa.org/packages/")
                          ("org" . "http://orgmode.org/elpa/")))
 
-; ("melpa-stable" . "http://stable.melpa.org/packages/")
-
 (package-initialize)
-
-; (setq package-pinned-packages '((gtags . "marmalade")
-;                                 (php-extras . "marmalade")
-;                                 (magit . "melpa-stable")))
-
 (package-refresh-contents)
 
 (defvar my-packages '(
@@ -49,6 +43,7 @@
                       magit
                       markdown-mode
                       ;neotree
+                      org-bullets
                       pbcopy
                       powerline
                       projectile
@@ -142,6 +137,7 @@
 
 ; Load configuration modules
 (load-user-file "evil.el")
+(load-user-file "orgmode.el")
 (load-user-file "appearance.el")
 
 ; Hate whitespace
