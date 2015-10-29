@@ -1,3 +1,11 @@
+;;; orgmode --- making orgmode look a little better
+
+;;; Commentary:
+; stolen from: http://mph.puddingbowl.org/2014/12/org-mode-face-lift/
+
+;;; Code:
+(require 'org-bullets)
+(add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
 
 '(org-agenda-date ((t (:inherit org-agenda-structure :weight semi-bold :height 1.2))) t)
 '(org-date ((t (:foreground "Purple" :underline t :height 0.8 :family "Helvetica Neue"))))
@@ -13,3 +21,6 @@
 '(org-table ((t (:foreground "dim gray" :height 0.9 :family "Menlo"))))
 '(org-tag ((t (:foreground "dark gray" :weight bold :height 0.8))))
 '(org-todo ((t (:foreground "#e67e22" :weight bold))))
+
+(provide 'orgmode)
+;;; orgmode.el ends here
