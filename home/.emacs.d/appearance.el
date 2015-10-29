@@ -1,8 +1,12 @@
-; Use solarized dark (in GUI)
-(when (display-graphic-p) (load-theme 'solarized-dark t))
+;;; package --- appearance customizations
 
-; Use Source Code Pro 14pt in GUI
-(when (display-graphic-p) (set-face-attribute 'default nil :font "Source Code Pro for Powerline-14"))
+;;; Commentary:
+
+;;; Code:
+
+(load-theme 'molokai)
+;(load-theme 'apropospriate-dark t)
+(set-face-attribute 'default nil :font "Monaco 18")
 
 (setq inhibit-splash-screen t
             inhibit-startup-message t
@@ -24,3 +28,6 @@
 
 ; (global-linum-mode 1) ; display line numbers
 ; (column-number-mode 1) ; display column/row of cursor in mode-line
+
+
+;;; appearance.el ends here

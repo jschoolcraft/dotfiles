@@ -1,3 +1,7 @@
+;;; package --- evil configuration
+
+;;; Code:
+
 (defun minibuffer-keyboard-quit ()
   "Abort recursive edit.
   In Delete Selection mode, if the mark is active, just deactivate it;
@@ -70,7 +74,7 @@
   "." 'find-tag
   "t" 'helm-projectile-find-file
   "f" 'helm-projectile-find-file
-  "b" 'ido-switch-buffer
+  "b" 'helm-projectile-switch-to-buffer
   "cc" 'evilnc-comment-or-uncomment-lines
   "ag" 'projectile-ag
   "," 'switch-to-previous-buffer
@@ -83,15 +87,15 @@
   "gL" 'magit-log
   "gs" 'magit-status
   "w"  'kill-buffer
-  "nn" 'neotree-toggle
-  "nf" 'neotree-find
   "gk" 'windmove-up
   "gj" 'windmove-down
   "gl" 'windmove-right
   "gh" 'windmove-left
   "vs" 'split-window-right
   "hs" 'split-window-below
-  "x" 'smex)
+  ;"x" 'smex
+  "mx" 'helm-M-x
+  )
 
 ;; =============================================================================
 ;; Evil Packages

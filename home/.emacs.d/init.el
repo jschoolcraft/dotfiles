@@ -1,3 +1,6 @@
+;;; config --- my configuration
+;;; Commentary:
+
 ;(require 'cl)
 (require 'package)
                                         ; places to look for config options
@@ -7,32 +10,37 @@
                                         ; http://doc.rix.si/projects/fsem.html
                                         ; https://github.com/joedicastro/dotfiles/tree/master/emacs
 
+;;; Code:
+
 (setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
                          ("melpa" . "http://melpa.org/packages/")
-                         ("melpa-stable" . "http://stable.melpa.org/packages/")
                          ("org" . "http://orgmode.org/elpa/")))
+
+; ("melpa-stable" . "http://stable.melpa.org/packages/")
+
 (package-initialize)
 
-(setq package-pinned-packages '((gtags . "marmalade")
-                                (php-extras . "marmalade")
-                                (magit . "melpa-stable")))
+; (setq package-pinned-packages '((gtags . "marmalade")
+;                                 (php-extras . "marmalade")
+;                                 (magit . "melpa-stable")))
 
-(when (not package-archive-contents)
-    (package-refresh-contents))
+(package-refresh-contents)
 
 (defvar my-packages '(
                       ag
                       ;alchemist
                       ;browse-at-remote
                       ;coffee-mode
-                      ;company
+                      company
                       ;elixir-mode
+                      enh-ruby-mode
                       evil
                       evil-leader
                       evil-nerd-commenter
                       evil-surround
                       evil-visualstar
                       flx-ido
+                      flycheck
                       helm
                       helm-ag
                       helm-projectile
@@ -44,7 +52,8 @@
                       pbcopy
                       powerline
                       projectile
-                      ruby-mode
+                      rbenv
+                      ;ruby-mode
                       saveplace
                       smartparens
                       smex
@@ -54,7 +63,9 @@
                       yaml-mode
                       yasnippet
                       ; themes
+                      apropospriate-theme
                       color-theme-sanityinc-solarized
+                      molokai-theme
                       ))
 
 (dolist (p my-packages)
@@ -69,10 +80,46 @@
 
 (require 'helm)
 (require 'helm-projectile)
-(setq helm-buffers-fuzzy-matching t)
+
+(setq helm-M-x-fuzzy-match                  t
+      helm-bookmark-show-location           t
+      helm-buffers-fuzzy-matching           t
+      helm-completion-in-region-fuzzy-match t
+      helm-file-cache-fuzzy-match           t
+      helm-imenu-fuzzy-match                t
+      helm-mode-fuzzy-match                 t
+      helm-locate-fuzzy-match               t
+      helm-quick-update                     t
+      helm-recentf-fuzzy-match              t
+      helm-semantic-fuzzy-match             t)
 (helm-mode 1)
 
 (setq projectile-sort-order (quote recently-active))
+
+(add-hook 'after-init-hook 'global-flycheck-mode)
+(add-hook 'after-init-hook 'global-company-mode)
+
+;; make startup nicer
+
+;; yasnippet
+(require 'yasnippet)
+(setq yas-snippet-dirs
+      '("~/.emacs-snippets"            ;; personal snippets
+        ))
+;(yas-load-directory "~/.emacs-snippets")
+(setq yas-indent-line nil)
+(yas-global-mode 1)
+
+;; web mode stuff
+(require 'web-mode)
+(add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.[agj]sp\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.as[cp]x\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
 
 (add-to-list 'load-path (expand-file-name "lib" user-emacs-directory))
 
@@ -113,3 +160,6 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+
+(provide 'init)
+;;; init.el ends here
