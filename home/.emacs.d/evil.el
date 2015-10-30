@@ -94,7 +94,6 @@
   "gh" 'windmove-left
   "vs" 'split-window-right
   "hs" 'split-window-below
-  ;"x" 'smex
   "mx" 'helm-M-x
   )
 
