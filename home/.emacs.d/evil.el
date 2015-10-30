@@ -1,4 +1,5 @@
 ;;; package --- evil configuration
+;;; Commentary:
 
 ;;; Code:
 
@@ -130,3 +131,5 @@ Repeated invocations toggle between the two most recently open buffers."
 (define-key evil-normal-state-map (kbd ";") 'evil-ex)
 (define-key evil-visual-state-map (kbd ";") 'evil-ex)
 (define-key evil-motion-state-map (kbd ";") 'evil-ex)
+(provide 'evil)
+;;; evil.el ends here
