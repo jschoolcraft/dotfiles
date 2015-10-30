@@ -135,6 +135,9 @@
   "Load a file in current user's configuration directory"
   (load-file (expand-file-name file user-init-dir)))
 
+;; system clipboard
+(setq select-enable-clipboard t)
+
 ; Load configuration modules
 (load-user-file "evil.el")
 (load-user-file "orgmode.el")
