@@ -76,7 +76,7 @@
   "t" 'helm-projectile-find-file
   "f" 'helm-projectile-find-file
   "b" 'helm-projectile-switch-to-buffer
-  "cc" 'evilnc-comment-or-uncomment-lines
+  "e" 'flycheck-list-errors
   "ag" 'projectile-ag
   "," 'switch-to-previous-buffer
   ; "gg" 'git-gutter+:toggle
