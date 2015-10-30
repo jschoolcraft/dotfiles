@@ -95,6 +95,7 @@
   "vs" 'split-window-right
   "hs" 'split-window-below
   "mx" 'helm-M-x
+  "p" 'helm-show-kill-ring
   )
 
 ;; =============================================================================
