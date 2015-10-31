@@ -1,3 +1,8 @@
+;;; package --- evil configuration
+;;; Commentary:
+
+;;; Code:
+
 (defun minibuffer-keyboard-quit ()
   "Abort recursive edit.
   In Delete Selection mode, if the mark is active, just deactivate it;
@@ -68,9 +73,10 @@
 (evil-leader/set-leader ";")
 (evil-leader/set-key
   "." 'find-tag
-  "t" 'projectile-find-file
-  "b" 'ido-switch-buffer
-  "cc" 'evilnc-comment-or-uncomment-lines
+  "t" 'helm-projectile-find-file
+  "f" 'helm-projectile-find-file
+  "b" 'helm-projectile-switch-to-buffer
+  "e" 'flycheck-list-errors
   "ag" 'projectile-ag
   "," 'switch-to-previous-buffer
   ; "gg" 'git-gutter+:toggle
@@ -82,15 +88,15 @@
   "gL" 'magit-log
   "gs" 'magit-status
   "w"  'kill-buffer
-  "nn" 'neotree-toggle
-  "nf" 'neotree-find
   "gk" 'windmove-up
   "gj" 'windmove-down
   "gl" 'windmove-right
   "gh" 'windmove-left
   "vs" 'split-window-right
   "hs" 'split-window-below
-  "x" 'smex)
+  "mx" 'helm-M-x
+  "p" 'helm-show-kill-ring
+  )
 
 ;; =============================================================================
 ;; Evil Packages
@@ -125,3 +131,16 @@ Repeated invocations toggle between the two most recently open buffers."
 (define-key evil-normal-state-map (kbd ";") 'evil-ex)
 (define-key evil-visual-state-map (kbd ";") 'evil-ex)
 (define-key evil-motion-state-map (kbd ";") 'evil-ex)
+
+
+;; moving around windows
+(eval-after-load "evil"
+  '(progn
+     (define-key evil-normal-state-map (kbd "C-h") 'evil-window-left)
+     (define-key evil-normal-state-map (kbd "C-j") 'evil-window-down)
+     (define-key evil-normal-state-map (kbd "C-k") 'evil-window-up)
+     (define-key evil-normal-state-map (kbd "C-l") 'evil-window-right)))
+
+
+(provide 'evil)
+;;; evil.el ends here
