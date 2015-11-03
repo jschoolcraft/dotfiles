@@ -20,6 +20,15 @@
 (package-initialize)
 (package-refresh-contents)
 
+;; UTF-8
+(set-terminal-coding-system  'utf-8)
+(set-keyboard-coding-system  'utf-8)
+(set-language-environment    'utf-8)
+(set-selection-coding-system 'utf-8)
+(setq locale-coding-system   'utf-8)
+(prefer-coding-system        'utf-8)
+(set-input-method nil)
+
 (defvar my-packages '(
                       ag
                       ;alchemist
@@ -35,6 +44,7 @@
                       evil-visualstar
                       flx-ido
                       flycheck
+                      haml-mode
                       helm
                       helm-ag
                       helm-projectile
@@ -144,6 +154,10 @@
 (load-user-file "evil.el")
 (load-user-file "orgmode.el")
 (load-user-file "appearance.el")
+
+; Kill backups
+(setq make-backup-files nil)
+(setq auto-save-default nil)
 
 ; Hate whitespace
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
