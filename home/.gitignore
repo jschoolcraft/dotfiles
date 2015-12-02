@@ -19,12 +19,6 @@ Thumbs.db
 # Folder config file
 Desktop.ini
 
-# Tags      taken from: https://github.com/github/gitignore/blob/master/Global/Tags.gitignore
-# ----------------------------------------------------------------------------------------------
-# Ignore tags created by etags and ctags
-TAGS
-tags
-
 # Vim       taken from: https://github.com/github/gitignore/blob/master/Global/vim.gitignore
 # ----------------------------------------------------------------------------------------------
 .*.sw[a-z]
