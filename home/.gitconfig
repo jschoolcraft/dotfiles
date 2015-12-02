@@ -76,6 +76,7 @@
 [merge]
   summary = true
   verbosity = 1
+	tool = p4merge
 [apply]
   whitespace = nowarn
 [format]
@@ -96,3 +97,6 @@
     end\n\
     File.open(%(%A), %(w)) {|f| f.write(b)}\n\
     exit 1 if b.include?(%(<)*%L)'"
+[mergetool]
+	keepTemporaries = false
+	prompt = false
