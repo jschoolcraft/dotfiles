@@ -32,6 +32,7 @@
 (defvar my-packages '(
                       ag
                       ;alchemist
+                      autopair
                       ;browse-at-remote
                       ;coffee-mode
                       company
@@ -83,6 +84,7 @@
 (require 'projectile)
 (projectile-mode t)
 
+(require 'autopair)
 
 ;; use helm
 (require 'helm)
@@ -100,7 +102,10 @@
       helm-recentf-fuzzy-match              t
       helm-semantic-fuzzy-match             t)
 (helm-mode 1)
-
+(projectile-global-mode)
+(setq projectile-completion-system 'helm)
+(setq helm-ag-base-command "ag --hidden --nocolor --nogroup --ignore-case")
+(helm-projectile-on)
 (setq projectile-sort-order (quote recently-active))
 
 (add-hook 'after-init-hook 'global-flycheck-mode)
@@ -116,6 +121,13 @@
 ;(yas-load-directory "~/.emacs-snippets")
 (setq yas-indent-line nil)
 (yas-global-mode 1)
+
+;; flycheck
+(setq flycheck-highlighting-mode 'lines)
+
+(custom-set-faces
+ '(flycheck-error ((((class color)) (:underline "Red"))))
+ '(flycheck-warning ((((class color)) (:underline "Orange")))))
 
 ;; web mode stuff
 (require 'web-mode)
