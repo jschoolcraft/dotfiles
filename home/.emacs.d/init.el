@@ -31,12 +31,13 @@
 
 (defvar my-packages '(
                       ag
-                      ;alchemist
+                      alchemist
                       autopair
                       ;browse-at-remote
                       ;coffee-mode
                       company
-                      ;elixir-mode
+                      deft
+                      elixir-mode
                       enh-ruby-mode
                       evil
                       evil-leader
@@ -128,6 +129,12 @@
 (custom-set-faces
  '(flycheck-error ((((class color)) (:underline "Red"))))
  '(flycheck-warning ((((class color)) (:underline "Orange")))))
+
+;; deft
+(require 'deft)
+(setq deft-extensions '("txt" "tex" "org"))
+(setq deft-directory "~/Dropbox/jschoolcraft/notes")
+(setq deft-use-filename-as-title 1)
 
 ;; web mode stuff
 (require 'web-mode)

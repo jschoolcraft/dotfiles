@@ -22,5 +22,20 @@
 '(org-tag ((t (:foreground "dark gray" :weight bold :height 0.8))))
 '(org-todo ((t (:foreground "#e67e22" :weight bold))))
 
+(require 'org-install)
+(require 'ob-tangle)
+
+; Some initial langauges we want org-babel to support
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '(
+   (sh . t)
+   (python . t)
+   (ruby . t)
+   (dot . t)
+   (sqlite . t)
+   (perl . t)
+   ))
+
 (provide 'orgmode)
 ;;; orgmode.el ends here

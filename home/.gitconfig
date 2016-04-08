@@ -1,3 +1,42 @@
+[branch]
+  autosetupmerge = always
+[push]
+  default = current
+[color]
+  diff = auto
+  status = auto
+  branch = auto
+  ui = auto
+[core]
+  excludesfile = ~/.gitignore
+  editor = vim
+[merge]
+  summary = true
+  verbosity = 1
+  tool = p4merge
+[apply]
+  whitespace = nowarn
+[format]
+  pretty=format:%C(yellow)%h%Creset -%C(red)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset
+[user]
+  name = Jeff Schoolcraft
+  email = jeff@thequeue.net
+[filter "media"]
+  clean = git-media-clean %f
+  smudge = git-media-smudge %f
+[merge "railsschema"]
+  name = newer Rails schema version
+  driver = "ruby -e '\n\
+    system %(git), %(merge-file), %(--marker-size=%L), %(%A), %(%O), %(%B)\n\
+    b = File.read(%(%A))\n\
+    b.sub!(/^<+ .*\\nActiveRecord::Schema\\.define.:version => (\\d+). do\\n=+\\nActiveRecord::Schema\\.define.:version => (\\d+). do\\n>+ .*/) do\n\
+      %(ActiveRecord::Schema.define(:version => #{[$1, $2].max}) do)\n\
+    end\n\
+    File.open(%(%A), %(w)) {|f| f.write(b)}\n\
+    exit 1 if b.include?(%(<)*%L)'"
+[mergetool]
+	keepTemporaries = false
+	prompt = false
 [alias]
   # adding
   a = add
@@ -25,6 +64,7 @@
   last = diff HEAD^
 
   # log
+  hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
   l = log --graph --abbrev-commit --date=relative
   la = !git l --all
   lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
@@ -61,42 +101,3 @@
   svnr = svn rebase
   svnd = svn dcommit
   svnl = svn log --oneline --show-commit
-[branch]
-  autosetupmerge = always
-[push]
-  default = current
-[color]
-  diff = auto
-  status = auto
-  branch = auto
-  ui = auto
-[core]
-  excludesfile = ~/.gitignore
-  editor = /usr/bin/vim
-[merge]
-  summary = true
-  verbosity = 1
-	tool = p4merge
-[apply]
-  whitespace = nowarn
-[format]
-    pretty=format:%C(yellow)%h%Creset -%C(red)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset
-[user]
-	name = Jeff Schoolcraft
-	email = jeff@thequeue.net
-[filter "media"]
-	clean = git-media-clean %f
-	smudge = git-media-smudge %f
-[merge "railsschema"]
-  name = newer Rails schema version
-  driver = "ruby -e '\n\
-    system %(git), %(merge-file), %(--marker-size=%L), %(%A), %(%O), %(%B)\n\
-    b = File.read(%(%A))\n\
-    b.sub!(/^<+ .*\\nActiveRecord::Schema\\.define.:version => (\\d+). do\\n=+\\nActiveRecord::Schema\\.define.:version => (\\d+). do\\n>+ .*/) do\n\
-      %(ActiveRecord::Schema.define(:version => #{[$1, $2].max}) do)\n\
-    end\n\
-    File.open(%(%A), %(w)) {|f| f.write(b)}\n\
-    exit 1 if b.include?(%(<)*%L)'"
-[mergetool]
-	keepTemporaries = false
-	prompt = false

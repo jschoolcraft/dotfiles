@@ -1,34 +1,50 @@
-.svn
+# Compiled source
+# -------------------------------------
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
+
+# Temporary files
+# -------------------------------------
+*.swp
+*.swo
 *~
 
-# OSX       taken from: https://github.com/github/gitignore/blob/master/Global/OSX.gitignore
-# ----------------------------------------------------------------------------------------------
-.DS_Store
-# Thumbnails
-._*
+# Packages
+# -------------------------------------
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
 
-# Files that might appear on external disk
-.Spotlight-V100
-.Trashes
+# Logs and databases
+# -------------------------------------
+*.log
+*.sqlite
 
-# Windows   taken from: https://github.com/github/gitignore/blob/master/Global/Windows.gitignore
-# ----------------------------------------------------------------------------------------------
-# Windows image file caches
+# OS generated files
+# -------------------------------------
+.DS_Store*
+ehthumbs.db
+Icon?
 Thumbs.db
 
-# Folder config file
-Desktop.ini
-
-# Vim       taken from: https://github.com/github/gitignore/blob/master/Global/vim.gitignore
-# ----------------------------------------------------------------------------------------------
-.*.sw[a-z]
-*.un~
-Session.vim
-
 # SASS
-# ----------------------------------------------------------------------------------------------
+# -------------------------------------
 .sass-cache
 
+# Emacs stuff
+# -------------------------------------
 .emacs.d/elpa
 .emacs.d/smex-items
+
+# Dotenv
+# -------------------------------------
 .envrc
