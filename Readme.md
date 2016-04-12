@@ -1,12 +1,17 @@
 ## Getting Started
 
-    gem install homesick
+Manage our dotfiles with [homeshick](https://github.com/andsens/homeshick) and [myrepos](https://github.com/jschoolcraft/myrepos).
 
-    homesick clone jschoolcraft/dotfiles
+After they're installed
 
-    homesick symlink dotfiles
+	homeshick clone jschoolcraft/myrepos
+	homeshick symlink myrepos
+	mr checkout
+	homeshick symlink
 
 ### Vim Things
+
+*probably very outdated*
 
 Need to clone the [powerline-fonts repository](https://github.com/Lokaltog/powerline-fonts) with:
 
@@ -30,7 +35,7 @@ You can ignore the HOMEBREW_CASK_OPTS but I'm using it to make sure the symlinks
 
 ### Rest of the dotfiles
 
-    vim +BundleInstall
+    vim +PluginInstall +Qall
 
     chpass -s /bin/zsh `whoami`
 
