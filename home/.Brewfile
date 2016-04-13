@@ -27,33 +27,35 @@ install wget
 install zsh
 
 # Casks
-tap 'phinze/cask'
-tap 'homebrew/binary'
-install phinze/cask/brew-cask
-
 cask install alfred
 cask install chromium
+cask install discord
 cask install dropbox
-cask install chromium
 cask install google-chrome
+cask install imageoptim
 cask install iterm2
-# cask install jq
 cask install launchrocket
+# cask install logitech-options
+cask install nvalt
 cask install sizeup
 cask install skitch
+cask install slack
+cask install spotify
 cask install teleport
+cask install textual
+cask install transmission-remote-gui
 cask install vagrant
 cask install virtualbox
+cask install vlc
 
 # Fonts
-tap 'caskroom/fonts'
+cask install font-dejavu-sans
+cask install font-droid-sans-mono
 cask install font-inconsolata
-cask install font-inconsolata-dz-for-powerline
-# cask install font-sauce-code-powerline
+cask install font-inconsolata
+cask install font-inconsolata-dz
 cask install font-source-code-pro
 cask install font-source-sans-pro
 cask install font-terminus
-cask install font-terminusbold
-
 # Clean up
 cleanup
