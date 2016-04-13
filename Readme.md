@@ -13,14 +13,6 @@ After they're installed
 
 *probably very outdated*
 
-Need to clone the [powerline-fonts repository](https://github.com/Lokaltog/powerline-fonts) with:
-
-    git clone git@github.com:Lokaltog/powerline-fonts.git
-
-Then install them system-wide fonts with FontBook
-
-Might also need to copy in some of this [.vimrc](https://github.com/wimstefan/dotfiles/blob/master/vim/vimrc#L630)
-
 ### Home Brewing
 
 Install homebrew:
@@ -29,7 +21,11 @@ Install homebrew:
 
 Then install all the things:
 
-HOMEBREW_CASK_OPTS="--appdir=/Applications" brew bundle ~/.Brewfile
+    brew bundle ~/.Brewfile
+
+If that didn't work then:
+
+    brew tap Homebrew/bundle
 
 You can ignore the HOMEBREW_CASK_OPTS but I'm using it to make sure the symlinks end up in /Applications instead of ~/Applications so Alfred et al don't bug me to move them.
 
