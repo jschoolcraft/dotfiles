@@ -12,15 +12,42 @@ if filereadable(expand("~/.vimrc.before"))
   source ~/.vimrc.before
 endif
 
-" ================ Vundle Config =====================
-" set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
+" ================ vim-plug Config =====================
+call plug#begin('~/.vim/plugged')
 
-if filereadable(expand("~/.vim/vundles.vim"))
-  call vundle#begin()
-  source ~/.vim/vundles.vim
-  call vundle#end()            " required
-endif
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-rails'
+Plug 'tpope/vim-haml'
+Plug 'vim-scripts/YankRing.vim'
+Plug 'kien/ctrlp.vim'
+Plug 'xolox/vim-notes'
+Plug 'xolox/vim-misc'
+Plug 'altercation/vim-colors-solarized'
+Plug 'tpope/vim-surround'
+Plug 'weierophinney/vimwiki'
+Plug 'mileszs/ack.vim'
+Plug 'jsahlen/vim-ir_black'
+Plug 'vim-scripts/scratch.vim'
+Plug 'godlygeek/tabular'
+Plug 'kchmck/vim-coffee-script'
+Plug 'bling/vim-airline'
+Plug 'plasticboy/vim-markdown'
+Plug 'scrooloose/syntastic'
+Plug 'roman/golden-ratio'
+Plug 'Gundo'
+Plug 'rails.vim'
+
+" react-native stuff
+Plug 'pangloss/vim-javascript'
+Plug 'mxw/vim-jsx'
+Plug 'jelera/vim-javascript-syntax'
+
+" auto-complete and snippets
+Plug 'ervandew/supertab'
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
+
+call plug#end()
 
 filetype plugin on
 filetype indent on
@@ -187,6 +214,7 @@ if executable('ag')
         \ --ignore .hg
         \ --ignore .DS_Store
         \ --ignore "**/*.pyc"
+        \ --ignore "node_modules"
         \ -g ""'
 
   " ag is fast enough
