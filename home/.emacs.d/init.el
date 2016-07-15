@@ -46,6 +46,7 @@
                       evil-visualstar
                       flx-ido
                       flycheck
+                      golden-ratio
                       haml-mode
                       helm
                       helm-ag
@@ -86,6 +87,10 @@
 (projectile-mode t)
 
 (require 'autopair)
+
+;; better sized splits
+(require 'golden-ratio)
+(golden-ratio-mode 1)
 
 ;; use helm
 (require 'helm)
