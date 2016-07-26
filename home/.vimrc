@@ -13,6 +13,9 @@ if filereadable(expand("~/.vimrc.before"))
 endif
 
 " ================ vim-plug Config =====================
+" source: https://github.com/junegunn/vim-plug
+" :PlugInstall
+
 call plug#begin('~/.vim/plugged')
 
 Plug 'tpope/vim-fugitive'
