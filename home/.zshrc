@@ -43,6 +43,7 @@ alias tma='tmux -2 attach -t $1'
 alias tmk='tmux kill-session -t $1'
 
 # react-native
+alias rn='react-native'
 alias rnios='react-native run-ios'
 alias rniphone='react-native run-ios --simulator "iPhone 6s"'
 alias rnipad='react-native run-ios --simulator "iPad Air 2"'
