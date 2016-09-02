@@ -8,15 +8,15 @@ filetype off
 
 " TODO: this may not be in the correct place. It is intended to allow overriding <Leader>.
 " source ~/.vimrc.before if it exists.
-if filereadable(expand("~/.vimrc.before"))
-  source ~/.vimrc.before
+if filereadable(expand("~/.config/nvim/.vimrc.before"))
+  source ~/.config/nvim/.vimrc.before
 endif
 
 " ================ vim-plug Config =====================
 " source: https://github.com/junegunn/vim-plug
 " :PlugInstall
 
-call plug#begin('~/.vim/plugged')
+call plug#begin('~/.config/nvim/plugged')
 
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rails'
@@ -200,7 +200,7 @@ imap <c-c> <esc>
 set ruler
 set cmdheight=2
 set laststatus=2
-set viminfo=!,'100,\"100,:20,<50,s10,h,n~/.viminfo
+set viminfo=!,'100,\"100,:20,<50,s10,h,n~/.nviminfo
 set statusline=[%l,%v\ %P%M]\ %f\ %r%h%w\ (%{&ff})\ %{fugitive#statusline()}
 set showcmd
 set number
