@@ -1,12 +1,17 @@
+[github]
+  user = jschoolcraft
+  email = jeff@thequeue.net
 [branch]
-  autosetupmerge = always
+  autosetupmerge = true
 [push]
   default = current
 [color]
+  ui = auto
   diff = auto
   status = auto
   branch = auto
-  ui = auto
+  interactive = auto
+  grep = auto
 [core]
   excludesfile = ~/.gitignore
   editor = vim
