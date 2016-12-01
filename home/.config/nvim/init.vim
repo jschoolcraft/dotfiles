@@ -22,9 +22,6 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rails'
 Plug 'tpope/vim-haml'
 Plug 'vim-scripts/YankRing.vim'
-Plug 'kien/ctrlp.vim'
-Plug 'xolox/vim-notes'
-Plug 'xolox/vim-misc'
 Plug 'altercation/vim-colors-solarized'
 Plug 'tpope/vim-surround'
 Plug 'weierophinney/vimwiki'
@@ -39,6 +36,8 @@ Plug 'scrooloose/syntastic'
 Plug 'roman/golden-ratio'
 Plug 'Gundo'
 Plug 'rails.vim'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
 
 " react-native stuff
 Plug 'pangloss/vim-javascript'
@@ -49,6 +48,10 @@ Plug 'jelera/vim-javascript-syntax'
 Plug 'ervandew/supertab'
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
+
+" note taking
+Plug 'xolox/vim-notes'
+Plug 'xolox/vim-misc'
 
 call plug#end()
 
@@ -176,18 +179,8 @@ noremap <C-l> <C-w>l
 " Quickly edit/reload the vimrc file
 nmap <silent> <leader>ev :e $MYVIMRC<CR>
 nmap <silent> <leader>sv :so $MYVIMRC<CR>
-nmap <silent> <leader>f :CtrlP<CR>
-nmap <silent> <leader>be :CtrlPBuffer<CR>
-
-" Let's make it easy to find files I use all the time
-map <leader>jv :CtrlP app/views<cr>
-map <leader>jc :CtrlP app/controllers<cr>
-map <leader>jm :CtrlP app/models<cr>
-map <leader>jh :CtrlP app/helpers<cr>
-map <leader>jl :CtrlP lib<cr>
-map <leader>jp :CtrlP public<cr>
-map <leader>js :CtrlP public/stylesheets/sass<cr>
-map <leader>jf :CtrlP features<cr>
+nmap <silent> <leader>f :Files<CR>
+nmap <silent> <leader>be :Buffers<CR>
 
 " Insert a => on <c-l>
 imap <c-l> <space>=><space>
@@ -209,6 +202,8 @@ set number
 if executable('ag')
   " Use ag instead of grep
   set grepprg=ag\ --nogroup\ --nocolor
+
+  let g:ackprg = 'ag --vimgrep'
 
   " make ctrlp a bit faster
   let g:ctrlp_user_command = 'ag %s -l --nocolor --nogroup --hidden
@@ -278,3 +273,8 @@ nnoremap <F3> :GundoToggle<CR>
 let g:gundo_right = 1
 let g:gundo_preview_bottom=1
 let g:gundo_preview_height = 40
+
+" note taking
+let g:notes_directories = ['~/Dropbox/jschoolcraft/notes']
+let g:notes_suffix = '.txt'
+let g:notes_title_sync = 'no'
