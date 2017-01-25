@@ -33,11 +33,11 @@ Plug 'kchmck/vim-coffee-script'
 Plug 'bling/vim-airline'
 Plug 'plasticboy/vim-markdown'
 Plug 'scrooloose/syntastic'
-Plug 'roman/golden-ratio'
 Plug 'Gundo'
 Plug 'rails.vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
+Plug 'Alok/notational-fzf-vim'
 
 " react-native stuff
 Plug 'pangloss/vim-javascript'
@@ -220,7 +220,10 @@ if executable('ag')
 endif
 
 " bind K to grep word under cursor
-nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
+" nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
+
+" format json from selection
+vnoremap <leader>j :!python -m json.tool<CR>
 
 " cool status line
 let g:airline#extensions#tabline#enabled = 1
@@ -278,3 +281,6 @@ let g:gundo_preview_height = 40
 let g:notes_directories = ['~/Dropbox/jschoolcraft/notes']
 let g:notes_suffix = '.txt'
 let g:notes_title_sync = 'no'
+
+" fzf notational velocity
+let g:nv_directories = ['~/Dropbox/jschoolcraft/notes']
