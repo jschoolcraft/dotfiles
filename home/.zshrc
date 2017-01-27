@@ -24,7 +24,7 @@ alias hu='homeshick pull dotfiles && homeshick symlink dotfiles'
 
 # homebrew
 alias bupd='brew update && echo "outdated:" && brew outdated'
-alias bupg='brew upgrade --all && brew cleanup'
+alias bupg='brew upgrade && brew cleanup'
 
 # ruby
 alias irb='pry' # prefer pry
