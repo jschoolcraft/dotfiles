@@ -21,7 +21,7 @@ Install homebrew:
 
 Then install all the things:
 
-    brew bundle ~/.Brewfile
+    brew bundle --global
 
 If that didn't work then:
 
@@ -31,7 +31,8 @@ You can ignore the HOMEBREW_CASK_OPTS but I'm using it to make sure the symlinks
 
 ### Rest of the dotfiles
 
-    vim +PluginInstall +Qall
+    vim +PlugInstall +Qall
+    nvim +PlugInstall +Qall
 
     chpass -s /bin/zsh `whoami`
 
