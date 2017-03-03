@@ -1,7 +1,3 @@
-source "$HOME/.homesick/repos/homeshick/homeshick.sh"
-source "$HOME/.homesick/repos/homeshick/homeshick.sh"
-fpath=($HOME/.homesick/repos/homeshick/completions $fpath)
-
 # Executes commands at the start of an interactive session.
 #
 # Authors:
@@ -56,6 +52,9 @@ prompt peepcode
 # of duplicates in the Open With submenu.
 alias fixopenwith='/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -kill -r -domain local -domain system -domain user'
 eval "$(direnv hook zsh)"
-source "$HOME/.homesick/repos/homeshick/homeshick.sh"
+
+export HOMESHICK_DIR=/usr/local/opt/homeshick
+source "/usr/local/opt/homeshick/homeshick.sh"
+fpath=($HOMESHICK_DIR/completions $fpath)
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
