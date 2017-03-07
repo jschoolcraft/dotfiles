@@ -9,6 +9,8 @@ cask 'hammerspoon'
 cask 'hazel'
 cask 'iterm2'
 cask 'keepingyouawake'
+cask 'nvalt'
+cask 'skype'
 cask 'slack'
 cask 'sourcetree'
 
@@ -35,14 +37,15 @@ brew 'mas'
 brew 'memcached'
 brew 'python'
 brew 'rbenv'
+brew 'readline'
+brew 'reattach-to-user-namespace'
 brew 'redis'
 brew 'ruby-build'
 brew 'sqlite'
 brew 'the_silver_searcher'
 brew 'tmux'
-brew 'reattach-to-user-namespace'
 brew 'tree'
-brew 'vim', args: ['--with-override-system-vi']
+brew 'vim', args: ['--with-cscope', '--with-python', '--with-lua', '--override-system-vim']
 brew 'wget'
 brew 'zsh'
 
@@ -50,4 +53,5 @@ tap 'homebrew/versions'
 brew 'postgresql95'
 
 tap 'neovim/neovim'
-brew 'neovim/neovim/neovim'
+brew 'neovim/neovim/neovim', args: ['--with-cscope', '--with-python', '--with-lua', '--override-system-vim']
+
