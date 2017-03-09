@@ -35,6 +35,7 @@ brew 'imagemagick'
 brew 'macvim'
 brew 'mas'
 brew 'memcached'
+brew 'postgresql'
 brew 'python'
 brew 'rbenv'
 brew 'readline'
@@ -50,7 +51,6 @@ brew 'wget'
 brew 'zsh'
 
 tap 'homebrew/versions'
-brew 'postgresql95'
 
 tap 'neovim/neovim'
 brew 'neovim/neovim/neovim', args: ['--with-cscope', '--with-python', '--with-lua', '--override-system-vim']
