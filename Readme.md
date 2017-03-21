@@ -2,34 +2,34 @@
 
 Manage dotfiles with [homeshick](https://github.com/andsens/homeshick) and [myrepos](https://github.com/jschoolcraft/myrepos).
 
-  brew install homeshick
-  brew install myrepos
+    brew install homeshick
+    brew install myrepos
 
 After they're installed
 
-	homeshick clone jschoolcraft/myrepos
-	homeshick link myrepos
-	mr update
+    homeshick clone jschoolcraft/myrepos
+    homeshick link myrepos
+    mr update
 
 That should have pulled down the various dotfiles, at this point there's a dance that needs to be done to get everything sorted.
 
-	homeshick link dotfiles
+    homeshick link dotfiles
 
 Probably open a new terminal to get updated configs, probably see an error about .zprezto stuff, so:
 
-  homeshick cd dotfiles
+    homeshick cd dotfiles
 
 if that didn't work:
 
-  cd .homeshick/repos/dotfiles
+    cd .homeshick/repos/dotfiles
 
 then
 
-  git submodule sync --recursive
+    git submodule sync --recursive
 
 Finally want to make sure to use zsh
 
-  chpass -s /bin/zsh `whoami`
+    chpass -s /bin/zsh `whoami`
 
 ### Home Brewing
 
