@@ -22,11 +22,9 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rails'
 Plug 'tpope/vim-haml'
 Plug 'vim-scripts/YankRing.vim'
-Plug 'altercation/vim-colors-solarized'
 Plug 'tpope/vim-surround'
 Plug 'weierophinney/vimwiki'
 Plug 'mileszs/ack.vim'
-Plug 'jsahlen/vim-ir_black'
 Plug 'vim-scripts/scratch.vim'
 Plug 'godlygeek/tabular'
 Plug 'kchmck/vim-coffee-script'
@@ -52,6 +50,11 @@ Plug 'honza/vim-snippets'
 " note taking
 Plug 'xolox/vim-notes'
 Plug 'xolox/vim-misc'
+
+" colorschemes
+Plug 'arcticicestudio/nord-vim'
+Plug 'altercation/vim-colors-solarized'
+Plug 'jsahlen/vim-ir_black'
 
 call plug#end()
 

@@ -22,22 +22,20 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rails'
 Plug 'tpope/vim-haml'
 Plug 'vim-scripts/YankRing.vim'
-Plug 'altercation/vim-colors-solarized'
 Plug 'tpope/vim-surround'
 Plug 'weierophinney/vimwiki'
 Plug 'mileszs/ack.vim'
-Plug 'jsahlen/vim-ir_black'
 Plug 'vim-scripts/scratch.vim'
 Plug 'godlygeek/tabular'
 Plug 'kchmck/vim-coffee-script'
 Plug 'bling/vim-airline'
 Plug 'plasticboy/vim-markdown'
 Plug 'scrooloose/syntastic'
-Plug 'roman/golden-ratio'
 Plug 'Gundo'
 Plug 'rails.vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
+Plug 'Alok/notational-fzf-vim'
 
 " react-native stuff
 Plug 'pangloss/vim-javascript'
@@ -52,6 +50,11 @@ Plug 'honza/vim-snippets'
 " note taking
 Plug 'xolox/vim-notes'
 Plug 'xolox/vim-misc'
+
+" colorschemes
+Plug 'arcticicestudio/nord-vim'
+Plug 'altercation/vim-colors-solarized'
+Plug 'jsahlen/vim-ir_black'
 
 call plug#end()
 
@@ -276,3 +279,6 @@ let g:gundo_preview_height = 40
 let g:notes_directories = ['~/Dropbox/jschoolcraft/notes']
 let g:notes_suffix = '.txt'
 let g:notes_title_sync = 'no'
+
+" fzf notational velocity
+let g:nv_directories = ['~/Dropbox/jschoolcraft/notes']
