@@ -1,17 +1,35 @@
 ## Getting Started
 
-Manage our dotfiles with [homeshick](https://github.com/andsens/homeshick) and [myrepos](https://github.com/jschoolcraft/myrepos).
+Manage dotfiles with [homeshick](https://github.com/andsens/homeshick) and [myrepos](https://github.com/jschoolcraft/myrepos).
+
+  brew install homeshick
+  brew install myrepos
 
 After they're installed
 
 	homeshick clone jschoolcraft/myrepos
-	homeshick symlink myrepos
-	mr checkout
-	homeshick symlink
+	homeshick link myrepos
+	mr update
 
-### Vim Things
+That should have pulled down the various dotfiles, at this point there's a dance that needs to be done to get everything sorted.
 
-*probably very outdated*
+	homeshick link dotfiles
+
+Probably open a new terminal to get updated configs, probably see an error about .zprezto stuff, so:
+
+  homeshick cd dotfiles
+
+if that didn't work:
+
+  cd .homeshick/repos/dotfiles
+
+then
+
+  git submodule sync --recursive
+
+Finally want to make sure to use zsh
+
+  chpass -s /bin/zsh `whoami`
 
 ### Home Brewing
 
@@ -27,14 +45,11 @@ If that didn't work then:
 
     brew tap Homebrew/bundle
 
-You can ignore the HOMEBREW_CASK_OPTS but I'm using it to make sure the symlinks end up in /Applications instead of ~/Applications so Alfred et al don't bug me to move them.
-
 ### Rest of the dotfiles
 
     vim +PlugInstall +Qall
     nvim +PlugInstall +Qall
 
-    chpass -s /bin/zsh `whoami`
 
 ### Iterm Colors
 
