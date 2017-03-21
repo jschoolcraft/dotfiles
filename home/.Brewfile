@@ -54,6 +54,7 @@ brew 'vim', args: ['--with-cscope', '--with-python', '--with-lua', '--override-s
 brew 'watchman'
 brew 'wget'
 brew 'zsh'
+brew 'zsh-completions'
 
 tap 'homebrew/versions'
 
