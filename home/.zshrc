@@ -50,6 +50,12 @@ source "$HOME/.homesick/repos/homeshick/homeshick.sh"
 # homeshick refreshing
 homeshick --quiet refresh
 
+# neovim aliases
+if type nvim > /dev/null 2>&1; then
+  alias vi='nvim'
+  alias vim='nvim'
+fi
+
 # fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
