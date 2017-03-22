@@ -50,6 +50,14 @@ If that didn't work then:
     vim +PlugInstall +Qall
     nvim +PlugInstall +Qall
 
+### Vim / Neovim
+
+If there's an error about Ultisnips or something else requiring `python` then do:
+
+    pip3 install neovim
+    pip2 install neovim
+
+Only use the one that's installed  `pip3` or `pip2`)
 
 ### Iterm Colors
 
