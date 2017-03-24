@@ -63,3 +63,26 @@ tap 'homebrew/versions'
 tap 'neovim/neovim'
 brew 'neovim/neovim/neovim', args: ['--with-cscope', '--with-python', '--with-lua', '--override-system-vim']
 
+# App Store Stuff
+
+mas 'Monosnap', id: 540348655
+mas 'Sip', id: 507257563
+mas 'FilePane', id: 847515307
+mas 'Dash', id: 449589707
+mas 'Soulver', id: 413965349
+mas 'Realm Browser', id: 1007457278
+mas 'PopClip', id: 445189367
+
+# maybe app store (tbd)
+# mas 'Textual 5', id: 896450579
+# mas 'ChronoMate, id: 472416858
+# mas 'Paprika Recipe Manager', id: 451907568
+# mas 'Alternote', id: 974971992
+# mas 'Xcode', id: 497799835
+# mas 'Shush', id: 496437906
+# mas 'Blogo', id: 902111700
+# mas 'Microsoft Remote Desktop', id: 715768417
+# mas 'ForkLift', id: 412448059
+# mas 'ReadKit', id: 588726889
+# mas 'Keka', id: 470158793
+# mas 'Evernote', id: 406056744
