@@ -2,6 +2,7 @@
 tap 'caskroom/cask'
 cask 'alfred'
 cask 'atom'
+cask 'dash'
 cask 'dropbox'
 cask 'emacs'
 cask 'google-chrome'
