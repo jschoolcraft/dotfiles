@@ -68,7 +68,6 @@ brew 'neovim/neovim/neovim', args: ['--with-cscope', '--with-python', '--with-lu
 mas 'Monosnap', id: 540348655
 mas 'Sip', id: 507257563
 mas 'FilePane', id: 847515307
-mas 'Dash', id: 449589707
 mas 'Soulver', id: 413965349
 mas 'Realm Browser', id: 1007457278
 mas 'PopClip', id: 445189367
