@@ -1,4 +1,3 @@
-
 tap 'caskroom/cask'
 cask 'alfred'
 cask 'atom'
