@@ -8,7 +8,7 @@ cask 'google-chrome'
 cask 'hammerspoon'
 cask 'hazel'
 cask 'iterm2'
-cask 'karabiner'
+cask 'karabiner-elements'
 cask 'keepingyouawake'
 cask 'nvalt'
 cask 'screenhero'
@@ -64,7 +64,7 @@ brew 'zsh-completions'
 tap 'homebrew/versions'
 
 tap 'neovim/neovim'
-brew 'neovim/neovim/neovim', args: ['--with-cscope', '--with-python', '--with-lua', '--override-system-vim']
+brew 'neovim', args: ['--with-cscope', '--with-python', '--with-lua', '--override-system-vim']
 
 # App Store Stuff
 
