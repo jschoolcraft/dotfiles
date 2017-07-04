@@ -22,6 +22,9 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'Alok/notational-fzf-vim'
 
+" elixir
+Plug 'slashmili/alchemist.vim'
+
 " react-native stuff
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
