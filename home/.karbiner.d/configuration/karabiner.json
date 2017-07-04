@@ -1,0 +1,13 @@
+{
+  “profiles”: [
+    {
+      “name”: “Keyboard”,
+      “selected”: true,
+      “simple_modifications”: {
+        “caps_lock”: “left_option”,
+        "left_command": "left_option",
+        "left_option": "left_command"
+      }
+    }
+  ]
+}
