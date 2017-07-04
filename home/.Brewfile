@@ -59,6 +59,7 @@ brew 'tree'
 brew 'vim', args: ['--with-cscope', '--with-python', '--with-lua', '--override-system-vim']
 brew 'watchman'
 brew 'wget'
+brew 'yarn'
 brew 'zsh'
 brew 'zsh-completions'
 
