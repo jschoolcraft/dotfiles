@@ -35,18 +35,18 @@
                 }
             ],
             "fn_function_keys": {
-                "f1": "display_brightness_decrement",
-                "f10": "mute",
+                "f1": "mute",
+                "f10": "mission_control",
                 "f11": "volume_decrement",
                 "f12": "volume_increment",
-                "f2": "display_brightness_increment",
-                "f3": "mission_control",
-                "f4": "launchpad",
-                "f5": "illumination_decrement",
-                "f6": "illumination_increment",
-                "f7": "rewind",
-                "f8": "play_or_pause",
-                "f9": "fastforward"
+                "f2": "volume_decrement",
+                "f3": "illumination_increment",
+                "f4": "rewind",
+                "f5": "play_or_pause",
+                "f6": "fastforward",
+                "f7": "display_brightness_decrement",
+                "f8": "display_brightness_increment",
+                "f9": "launchpad"
             },
             "name": "Default profile",
             "selected": true,
