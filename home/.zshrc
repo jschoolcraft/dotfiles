@@ -8,6 +8,8 @@ source "$HOME/.homesick/repos/homeshick/homeshick.sh"
 source "$HOME/.homesick/repos/homeshick/homeshick.sh"
 fpath=($HOME/.homesick/repos/homeshick/completions $fpath)
 
+# config files
+alias vc='nvim ~/.config/nvim/init.vim ~/.config/nvim/config/*'
 # rbenv
 if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 
@@ -50,10 +52,13 @@ source "$HOME/.homesick/repos/homeshick/homeshick.sh"
 # homeshick refreshing
 homeshick --quiet refresh
 
+EDITOR=vim
 # neovim aliases
 if type nvim > /dev/null 2>&1; then
+  alias v='nvim'
   alias vi='nvim'
   alias vim='nvim'
+  EDITOR=nvim
 fi
 
 # fzf
