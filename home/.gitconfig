@@ -15,6 +15,7 @@
 [core]
   excludesfile = ~/.gitignore
   editor = vim
+	quotepath = false
 [merge]
   summary = true
   verbosity = 1
@@ -24,8 +25,8 @@
 [format]
   pretty=format:%C(yellow)%h%Creset -%C(red)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset
 [user]
-  name = Jeff Schoolcraft
-  email = jeff@thequeue.net
+	name = Jeff Schoolcraft
+	email = jeff@thequeue.net
 [filter "media"]
   clean = git-media-clean %f
   smudge = git-media-smudge %f
@@ -79,6 +80,7 @@
   changelog = log --pretty=format:\" * %s\"
   shortnocolor = log --pretty=format:\"%h %cr %cn %s\"
 
+  wc = whatchanged -p --abbrev-commit --pretty=medium
   # remote
   r = remote -v
 
