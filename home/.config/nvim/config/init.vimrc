@@ -15,29 +15,37 @@ Plug 'vim-scripts/scratch.vim'
 Plug 'godlygeek/tabular'
 Plug 'kchmck/vim-coffee-script'
 Plug 'plasticboy/vim-markdown'
-Plug 'scrooloose/syntastic'
 Plug 'sjl/gundo.vim'
 Plug 'vim-scripts/rails.vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'Alok/notational-fzf-vim'
+Plug 'alvan/vim-closetag'
+
+" linting
+" Plug 'scrooloose/syntastic'
+Plug 'w0rp/ale'
 
 " elixir
 Plug 'slashmili/alchemist.vim'
-
-" react-native stuff
-Plug 'pangloss/vim-javascript'
-Plug 'mxw/vim-jsx'
-Plug 'jelera/vim-javascript-syntax'
 
 " auto-complete and snippets
 Plug 'Shougo/deoplete.nvim', { 'do': '::UpdateRemotePlugins' }
 Plug 'ervandew/supertab'
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
-"Plug 'ternjs/tern_for_vim', { 'for': ['javascript', 'javascript.jsx'] }
-"Plug 'carlitux/deoplete-ternjs', { 'for': ['javascript', 'javascript.jsx'] }
+
+" react / react-native / javascript
+Plug 'pangloss/vim-javascript'
+Plug 'mxw/vim-jsx'
+Plug 'sheerun/vim-json'
+Plug 'jelera/vim-javascript-syntax'
+Plug 'ternjs/tern_for_vim', { 'for': ['javascript', 'javascript.jsx'] }
+Plug 'carlitux/deoplete-ternjs', {'do': 'yarn install', 'for': ['javascript', 'javascript.jsx'] }
 Plug 'othree/jspc.vim', { 'for': ['javascript', 'javascript.jsx'] }
+Plug 'prettier/vim-prettier', {
+	\ 'do': 'yarn install',
+	\ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql'] }
 
 " note taking
 Plug 'xolox/vim-notes'
