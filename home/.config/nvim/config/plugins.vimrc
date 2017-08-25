@@ -31,6 +31,10 @@ let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 
 " ale
 let g:airline#extensions#ale#enabled = 1
+
+" lightline
+set noshowmode
+
 "   - jump between linting errors
 nmap <silent> <C-k> <Plug>(ale_previous_wrap)
 nmap <silent> <C-j> <Plug>(ale_next_wrap)
