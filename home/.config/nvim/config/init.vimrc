@@ -47,10 +47,6 @@ Plug 'prettier/vim-prettier', {
 	\ 'do': 'yarn install',
 	\ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql'] }
 
-" note taking
-Plug 'xolox/vim-notes'
-Plug 'xolox/vim-misc'
-
 " colorschemes
 Plug 'arcticicestudio/nord-vim'
 Plug 'altercation/vim-colors-solarized'

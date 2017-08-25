@@ -79,11 +79,6 @@ let g:gundo_right = 1
 let g:gundo_preview_bottom=1
 let g:gundo_preview_height = 40
 
-" note taking
-let g:notes_directories = ['~/Dropbox/jschoolcraft/notes']
-let g:notes_suffix = '.txt'
-let g:notes_title_sync = 'no'
-
 " YankRing plugin to manage yanked/deleted buffers
 nnoremap <silent> <F7> :YRShow<CR>
 let g:yankring_history_file = '.yankring-history'
