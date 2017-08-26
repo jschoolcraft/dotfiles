@@ -52,9 +52,6 @@ Plug 'arcticicestudio/nord-vim'
 Plug 'altercation/vim-colors-solarized'
 Plug 'jsahlen/vim-ir_black'
 
-" Relative Line Numbers (need to see if this is built in)
-Plug 'myusuf3/numbers.vim'
-
 " temporary (things I'm testing out)
 Plug 'tommcdo/vim-lion'  " Alignment (https://github.com/tommcdo/vim-lion)
 Plug 'tpope/vim-eunuch'  " unix helpers (https://github.com/tpope/vim-eunuch)
