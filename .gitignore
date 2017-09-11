@@ -1,5 +1,6 @@
 home/.zsh-update
 home/.zsh_history
+home/.config/nvim/autoload/plug.vim
 home/.vim/backup/*
 home/.vim/swap/*
 home/.vim/bundle/*
@@ -8,11 +9,3 @@ home/.emacs.d/backups/*
 home/.emacs.d/auto-save-list/*
 home/.emacs.d/elpa/*
 home/.emacs.d/smex-items
-
-drwx------   2 jschoolcraft  staff    68B Sep  9 10:46 auto-save-list
--rw-r--r--   1 jschoolcraft  staff   1.1K Nov  2 10:29 custom.el
-drwxr-xr-x  43 jschoolcraft  staff   1.4K Aug  8 17:12 elpa
--rw-r--r--   1 jschoolcraft  staff   4.9K Oct 30 10:43 evil.el
--rw-r--r--   1 jschoolcraft  staff   5.5K Nov  3 10:36 init.el
--rw-r--r--   1 jschoolcraft  staff   1.3K Oct 29 18:55 orgmode.el
--rw-r--r--   1 jschoolcraft  staff   389B Sep  1 09:01 smex-items
