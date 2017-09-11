@@ -1,0 +1,28 @@
+"*":
+  "atom-beautify":
+    general:
+      _analyticsUserId: "2ac39e1f-4ec6-4f17-90d7-a3286b6c4850"
+  core:
+    disabledPackages: [
+      "jslint"
+      "react"
+    ]
+    telemetryConsent: "no"
+  editor:
+    fontFamily: "Hack"
+    invisibles: {}
+    showIndentGuide: true
+  "exception-reporting":
+    userId: "e5b37b70-1130-f59b-1bfd-d4d1533e2912"
+  "fuzzy-finder": {}
+  linter: {}
+  metrics:
+    userId: "cc1d12db942cefce8aaad2c772978f5eff7f1597"
+  "release-notes":
+    viewedVersion: "0.95.0"
+  "tree-view":
+    hideVcsIgnoredFiles: true
+  welcome:
+    showOnStartup: false
+  whitespace:
+    ensureSingleTrailingNewline: false
