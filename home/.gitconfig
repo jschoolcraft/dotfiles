@@ -14,7 +14,7 @@
   grep = auto
 [core]
   excludesfile = ~/.gitignore
-  editor = vim
+  editor = nvim
 	quotepath = false
 [merge]
   summary = true
