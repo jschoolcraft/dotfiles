@@ -1,2 +1,2 @@
-logs/
-xfer/
+logs/*
+xfer/*
