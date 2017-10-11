@@ -90,6 +90,7 @@ set wildmode=list:longest,full
 set wildmenu                "enable ctrl-n and ctrl-p to scroll thru matches
 set wildignore=*.o,*.obj,*~,*.swp,*.dll,*.pyc,*.bak,*.exe,*.jpg,*.jpeg,*.png,*.gif,*$py.class,.git,tmp,*.log,*~,.svn,.hg
 set wildignore+=*vim/backups*
+set wildignore+=*/node_modules/*,*/bower_components/*
 
 " ================ Scrolling ========================
 
