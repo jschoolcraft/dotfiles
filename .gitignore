@@ -1,6 +1,7 @@
 home/.zsh-update
 home/.zsh_history
 home/.config/nvim/autoload/plug.vim
+home/.config/nvim/autoload/plug.vim.old
 home/.vim/backup/*
 home/.vim/swap/*
 home/.vim/bundle/*
