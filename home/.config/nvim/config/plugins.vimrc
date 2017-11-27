@@ -95,5 +95,5 @@ let g:yankring_history_file = '.yankring-history'
 let g:yankring_zap_keys = 'f F t T / ?'
 
 " fzf notational velocity
-let g:nv_directories = ['~/Dropbox/jschoolcraft/notes']
+let g:nv_search_paths = ['~/Dropbox/jschoolcraft/notes']
 
