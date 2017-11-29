@@ -1,8 +1,16 @@
 {
-  'batch': true,
-  'overwrite_destination_on_rename': true,
-  'overwrite_destination_on_move': true,
-  'move_files_enabled': true,
-  'move_files_destination': '/Volumes/Multimedia/videos/TV Shows/%(seriesname)s/Season %(seasonnumber)02d',
-  'always_move': true
+  "batch": true,
+  "overwrite_destination_on_rename": true,
+  "overwrite_destination_on_move": true,
+  "move_files_enabled": true,
+  "move_files_confirmation": false,
+  "move_files_destination": "/Volumes/Multimedia/videos/TV Shows/%(seriesname)s/Season %(seasonnumber)02d",
+  "always_move": true,
+  "always_rename": true,
+  "valid_extensions": ["avi", "mkv", "mp4"],
+  "recursive": true,
+  "filename_blacklist": [
+	  {"is_regex": false, "match": "RARBG"}
+  ],
+  "verbose": true
 }
