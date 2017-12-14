@@ -7,7 +7,6 @@ call plug#begin('~/.config/nvim/plugged')
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rails'
 Plug 'tpope/vim-haml'
-Plug 'vim-scripts/YankRing.vim'
 Plug 'tpope/vim-surround'
 Plug 'weierophinney/vimwiki'
 Plug 'mileszs/ack.vim'
@@ -23,7 +22,6 @@ Plug 'Alok/notational-fzf-vim'
 Plug 'alvan/vim-closetag'
 
 " linting
-" Plug 'scrooloose/syntastic'
 Plug 'w0rp/ale'
 
 " elixir
@@ -32,8 +30,10 @@ Plug 'slashmili/alchemist.vim'
 " auto-complete and snippets
 Plug 'Shougo/deoplete.nvim', { 'do': '::UpdateRemotePlugins' }
 Plug 'ervandew/supertab'
-Plug 'SirVer/ultisnips'
-Plug 'honza/vim-snippets'
+" Plug 'joereynolds/vim-minisnip'
+" Plug 'joereynolds/deoplete-minisnip', { 'do': '::UpdateRemotePlugins' }
+" Plug 'SirVer/ultisnips'
+" Plug 'honza/vim-snippets'
 
 " react / react-native / javascript
 Plug 'pangloss/vim-javascript'
