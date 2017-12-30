@@ -10,15 +10,39 @@
 ; https://github.com/syl20bnr/evil-tutor
 ; http://doc.rix.si/projects/fsem.html
 ; https://github.com/joedicastro/dotfiles/tree/master/emacs
+; https://github.com/howardabrams/dot-files/blob/master/emacs.org
 
 ;;; Code:
+(add-to-list 'package-archives '("mela-stable" . "https://stable.melpa.org/packages/"))
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
+(add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/"))
 
-(setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
-                         ("melpa" . "http://melpa.org/packages/")
-                         ("org" . "http://orgmode.org/elpa/")))
+(setq use-package-always-pin "melpa")
 
 (package-initialize)
 (package-refresh-contents)
+
+; Let's use use-package
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
+
+(require 'use-package)
+(provide 'setup-package)
+
+;; Some Emacs Lisp enhancements that I'll probably never use
+;; stolen from: https://github.com/howardabrams/dot-files/blob/master/emacs.org#init-file-support
+(require 'cl)
+
+(use-package dash
+  :ensure t
+  :config (eval-after-load "dash" '(dash-enable-font-lock)))
+
+(use-package s
+  :ensure t)
+
+(use-package f
+  :ensure t)
 
 ;; UTF-8
 (set-terminal-coding-system  'utf-8)
@@ -27,25 +51,27 @@
 (set-selection-coding-system 'utf-8)
 (setq locale-coding-system   'utf-8)
 (prefer-coding-system        'utf-8)
+(setq-default buffer-file-coding-system 'utf-8-auto-unix)
 (set-input-method nil)
 
+(setq echo-keystrokes 0.25) ;display unfinished keystroke more quickly (defaults 1 second)
+
+;;  big fast machines now
+(setq gc-cons-threshold 50000000)
+(setq gnutls-min-prime-bits 4096)
+
 (defvar my-packages '(
-                      ag
                       alchemist
                       autopair
-                      ;browse-at-remote
-                      ;coffee-mode
-                      company
                       deft
+                      diminish
                       elixir-mode
-                      enh-ruby-mode
                       evil
                       evil-leader
                       evil-nerd-commenter
                       evil-surround
                       evil-visualstar
                       flx-ido
-                      flycheck
                       golden-ratio
                       haml-mode
                       helm
@@ -55,13 +81,11 @@
                       key-chord
                       magit
                       markdown-mode
-                      ;neotree
                       org-bullets
                       pbcopy
                       powerline
                       projectile
                       rbenv
-                      ;ruby-mode
                       saveplace
                       smartparens
                       smex
@@ -69,7 +93,6 @@
                       web-mode
                       ;writeroom-mode
                       yaml-mode
-                      yasnippet
                       ; themes
                       apropospriate-theme
                       color-theme-sanityinc-solarized
@@ -79,6 +102,31 @@
 (dolist (p my-packages)
     (when (not (package-installed-p p))
           (package-install p)))
+
+(use-package diminish
+  :ensure t
+  :demand t
+  :diminish (visual-line-mode . "ω")
+  :diminish hs-minor-mode
+  :diminish abbrev-mode
+  :diminish auto-fill-function
+  :diminish subword-mode)
+
+(use-package ag
+  :ensure    t
+  :commands  ag
+  :init      (setq ag-highlight-search t)
+  :config    (add-to-list 'ag-arguments "--word-regexp"))
+
+(use-package company
+  :ensure t
+  :init
+  (setq company-dabbrev-ignore-case t
+        company-show-numbers t)
+  (add-hook 'after-init-hook 'global-company-mode)
+  :config
+  (add-to-list 'company-backends 'company-math-symbols-unicode)
+  :diminish company-mode)
 
 (require 'evil)
 (evil-mode t)
@@ -114,22 +162,60 @@
 (helm-projectile-on)
 (setq projectile-sort-order (quote recently-active))
 
-(add-hook 'after-init-hook 'global-flycheck-mode)
-(add-hook 'after-init-hook 'global-company-mode)
-
-;; make startup nicer
+;; flycheck
+(use-package flycheck
+  :ensure t
+  :init
+  (add-hook 'after-init-hook 'global-flycheck-mode)
+  :config
+  (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc))
+  (setq flycheck-highlighting-mode 'lines))
 
 ;; yasnippet
-(require 'yasnippet)
-(setq yas-snippet-dirs
-      '("~/.emacs-snippets"            ;; personal snippets
-        ))
-;(yas-load-directory "~/.emacs-snippets")
-(setq yas-indent-line nil)
-(yas-global-mode 1)
+(use-package yasnippet
+  :ensure t
+  :init
+  (yas-global-mode 1)
+  :config
+  (add-to-list 'yas-snippet-dirs "~/.emacs-snippets"))
 
-;; flycheck
-(setq flycheck-highlighting-mode 'lines)
+;; git related stuffs
+(use-package git-gutter-fringe
+   :ensure t
+   :diminish git-gutter-mode
+   :init (setq git-gutter-fr:side 'right-fringe)
+   :config (global-git-gutter-mode t))
+
+(use-package gitconfig-mode
+  :ensure t)
+
+(use-package gitignore-mode
+  :ensure t)
+
+;need to figure out where this goes with use-package variant
+;(setq yas-indent-line nil)
+
+(use-package markdown-mode
+  :ensure t
+  :mode ("\\.\\(m\\(ark\\)?down\\|md\\)$" . markdown-mode))
+
+(use-package ruby-mode
+  :ensure t
+  :mode "\\.rb\\'"
+  :mode "Rakefile\\'"
+  :mode "Gemfile\\'"
+  :mode "Berksfile\\'"
+  :mode "Vagrantfile\\'"
+  :interpreter "ruby"
+
+  :init
+  (setq ruby-indent-level 2
+        ruby-indent-tabs-mode nil)
+  (add-hook 'ruby-mode 'superword-mode))
+
+(use-package web-mode
+  :ensure t
+  :mode "\\.erb\\'")
 
 (custom-set-faces
  '(flycheck-error ((((class color)) (:underline "Red"))))

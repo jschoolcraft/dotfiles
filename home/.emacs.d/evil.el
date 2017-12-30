@@ -24,25 +24,25 @@
 
 ; Set cursor colors depending on mode
 (when (display-graphic-p)
-  (setq evil-emacs-state-cursor '("red" box))
-  (setq evil-normal-state-cursor '("green" box))
-  (setq evil-visual-state-cursor '("orange" box))
-  (setq evil-insert-state-cursor '("red" bar))
-  (setq evil-replace-state-cursor '("red" bar))
-  (setq evil-operator-state-cursor '("red" hollow))
-)
+  (setq evil-emacs-state-cursor '("red" box)
+        evil-normal-state-cursor '("green" box)
+        evil-visual-state-cursor '("orange" box)
+        evil-insert-state-cursor '("red" bar)
+        evil-replace-state-cursor '("red" bar)
+        evil-operator-state-cursor '("red" hollow)))
 
 (global-evil-visualstar-mode 1)
 ; (setq evil-default-cursor t)
-(progn (setq evil-default-state 'normal)
-       (setq evil-auto-indent t)
-       (setq evil-shift-width 2)
-       (setq evil-search-wrap t)
-       (setq evil-find-skip-newlines t)
-       (setq evil-move-cursor-back nil)
-       (setq evil-mode-line-format 'before)
-       (setq evil-esc-delay 0.001)
-       (setq evil-cross-lines t))
+(progn
+  (setq evil-default-state 'normal
+        evil-auto-indent t
+        evil-shift-width 2
+        evil-search-wrap t
+        evil-find-skip-newlines t
+        evil-move-cursor-back nil
+        evil-mode-line-format 'before
+        evil-esc-delay 0.001
+        evil-cross-lines t))
 
 (setq evil-overriding-maps nil)
 (setq evil-intercept-maps nil)
@@ -96,6 +96,7 @@
   "hs" 'split-window-below
   "mx" 'helm-M-x
   "p" 'helm-show-kill-ring
+  "oc" 'org-capture
   )
 
 ;; =============================================================================
