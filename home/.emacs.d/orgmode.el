@@ -3,6 +3,9 @@
 ;;; Commentary:
 ; stolen from: http://mph.puddingbowl.org/2014/12/org-mode-face-lift/
 
+;;; Other Sources:
+; https://github.com/joedicastro/dotfiles/tree/master/emacs/.emacs.d#org-mode-settings
+
 ;;; Code:
 (require 'org-bullets)
 (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
