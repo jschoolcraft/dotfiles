@@ -7,8 +7,109 @@
 ; https://github.com/joedicastro/dotfiles/tree/master/emacs/.emacs.d#org-mode-settings
 
 ;;; Code:
-(require 'org-bullets)
-(add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+(use-package org
+  :ensure t
+  :defer t
+  :config
+  (progn
+    ;; set the modules enabled by default
+    (setq org-modules '(
+                        org-bbdb
+                        org-bibtex
+                        org-docview
+                        org-mhe
+                        org-rmail
+                        org-crypt
+                        org-protocol
+                        org-gnus
+                        org-id
+                        org-info
+                        org-habit
+                        org-irc
+                        org-annotate-file
+                        org-eval
+                        org-expiry
+                        org-man
+                        org-panel
+                        org-toc))
+    ;; set default directories
+    (setq org-directory "~/Dropbox/org"
+          org-default-notes-file (concat org-directory "/notes.org"))
+
+    ;; set the archive
+    (setq org-archive-location "~/Dropbox/org/archive/%s_archive::datetree/** Archived")
+
+    ;; refiling
+    ;; all of this stolen from https://blog.aaronbieber.com/2017/03/19/organizing-notes-with-refile.html
+    ;; look at this https://mollermara.com/blog/Fast-refiling-in-org-mode-with-hydras/
+    (setq org-refile-targets '((org-agenda-files :maxlevel . 3))
+          org-refile-use-outline-path 'file
+          org-outline-path-complete-in-steps nil
+          org-refile-allow-creating-parent-nodes 'confirm)
+
+
+    ;; capture templates
+    (setq org-capture-templates
+          '(
+            ("t" "Todo" entry (file+headline "~/Dropbox/org/gtd.org" "Tasks")
+             "* TODO %?\n  %i\n  %a")
+            ("r" "TODO" entry (file+headline "~/Dropbox/org/gtd.org" "Tasks")
+             "* TODO %^{Task}  %^G\n   %?\n  %a")
+            ("j" "Journal" entry (file+datetree "~/Dropbox/org/journal.org")
+             "* %?\nEntered on %U\n  %i\n  %a")
+            ("i" "Inbox" entry (file+datetree "~/Dropbox/org/inbox.org")
+             "* %?\nEntered on %U\n  %i\n  %a")
+            ("n" "Notes" entry (file+headline "~/Dropbox/org/notes.org" "Notes")
+             "* %^{Header}  %^G\n  %U\n\n  %?")
+            ("l" "Link" entry (file+headline "~/Dropbox/org/links.org" "Links")
+             "* %? %^L %^g \n%T" :prepend t)
+            ))
+
+    ;; highlight code blocks syntax
+    (setq org-src-fontify-natively  t
+          org-src-tab-acts-natively t)
+    (add-to-list 'org-src-lang-modes (quote ("dot" . graphviz-dot)))
+
+    ;; tasks management
+    (setq org-log-done t)
+    ;; (setq org-clock-idle-time nil)
+
+    ;; agenda & diary
+    (setq org-agenda-include-diary t)
+    (setq org-agenda-files '("~/Dropbox/org/"
+                             "~/Dropbox/org/personal.org"
+                             "~/Dropbox/org/technical.org"
+                             "~/Dropbox/org/project.org"))
+    (setq org-agenda-inhibit-startup t)
+
+    ;; show images inline
+    ;; only works in GUI, but is a nice feature to have
+    (when (window-system)
+      (setq org-startup-with-inline-images t))
+    ;; limit images width
+    (setq org-image-actual-width '(800))
+
+    ;; Some initial langauges we want org-babel to support
+    (org-babel-do-load-languages 'org-babel-load-languages
+                                 '((sh     . t)
+                                   (js     . t)
+                                   (python . t)
+                                   (ruby   . t)
+                                   (dot    . t)
+                                   (org . t)
+                                   (sqlite . t)
+                                   (perl   . t)))
+
+    ;; refresh images after execution
+    (add-hook 'org-babel-after-execute-hook 'org-redisplay-inline-images)
+    )
+  )
+
+(use-package org-bullets
+  :ensure t
+  :config
+  (progn
+    (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))))
 
 '(org-agenda-date ((t (:inherit org-agenda-structure :weight semi-bold :height 1.2))) t)
 '(org-date ((t (:foreground "Purple" :underline t :height 0.8 :family "Helvetica Neue"))))
@@ -25,40 +126,9 @@
 '(org-tag ((t (:foreground "dark gray" :weight bold :height 0.8))))
 '(org-todo ((t (:foreground "#e67e22" :weight bold))))
 
-; refiling
-; all of this stolen from https://blog.aaronbieber.com/2017/03/19/organizing-notes-with-refile.html
-(setq org-refile-targets '((org-agenda-files :maxlevel . 3))
-      org-refile-use-outline-path 'file
-      org-outline-path-complete-in-steps nil
-      org-refile-allow-creating-parent-nodes 'confirm)
-
-(setq org-agenda-files '("~/orgnotes/"
-                         "~/Dropbox/org/personal"
-                         "~/Dropbox/org/technical"
-                         "~/Dropbox/org/project"))
-
-; capture templates
-(setq org-capture-templates
-      '(
-        ("t" "Todo" entry (file+headline "~/orgnotes/gtd.org" "Tasks")
-         "* TODO %?\n  %i\n  %a")
-        ("j" "Journal" entry (file+datetree "~/orgnotes/journal.org")
-         "* %?\nEntered on %U\n  %i\n  %a")
-        ("i" "Inbox" entry (file+datetree "~/orgnotes/inbox.org")
-         "* %?\nEntered on %U\n  %i\n  %a")
-        ))
 (require 'org-install)
 (require 'ob-tangle)
 
-; Some initial langauges we want org-babel to support
-(org-babel-do-load-languages 'org-babel-load-languages
-                             '((sh     . t)
-                               (js     . t)
-                               (python . t)
-                               (ruby   . t)
-                               (dot    . t)
-                               (sqlite . t)
-                               (perl   . t)))
 
 ;; just evaluate, don't ask me
 (setq org-confirm-babel-evaluate nil)
@@ -66,6 +136,52 @@
 ;; syntax highlighting code blocks
 (setq org-src-fontify-natively t)
 (setq org-src-tab-acts-natively t)
+
+;; evil keys
+(use-package evil-org
+  :ensure t
+  :after org
+  :config
+  (add-hook 'org-mode-hook 'evil-org-mode)
+  (add-hook 'evil-org-mode-hook
+            (lambda ()
+              (evil-org-set-key-theme)))
+   (evil-leader/set-key-for-mode 'org-mode
+     "." 'hydra-org-state/body
+     "t" 'org-todo
+     "T" 'org-show-todo-tree
+     "v" 'org-mark-element
+     "a" 'org-agenda
+     "c" 'org-archive-subtree
+     "l" 'evil-org-open-links
+     "C" 'org-resolve-clocks))
+
+;; Define a transient state for quick navigation
+; (defhydra hydra-org-state ()
+;   ;; basic navigation
+;   ("i" org-cycle)
+;   ("I" org-shifttab)
+;   ("h" org-up-element)
+;   ("l" org-down-element)
+;   ("j" org-forward-element)
+;   ("k" org-backward-element)
+;   ;; navigating links
+;   ("n" org-next-link)
+;   ("p" org-previous-link)
+;   ("o" org-open-at-point)
+;   ;; navigation blocks
+;   ("N" org-next-block)
+;   ("P" org-previous-block)
+;   ;; updates
+;   ("." org-ctrl-c-ctrl-c)
+;   ("*" org-ctrl-c-star)
+;   ("-" org-ctrl-c-minus)
+;   ;; change todo state
+;   ("H" org-shiftleft)
+;   ("L" org-shiftright)
+;   ("J" org-shiftdown)
+;   ("K" org-shiftup)
+;   ("t" org-todo))
 
 ;; exporting
 (use-package ox-html
@@ -84,6 +200,20 @@
            font-family: 'Source Code Pro', monospace;
         }
      </style>"))
+
+;;; this is here for the alfred workflow
+;;   all of this was stolen from:
+;;   https://github.com/jjasghar/alfred-org-capture/blob/master/el/alfred-org-capture.el
+;; for this to work the server has to be started: M-x start-server
+(defun make-orgcapture-frame ()
+  "Create a new frame and run org-capture."
+  (interactive)
+  (make-frame '((name . "remember") (width . 80) (height . 16)
+                (top . 400) (left . 300)
+                (font . "-apple-Monaco-medium-normal-normal-*-13-*-*-*-m-0-iso10646-1")
+                ))
+  (select-frame-by-name "remember")
+  (org-capture))
 
 (provide 'orgmode)
 ;;; orgmode.el ends here

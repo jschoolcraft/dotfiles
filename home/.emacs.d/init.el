@@ -4,13 +4,10 @@
 ;(require 'cl)
 (require 'package)
 
-; places to look for config options
-; https://github.com/aaronbieber/dotfiles/tree/master/configs/emacs.d
-; https://github.com/chrismccord/dot_emacs
-; https://github.com/syl20bnr/evil-tutor
-; http://doc.rix.si/projects/fsem.html
-; https://github.com/joedicastro/dotfiles/tree/master/emacs
-; https://github.com/howardabrams/dot-files/blob/master/emacs.org
+;; places to look for config options
+;; https://github.com/joedicastro/dotfiles/tree/master/emacs
+;; https://github.com/howardabrams/dot-files/blob/master/emacs.org
+;; https://github.com/joedicastro/dotfiles/tree/master/emacs/.emacs.d
 
 ;;; Code:
 (add-to-list 'package-archives '("mela-stable" . "https://stable.melpa.org/packages/"))
@@ -60,49 +57,6 @@
 (setq gc-cons-threshold 50000000)
 (setq gnutls-min-prime-bits 4096)
 
-(defvar my-packages '(
-                      alchemist
-                      autopair
-                      deft
-                      diminish
-                      elixir-mode
-                      evil
-                      evil-leader
-                      evil-nerd-commenter
-                      evil-surround
-                      evil-visualstar
-                      flx-ido
-                      golden-ratio
-                      haml-mode
-                      helm
-                      helm-ag
-                      helm-projectile
-                      jsx-mode
-                      key-chord
-                      magit
-                      markdown-mode
-                      org-bullets
-                      pbcopy
-                      powerline
-                      projectile
-                      rbenv
-                      saveplace
-                      smartparens
-                      smex
-                      smooth-scrolling
-                      web-mode
-                      ;writeroom-mode
-                      yaml-mode
-                      ; themes
-                      apropospriate-theme
-                      color-theme-sanityinc-solarized
-                      molokai-theme
-                      ))
-
-(dolist (p my-packages)
-    (when (not (package-installed-p p))
-          (package-install p)))
-
 (use-package diminish
   :ensure t
   :demand t
@@ -114,9 +68,14 @@
 
 (use-package ag
   :ensure    t
-  :commands  ag
+  :commands  (ag ag-project)
   :init      (setq ag-highlight-search t)
-  :config    (add-to-list 'ag-arguments "--word-regexp"))
+  :config
+  (add-to-list 'ag-arguments "--word-regexp")
+  ;; (setq ag-executable "/usr/local/bin/ag")
+  (setq ag-highlight-search t)
+  (setq ag-reuse-buffers t)
+  (setq ag-reuse-window t))
 
 (use-package company
   :ensure t
@@ -128,39 +87,55 @@
   (add-to-list 'company-backends 'company-math-symbols-unicode)
   :diminish company-mode)
 
-(require 'evil)
-(evil-mode t)
+(use-package projectile
+  :ensure t
+  :defer 1
+  :config
+  (projectile-mode)
+  (setq projectile-enable-caching t)
+  (setq projectile-completion-system 'helm)
+  (setq projectile-sort-order (quote recently-active))
+  (setq projectile-mode-line
+        '(:eval
+          (format " Proj[%s]"
+                  (projectile-project-name)))))
 
-(require 'projectile)
-(projectile-mode t)
+(use-package highlight-symbol
+  :ensure t
+  :defer t
+  :diminish ""
+  :config
+  (setq-default highlight-symbol-idle-delay 1.5))
 
-(require 'autopair)
+(use-package helm
+  :ensure t
+  :diminish helm-mode
+  :commands helm-mode
+  :config
+  (helm-mode 1)
+  (setq helm-buffers-fuzzy-matching t
+        helm-autoresize-mode t
+        helm-M-x-fuzzy-match                  t
+        helm-bookmark-show-location           t
+        helm-buffers-fuzzy-matching           t
+        helm-completion-in-region-fuzzy-match t
+        helm-file-cache-fuzzy-match           t
+        helm-imenu-fuzzy-match                t
+        helm-mode-fuzzy-match                 t
+        helm-locate-fuzzy-match               t
+        helm-quick-update                     t
+        helm-recentf-fuzzy-match              t
+        helm-semantic-fuzzy-match             t))
 
-;; better sized splits
-(require 'golden-ratio)
-(golden-ratio-mode 1)
+(use-package helm-projectile
+  :ensure t
+  :commands (helm-projectile helm-projectile-switch-project))
 
-;; use helm
-(require 'helm)
-(require 'helm-projectile)
+(use-package helm-ag
+  :ensure t)
 
-(setq helm-M-x-fuzzy-match                  t
-      helm-bookmark-show-location           t
-      helm-buffers-fuzzy-matching           t
-      helm-completion-in-region-fuzzy-match t
-      helm-file-cache-fuzzy-match           t
-      helm-imenu-fuzzy-match                t
-      helm-mode-fuzzy-match                 t
-      helm-locate-fuzzy-match               t
-      helm-quick-update                     t
-      helm-recentf-fuzzy-match              t
-      helm-semantic-fuzzy-match             t)
-(helm-mode 1)
-(projectile-global-mode)
-(setq projectile-completion-system 'helm)
 (setq helm-ag-base-command "ag --hidden --nocolor --nogroup --ignore-case")
 (helm-projectile-on)
-(setq projectile-sort-order (quote recently-active))
 
 ;; flycheck
 (use-package flycheck
@@ -171,15 +146,36 @@
   (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc))
   (setq flycheck-highlighting-mode 'lines))
 
-;; yasnippet
+(custom-set-faces
+ '(flycheck-error ((((class color)) (:underline "Red"))))
+ '(flycheck-warning ((((class color)) (:underline "Orange")))))
+
 (use-package yasnippet
   :ensure t
+  :defer t
   :init
   (yas-global-mode 1)
   :config
-  (add-to-list 'yas-snippet-dirs "~/.emacs-snippets"))
+  (yas-reload-all)
+  (setq yas-snippet-dirs '("~/.emacs.d/snippets"
+                           "~/.emacs.d/remote-snippets"))
+  (setq yas-indent-line nil)
+  (setq tab-always-indent 'complete)
+  (setq yas-prompt-functions '(yas-completing-prompt
+                               yas-ido-prompt
+                               yas-dropdown-prompt))
+  (define-key yas-minor-mode-map (kbd "<escape>") 'yas-exit-snippet))
 
 ;; git related stuffs
+(use-package magit
+  :ensure t
+  :defer t
+  :config
+  (setq magit-branch-arguments nil)
+  (setq magit-push-always-verify nil)
+  (setq magit-last-seen-setup-instructions "1.4.0")
+  (magit-define-popup-switch 'magit-log-popup ?f "first parent" "--first-parent"))
+
 (use-package git-gutter-fringe
    :ensure t
    :diminish git-gutter-mode
@@ -187,22 +183,41 @@
    :config (global-git-gutter-mode t))
 
 (use-package gitconfig-mode
-  :ensure t)
+  :ensure t
+  :defer t)
 
 (use-package gitignore-mode
-  :ensure t)
+  :ensure t
+  :defer t)
 
-;need to figure out where this goes with use-package variant
-;(setq yas-indent-line nil)
+(use-package gitattributes-mode
+  :ensure t
+  :defer t)
+
+(use-package which-key
+  :ensure t
+  :diminish ""
+  :config
+  (which-key-mode t))
+
+(use-package restclient
+  :ensure t
+  :defer t)
 
 (use-package markdown-mode
   :ensure t
   :mode ("\\.\\(m\\(ark\\)?down\\|md\\)$" . markdown-mode))
 
+(use-package yaml-mode
+  :ensure t
+  :defer t)
+
 (use-package ruby-mode
   :ensure t
   :mode "\\.rb\\'"
   :mode "Rakefile\\'"
+  :mode "Fastfile\\'"
+  :mode "Matchfile\\'"
   :mode "Gemfile\\'"
   :mode "Berksfile\\'"
   :mode "Vagrantfile\\'"
@@ -217,18 +232,35 @@
   :ensure t
   :mode "\\.erb\\'")
 
-(custom-set-faces
- '(flycheck-error ((((class color)) (:underline "Red"))))
- '(flycheck-warning ((((class color)) (:underline "Orange")))))
+(use-package haml-mode
+  :ensure t
+  :defer t)
+
+;; helps find the source of an error
+(use-package bug-hunter
+  :ensure t
+  :commands (bug-hunter-file bug-hunter-init-file))
 
 ;; deft
-(require 'deft)
-(setq deft-extensions '("txt" "tex" "org"))
-(setq deft-directory "~/Dropbox/jschoolcraft/notes")
-(setq deft-use-filename-as-title 1)
+(use-package deft
+  :ensure t
+  :commands (deft)
+  :config
+  (setq deft-extensions '("txt" "tex" "org"))
+  (setq deft-use-filename-as-title t)
+  (setq deft-directory "~/Dropbox/jschoolcraft/notes"))
 
-;; web mode stuff
-(require 'web-mode)
+(use-package web-mode
+  :ensure t
+  :defer t
+  :config
+  (setq web-mode-attr-indent-offset 2)
+  (setq web-mode-code-indent-offset 2)
+  (setq web-mode-css-indent-offset 2)
+  (setq web-mode-indent-style 2)
+  (setq web-mode-markup-indent-offset 2)
+  (setq web-mode-sql-indent-offset 2))
+
 (add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.[agj]sp\\'" . web-mode))
@@ -266,26 +298,20 @@
 (load-user-file "appearance.el")
 
 ; Kill backups
-(setq make-backup-files nil)
-(setq auto-save-default nil)
+(setq auto-save-default nil
+      auto-save-list-file-prefix nil
+      make-backup-files nil)
 
 ; Hate whitespace
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   (quote
-    (color-theme-sanityinc-solarized yasnippet yaml-mode web-mode smooth-scrolling smex smartparens powerline pbcopy markdown-mode magit key-chord jsx-mode helm-projectile helm-ag helm flx-ido evil-visualstar evil-surround evil-nerd-commenter evil-leader evil ag))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
+;; electric-pair-mode
+;; smartish parens/pairs stuff
+(electric-pair-mode)
+
+;; put that custom bullshit somewhere else
+(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
+(load custom-file 'noerror)
 
 (provide 'init)
 ;;; init.el ends here
