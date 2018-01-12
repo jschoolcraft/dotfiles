@@ -129,6 +129,26 @@
 (require 'org-install)
 (require 'ob-tangle)
 
+;; should be able to use this, according to:
+;; https://github.com/heikkil/emacs-literal-config/blob/master/emacs.org#url-copying
+;; https://orgmode.org/worg/org-contrib/org-mac-link.html
+;; (use-package org-mac-link
+;;   :ensure t
+;;   :if (eq system-type 'darwin)
+;;   :bind ("C-c v" . my/quick-url-note)
+;;   :config
+;;   (defun my/quick-url-note ()
+;;     "Fastest way to capture a web page link"
+;;     (interactive)
+;;     (org-capture nil "n")
+;;     (org-mac-chrome-insert-frontmost-url)
+;;     (org-capture-finalize)))
+
+;; https://thraxys.wordpress.com/2016/01/14/pimp-up-your-org-agenda/
+;; you can add UTF-8 bits to sequence keywords, something like:
+;; (setq org-todo-keywords '((sequence "☛ TODO(t)" "|" "<img draggable="false" class="emoji" alt="✔" src="https://s0.wp.com/wp-content/mu-plugins/wpcom-smileys/twemoji/2/svg/2714.svg"> DONE(d)")
+;;                           (sequence "⚑ WAITING(w)" "|")
+;;                           (sequence "|" "✘ CANCELED(c)")))
 
 ;; just evaluate, don't ask me
 (setq org-confirm-babel-evaluate nil)
