@@ -33,3 +33,7 @@ vnoremap <C-u> <C-u>zz
 vnoremap <C-d> <C-d>zz
 vnoremap <C-f> <C-f>zz
 vnoremap <C-b> <C-b>zz
+
+" Macros
+nnoremap Q @@
+nnoremap Y y$

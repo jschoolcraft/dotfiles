@@ -48,6 +48,7 @@ Plug 'prettier/vim-prettier', {
 	\ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql'] }
 
 " colorschemes
+Plug 'nightsense/vimspectr'
 Plug 'arcticicestudio/nord-vim'
 Plug 'altercation/vim-colors-solarized'
 Plug 'jsahlen/vim-ir_black'
@@ -56,6 +57,7 @@ Plug 'jsahlen/vim-ir_black'
 Plug 'tommcdo/vim-lion'  " Alignment (https://github.com/tommcdo/vim-lion)
 Plug 'tpope/vim-eunuch'  " unix helpers (https://github.com/tpope/vim-eunuch)
 Plug 'itchyny/lightline.vim' "airline replacements'
+Plug 'editorconfig/editorconfig-vim' " consistency with peers in projects
 
 call plug#end()
 
