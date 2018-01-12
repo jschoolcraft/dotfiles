@@ -177,10 +177,13 @@
   (magit-define-popup-switch 'magit-log-popup ?f "first parent" "--first-parent"))
 
 (use-package git-gutter-fringe
-   :ensure t
-   :diminish git-gutter-mode
-   :init (setq git-gutter-fr:side 'right-fringe)
-   :config (global-git-gutter-mode t))
+  :ensure t
+  :defer t
+  :diminish (git-gutter-mode . "")
+  :init
+  (global-git-gutter-mode +1)
+  (setq-default indicate-buffer-boundaries 'left)
+  (setq-default indicate-empty-lines +1))
 
 (use-package gitconfig-mode
   :ensure t
@@ -261,6 +264,15 @@
   (setq web-mode-markup-indent-offset 2)
   (setq web-mode-sql-indent-offset 2))
 
+;; editorconfig
+;; for consistency among developers on a project
+(use-package editorconfig
+  :ensure t
+  :defer t
+  :diminish ""
+  :config
+  (editorconfig-mode 1))
+
 (add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.[agj]sp\\'" . web-mode))
@@ -315,3 +327,5 @@
 
 (provide 'init)
 ;;; init.el ends here
+(put 'narrow-to-page 'disabled nil)
+(put 'narrow-to-region 'disabled nil)
