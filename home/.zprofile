@@ -36,7 +36,7 @@ fi
 # Ensure path arrays do not contain duplicates.
 typeset -gU cdpath fpath mailpath path
 
-# Set the the list of directories that cd searches.
+# Set the list of directories that cd searches.
 # cdpath=(
 #   $cdpath
 # )
@@ -61,24 +61,3 @@ export LESS='-F -g -i -M -R -S -w -X -z-4'
 if (( $#commands[(i)lesspipe(|.sh)] )); then
   export LESSOPEN="| /usr/bin/env $commands[(i)lesspipe(|.sh)] %s 2>&-"
 fi
-
-#
-# Temporary Files
-#
-
-if [[ ! -d "$TMPDIR" ]]; then
-  export TMPDIR="/tmp/$LOGNAME"
-  mkdir -p -m 700 "$TMPDIR"
-fi
-
-TMPPREFIX="${TMPDIR%/}/zsh"
-
-export PATH="$HOME/.cargo/bin:$PATH"
-
-# alias d=docker
-# alias dc=docker-compose
-# alias dm=docker-machine
-# # TODO: figure out how to wrap this line in a conditional if `docker ps` doesn't return anything useful
-# eval $(docker-machine env nade)
-# alias dcu="docker-compose up"
-# de () { docker exec -it `echo ${PWD##*/}`_app_1 $* }
