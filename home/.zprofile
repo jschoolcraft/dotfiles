@@ -75,10 +75,10 @@ TMPPREFIX="${TMPDIR%/}/zsh"
 
 export PATH="$HOME/.cargo/bin:$PATH"
 
-alias d=docker
-alias dc=docker-compose
-alias dm=docker-machine
-# TODO: figure out how to wrap this line in a conditional if `docker ps` doesn't return anything useful
-eval $(docker-machine env nade)
-alias dcu="docker-compose up"
-de () { docker exec -it `echo ${PWD##*/}`_app_1 $* }
+# alias d=docker
+# alias dc=docker-compose
+# alias dm=docker-machine
+# # TODO: figure out how to wrap this line in a conditional if `docker ps` doesn't return anything useful
+# eval $(docker-machine env nade)
+# alias dcu="docker-compose up"
+# de () { docker exec -it `echo ${PWD##*/}`_app_1 $* }
