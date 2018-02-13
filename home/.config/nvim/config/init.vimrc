@@ -53,6 +53,7 @@ Plug 'nightsense/vimspectr'
 Plug 'arcticicestudio/nord-vim'
 Plug 'altercation/vim-colors-solarized'
 Plug 'jsahlen/vim-ir_black'
+Plug 'itchyny/landscape.vim'
 
 " temporary (things I'm testing out)
 Plug 'tommcdo/vim-lion'  " Alignment (https://github.com/tommcdo/vim-lion)
