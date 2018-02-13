@@ -56,6 +56,7 @@ Plug 'jsahlen/vim-ir_black'
 Plug 'itchyny/landscape.vim'
 
 " temporary (things I'm testing out)
+Plug 'tpope/vim-repeat' " Let's you repeat plugin commands, like surround
 Plug 'tommcdo/vim-lion'  " Alignment (https://github.com/tommcdo/vim-lion)
 Plug 'tpope/vim-eunuch'  " unix helpers (https://github.com/tpope/vim-eunuch)
 Plug 'itchyny/lightline.vim' "airline replacements'
