@@ -7,4 +7,4 @@ source $HOME/.config/nvim/config/plugins.vimrc
 " most of my key mappings should go here
 source $HOME/.config/nvim/config/keys.vimrc
 " status line configuration
-source $HOME/.config/nvim/config/line.vimrc
+" source $HOME/.config/nvim/config/line.vimrc
