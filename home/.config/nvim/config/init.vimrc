@@ -7,6 +7,7 @@ call plug#begin('~/.config/nvim/plugged')
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rails'
 Plug 'tpope/vim-haml'
+Plug 'slim-template/vim-slim'
 Plug 'tpope/vim-surround'
 Plug 'weierophinney/vimwiki'
 Plug 'mileszs/ack.vim'
