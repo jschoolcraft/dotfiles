@@ -57,6 +57,17 @@
              "* TODO %^{Task}  %^G\n   %?\n  %a")
             ("j" "Journal" entry (file+datetree "~/Dropbox/org/journal.org")
              "* %?\nEntered on %U\n  %i\n  %a")
+            ("m" "Meeting")
+            ("mb" "Bibleschools" entry (file+datetree "~/Dropbox/org/clients/BibleSchools.org")
+             "* %?\nEntered on %U\n  %i\n")
+            ("mn" "NADE" entry (file+datetree "~/Dropbox/org/clients/NADE.org")
+             "* %?\nEntered on %U\n  %i\n")
+            ("mr" "Roth" entry (file+datetree "~/Dropbox/org/clients/Roth.org")
+             "* %?\nEntered on %U\n  %i\n")
+            ("ms" "SkillScout" entry (file+datetree "~/Dropbox/org/clients/SkillScout.org")
+             "* %?\nEntered on %U\n  %i\n")
+            ("mw" "SZW" entry (file+datetree "~/Dropbox/org/clients/Subzero.org")
+             "* %?\nEntered on %U\n  %i\n")
             ("i" "Inbox" entry (file+datetree "~/Dropbox/org/inbox.org")
              "* %?\nEntered on %U\n  %i\n  %a")
             ("n" "Notes" entry (file+headline "~/Dropbox/org/notes.org" "Notes")
@@ -79,7 +90,8 @@
     (setq org-agenda-files '("~/Dropbox/org/"
                              "~/Dropbox/org/personal.org"
                              "~/Dropbox/org/technical.org"
-                             "~/Dropbox/org/project.org"))
+                             "~/Dropbox/org/project.org"
+                             "~/Dropbox/org/clients/"))
     (setq org-agenda-inhibit-startup t)
 
     ;; show images inline
