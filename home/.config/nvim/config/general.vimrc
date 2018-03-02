@@ -101,7 +101,7 @@ set sidescrolloff=15
 set sidescroll=1
 set background=dark
 "colorscheme ir_black
-colorscheme landscape
+colorscheme dracula
 " utf-8 default encoding
 set enc=utf-8
 
