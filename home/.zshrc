@@ -1,75 +1,101 @@
-# Source Prezto.
-if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
-  source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
-fi
+# If you come from bash you might have to change your $PATH.
+# export PATH=$HOME/bin:/usr/local/bin:$PATH
 
-# homeshick
-source "$HOME/.homesick/repos/homeshick/homeshick.sh"
-source "$HOME/.homesick/repos/homeshick/homeshick.sh"
-fpath=($HOME/.homesick/repos/homeshick/completions $fpath)
+# Path to your oh-my-zsh installation.
+export ZSH=/Users/jschoolcraft/.oh-my-zsh
 
-# config files
-alias vc='nvim ~/.config/nvim/init.vim ~/.config/nvim/config/*'
-# rbenv
-if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
+# Set name of the theme to load. Optionally, if you set this to "random"
+# it'll load a random theme each time that oh-my-zsh is loaded.
+# See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
+ZSH_THEME="avit"
 
-# Aliases
-alias ack='ag'  # prefer ag
-alias hu='homeshick pull dotfiles && homeshick symlink dotfiles'
+# Set list of themes to load
+# Setting this variable when ZSH_THEME=random
+# cause zsh load theme from this variable instead of
+# looking in ~/.oh-my-zsh/themes/
+# An empty array have no effect
+# ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
 
-# homebrew
-alias bupd='brew update && echo "outdated:" && brew outdated'
-alias bupg='brew upgrade && brew cleanup'
+# Uncomment the following line to use case-sensitive completion.
+# CASE_SENSITIVE="true"
 
-# ruby
-alias irb='pry' # prefer pry
+# Uncomment the following line to use hyphen-insensitive completion. Case
+# sensitive completion must be off. _ and - will be interchangeable.
+# HYPHEN_INSENSITIVE="true"
 
-# git
-alias gc='git commit'
-alias gd='git diff'
-alias gp='git push'
-alias gpom='git push origin master'
-alias gr='git pull --rebase'
-alias gs='git status -s'
-alias git-remove-untracked='git fetch --prune && git branch -r | awk "{print \$1}" | egrep -v -f /dev/fd/0 <(git branch -vv | grep origin) | awk "{print \$1}" | xargs git branch -d'
-alias git-delete-merged='git branch --merged master | grep -v ''^[ *]*master$'' | xargs git branch -d'
+# Uncomment the following line to disable bi-weekly auto-update checks.
+# DISABLE_AUTO_UPDATE="true"
 
-# tmux
-alias tml='tmux list-sessions'
-alias tma='tmux -2 attach -t $1'
-alias tmk='tmux kill-session -t $1'
+# Uncomment the following line to change how often to auto-update (in days).
+# export UPDATE_ZSH_DAYS=13
 
-# react-native
-alias rn='react-native'
-alias rnios='react-native run-ios'
-alias rniphone='react-native run-ios --simulator "iPhone 6s"'
-alias rnipad='react-native run-ios --simulator "iPad Air 2"'
+# Uncomment the following line to disable colors in ls.
+# DISABLE_LS_COLORS="true"
 
-# Quick way to rebuild the Launch Services database and get rid
-# of duplicates in the Open With submenu.
-alias fixopenwith='/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -kill -r -domain local -domain system -domain user'
-eval "$(direnv hook zsh)"
-source "$HOME/.homesick/repos/homeshick/homeshick.sh"
+# Uncomment the following line to disable auto-setting terminal title.
+# DISABLE_AUTO_TITLE="true"
 
-# homeshick refreshing
-homeshick --quiet refresh
+# Uncomment the following line to enable command auto-correction.
+# ENABLE_CORRECTION="true"
 
-EDITOR=vim
-# neovim aliases
-if type nvim > /dev/null 2>&1; then
-  alias v='nvim'
-  alias vi='nvim'
-  alias vim='nvim'
-  EDITOR=nvim
-fi
+# Uncomment the following line to display red dots whilst waiting for completion.
+# COMPLETION_WAITING_DOTS="true"
 
-# fzf
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+# Uncomment the following line if you want to disable marking untracked files
+# under VCS as dirty. This makes repository status check for large repositories
+# much, much faster.
+# DISABLE_UNTRACKED_FILES_DIRTY="true"
 
-## fd - cd to selected directory
-fd() {
-  local dir
-  dir=$(find ${1:-.} -path '*/\.*' -prune \
-                  -o -type d -print 2> /dev/null | fzf +m) &&
-  cd "$dir"
-}
+# Uncomment the following line if you want to change the command execution time
+# stamp shown in the history command output.
+# The optional three formats: "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
+# HIST_STAMPS="mm/dd/yyyy"
+
+# Would you like to use another custom folder than $ZSH/custom?
+# ZSH_CUSTOM=/path/to/new-custom-folder
+
+# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
+# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
+# Example format: plugins=(rails git textmate ruby lighthouse)
+# Add wisely, as too many plugins slow down shell startup.
+plugins=(
+  bundler
+  docker
+  dotenv
+  git
+  git-extras
+  httpie
+  osx
+  rake
+  rbenv
+  ruby
+)
+
+source $ZSH/oh-my-zsh.sh
+
+# User configuration
+
+# export MANPATH="/usr/local/man:$MANPATH"
+
+# You may need to manually set your language environment
+# export LANG=en_US.UTF-8
+
+# Preferred editor for local and remote sessions
+# if [[ -n $SSH_CONNECTION ]]; then
+#   export EDITOR='vim'
+# else
+#   export EDITOR='mvim'
+# fi
+
+# Compilation flags
+# export ARCHFLAGS="-arch x86_64"
+
+# ssh
+# export SSH_KEY_PATH="~/.ssh/rsa_id"
+
+# Set personal aliases, overriding those provided by oh-my-zsh libs,
+# plugins, and themes. Aliases can be placed here, though oh-my-zsh
+# users are encouraged to define aliases within the ZSH_CUSTOM folder.
+# For a full list of active aliases, run `alias`.
+
+source "$HOME/.shell/.aliases"
