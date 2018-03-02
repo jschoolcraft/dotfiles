@@ -99,3 +99,5 @@ source $ZSH/oh-my-zsh.sh
 # For a full list of active aliases, run `alias`.
 
 source "$HOME/.shell/.aliases"
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

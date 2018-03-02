@@ -1,2 +1,1 @@
-set -g -x PATH /usr/local/bin $PATH
-
+../../.homesick/repos/dotfiles/home/.config/fish/config.fish

@@ -1,63 +1,27 @@
 ## Getting Started
 
-Manage dotfiles with [homeshick](https://github.com/andsens/homeshick) and [myrepos](https://github.com/jschoolcraft/myrepos).
+Manage dotfiles with [dotbot](https://github.com/anishathalye/dotbot) and apps with [homebrew](https://brew.sh/).
 
-    brew install homeshick
-    brew install myrepos
+git clone this repo:
 
-After they're installed
-
-    homeshick clone jschoolcraft/myrepos
-    homeshick link myrepos
-    mr update
-
-That should have pulled down the various dotfiles, at this point there's a dance that needs to be done to get everything sorted.
-
-    homeshick link dotfiles
-
-Probably open a new terminal to get updated configs, probably see an error about .zprezto stuff, so:
-
-    homeshick cd dotfiles
-
-if that didn't work:
-
-    cd .homeshick/repos/dotfiles
-
-then
-
-    git submodule sync --recursive
-
-Finally want to make sure to use zsh
-
-    chpass -s /bin/zsh `whoami`
-
-### Home Brewing
+	git clone git@github.com:jschoolcraft/dotfiles.git ~/code/dotfiles
 
 Install homebrew:
 
     ruby -e "$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)"
 
-Then install all the things:
+then install (idempotent, so update too) the dotfiles
 
-    brew bundle --global
+	~/code/dotfiles/install
 
-If that didn't work then:
+Finally want to make sure to use zsh
 
-    brew tap Homebrew/bundle
+	chpass -s /bin/zsh `whoami`
 
-### Rest of the dotfiles
-
-    vim +PlugInstall +Qall
-    nvim +PlugInstall +Qall
-
-### Vim / Neovim
-
-If there's an error about Ultisnips or something else requiring `python` then do:
+### neovim (and vim)
 
     pip3 install neovim
-    pip2 install neovim
-
-Only use the one that's installed  `pip3` or `pip2`)
+    nvim +PlugInstall +Qall
 
 ### Iterm Colors
 
