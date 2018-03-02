@@ -25,13 +25,17 @@
 (use-package color-theme-sanityinc-solarized
   :ensure t)
 
+(use-package dracula-theme
+  :ensure t)
+
 ;; (moe-dark)
 ;; (use-package powerline
 ;;   :ensure t
 ;;   :config
 ;;   (powerline-moe-theme))
 
-(load-theme 'base16-irblack)
+;; (load-theme 'base16-irblack)
+(load-theme 'dracula)
 
 (set-face-attribute 'default nil :font "Monaco 18")
 
