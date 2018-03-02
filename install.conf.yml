@@ -1,0 +1,58 @@
+- defaults:
+    link:
+      relink: true
+
+- clean: ['~']
+
+- link:
+  # Terminal
+  ~/.shell:
+    path: shell
+    create: true
+  ~/.zshrc: home/.zshrc
+  ~/.oh-my-zsh: home/.oh-my-zsh
+  ~/.tmux.conf: home/.tmux.conf
+  ~/.iterm-colors: home/.iterm-colors
+  ~/.antibody: config/antibody.txt
+
+  # Git
+  ~/.gitconfig: home/.gitconfig
+  ~/.gitignore: home/.gitignore
+
+  # Tools
+  ~/.osx: home/.osx
+  ~/.hammerspoon: home/.hammerspoon
+  ~/.karbiner.d: home/.karbiner.d
+  ~/.ackrc: home/.ackrc
+  ~/.agignore: home/.agignore
+
+  # neovim/vim
+  ~/.vim: home/.vim
+  ~/.config: home/.config
+  ~/.gvimrc: home/.gvimrc
+  ~/.vimrc: home/.vimrc
+  ~/.vimpressrc: home/.vimpressrc
+
+  # emacs
+  ~/.emacs.d: home/.emacs.d
+
+  # random editors
+  ~/.atom: home/.atom
+  ~/.uncrustify.cfg: home/.uncrustify.cfg
+
+  # ruby
+  ~/.gemrc: home/.gemrc
+
+  # tvnamer
+  ~/.tvnamer-hazel.json: home/.tvnamer-hazel.json
+
+  # weechat
+  ~/.weechat: home/.weechat
+
+- brewfile:
+  file: .Brewfile
+  no-upgrade: true
+
+
+- shell:
+  - [git submodule update --init --recursive, Installing submodules]

@@ -1,4 +1,5 @@
 tap 'caskroom/cask'
+
 cask 'alfred'
 cask 'atom'
 cask 'dash'
@@ -51,9 +52,11 @@ cask 'font-ubuntu-mono-derivative-powerline'
 
 brew 'ack'
 brew 'ansible'
+brew 'asdf'
 brew 'ctags'
 brew 'direnv'
 brew 'emacs'
+brew 'fasd'
 brew 'fzf'
 brew 'git'
 brew 'gnu-sed'
@@ -85,7 +88,9 @@ brew 'watchman'
 brew 'wget'
 brew 'yarn'
 brew 'zsh'
-brew 'zsh-completions'
+
+tap 'getantibody/tap'
+brew 'getantibody/tap/antibody'
 
 tap 'homebrew/versions'
 
