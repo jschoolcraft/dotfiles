@@ -1,6 +1,10 @@
 mafredri/zsh-async
+
 djui/alias-tips # helps show where you have aliases defined for commands you're using
+
 rupa/z # Jump around
+
+caarlos0/ports # see what's going on with ports on machine
 
 zsh-users/zsh-completions # Additional completion definitions for Zsh
 zsh-users/zsh-autosuggestions branch:develop # Fish-like autosuggestions for zsh
