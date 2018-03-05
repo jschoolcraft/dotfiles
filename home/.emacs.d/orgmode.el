@@ -47,6 +47,44 @@
           org-outline-path-complete-in-steps nil
           org-refile-allow-creating-parent-nodes 'confirm)
 
+    ;; Template Expansions (for reference, from: https://orgmode.org/manual/Template-expansion.html#Template-expansion)
+    ;; %[file]     Insert the contents of the file given by file.
+    ;; %(sexp)     Evaluate Elisp sexp and replace with the result.
+    ;;                   For convenience, %:keyword (see below) placeholders
+    ;;                   within the expression will be expanded prior to this.
+    ;;                   The sexp must return a string.
+    ;; %<...>      The result of format-time-string on the ... format specification.
+    ;; %t          Timestamp, date only.
+    ;; %T          Timestamp, with date and time.
+    ;; %u, %U      Like the above, but inactive timestamps.
+    ;; %i          Initial content, the region when capture is called while the
+    ;;             region is active.
+    ;;             The entire text will be indented like %i itself.
+    ;; %a          Annotation, normally the link created with org-store-link.
+    ;; %A          Like %a, but prompt for the description part.
+    ;; %l          Like %a, but only insert the literal link.
+    ;; %c          Current kill ring head.
+    ;; %x          Content of the X clipboard.
+    ;; %k          Title of the currently clocked task.
+    ;; %K          Link to the currently clocked task.
+    ;; %n          User name (taken from user-full-name).
+    ;; %f          File visited by current buffer when org-capture was called.
+    ;; %F          Full path of the file or directory visited by current buffer.
+    ;; %:keyword   Specific information for certain link types, see below.
+    ;; %^g         Prompt for tags, with completion on tags in target file.
+    ;; %^G         Prompt for tags, with completion all tags in all agenda files.
+    ;; %^t         Like %t, but prompt for date.  Similarly %^T, %^u, %^U.
+    ;;             You may define a prompt like %^{Birthday}t.
+    ;; %^C         Interactive selection of which kill or clip to use.
+    ;; %^L         Like %^C, but insert as link.
+    ;; %^{prop}p   Prompt the user for a value for property prop.
+    ;; %^{prompt}  prompt the user for a string and replace this sequence with it.
+    ;;             You may specify a default value and a completion table with
+    ;;             %^{prompt|default|completion2|completion3...}.
+    ;;             The arrow keys access a prompt-specific history.
+    ;; %\1 … %\N Insert the text entered at the Nth %^{prompt}, where N is
+    ;;             a number, starting from 1.(90)
+    ;; %?          After completing the template, position cursor here.
 
     ;; capture templates
     (setq org-capture-templates
@@ -70,6 +108,8 @@
              "* %?\nEntered on %U\n  %i\n")
             ("i" "Inbox" entry (file+datetree "~/Dropbox/org/inbox.org")
              "* %?\nEntered on %U\n  %i\n  %a")
+            ("I" "Read Later" entry (file+datetree "~/Dropbox/org/inbox.org")
+             "* %?\n  %i\n %c\n")
             ("n" "Notes" entry (file+headline "~/Dropbox/org/notes.org" "Notes")
              "* %^{Header}  %^G\n  %U\n\n  %?")
             ("l" "Link" entry (file+headline "~/Dropbox/org/links.org" "Links")
