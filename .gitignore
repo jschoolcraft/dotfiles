@@ -12,6 +12,8 @@ home/.emacs.d/backups/*
 home/.emacs.d/auto-save-list/*
 home/.emacs.d/elpa/*
 home/.emacs.d/smex-items
+home/.emacs.d/bookmarks
+home/.emacs.d/projectile-bookmarks.eld
 dotdirs/.weechat/urlserver_list.txt
 dotdirs/.weechat/sec.conf
 home/.config/fish/fishd*
