@@ -1,4 +1,8 @@
-# homeshick
+# brew service
+alias bss='brew services start'
+alias bsl='brew services list'
+alias bst='brew services stop'
+
 # config files
 alias vc='nvim ~/.config/nvim/init.vim ~/.config/nvim/config/*'
 
@@ -36,6 +40,10 @@ alias rnios='react-native run-ios'
 alias rniphone='react-native run-ios --simulator "iPhone 6s"'
 alias rnipad='react-native run-ios --simulator "iPad Air 2"'
 
+# random
+alias crypto='curl rate.sx' # Get crypto prices
+alias pubkey="more ~/.ssh/id_rsa.pub | pbcopy | echo '=> public key copied to pasteboard'"
+
 # Quick way to rebuild the Launch Services database and get rid
 # of duplicates in the Open With submenu.
 alias fixopenwith='/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -kill -r -domain local -domain system -domain user'
@@ -51,13 +59,13 @@ if type nvim > /dev/null 2>&1; then
 fi
 
 # fzf
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+# [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-## fd - cd to selected directory
-fd() {
-  local dir
-  dir=$(find ${1:-.} -path '*/\.*' -prune \
-                  -o -type d -print 2> /dev/null | fzf +m) &&
-  cd "$dir"
-}
-
+# # fd - cd to selected directory
+# fd() {
+#   local dir
+#   dir=$(find ${1:-.} -path '*/\.*' -prune \
+#                   -o -type d -print 2> /dev/null | fzf +m) &&
+#   cd "$dir"
+# }
+#
