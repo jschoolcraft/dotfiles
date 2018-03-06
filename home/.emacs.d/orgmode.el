@@ -42,7 +42,7 @@
     ;; refiling
     ;; all of this stolen from https://blog.aaronbieber.com/2017/03/19/organizing-notes-with-refile.html
     ;; look at this https://mollermara.com/blog/Fast-refiling-in-org-mode-with-hydras/
-    (setq org-refile-targets '((org-agenda-files :maxlevel . 3))
+    (setq org-refile-targets '((org-agenda-files :maxlevel . 4))
           org-refile-use-outline-path 'file
           org-outline-path-complete-in-steps nil
           org-refile-allow-creating-parent-nodes 'confirm)
@@ -220,6 +220,9 @@
               (evil-org-set-key-theme)))
    (evil-leader/set-key-for-mode 'org-mode
      "." 'hydra-org-state/body
+     "r" 'org-refile
+     "s" 'org-schedule
+     "d" 'org-deadline
      "t" 'org-todo
      "T" 'org-show-todo-tree
      "v" 'org-mark-element
