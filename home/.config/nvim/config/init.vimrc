@@ -54,6 +54,7 @@ Plug 'jsahlen/vim-ir_black'
 Plug 'itchyny/landscape.vim'
 Plug 'itchyny/lightline.vim' "airline replacements'
 Plug 'dracula/vim', { 'as': 'dracula' }
+Plug 'joshdick/onedark.vim'
 
 " wiki/notes/misc
 Plug 'weierophinney/vimwiki'

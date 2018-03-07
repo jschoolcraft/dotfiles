@@ -28,14 +28,11 @@
 (use-package dracula-theme
   :ensure t)
 
-;; (moe-dark)
-;; (use-package powerline
-;;   :ensure t
-;;   :config
-;;   (powerline-moe-theme))
+(use-package atom-one-dark-theme
+  :ensure t)
 
 ;; (load-theme 'base16-irblack)
-(load-theme 'dracula)
+(load-theme 'atom-one-dark)
 
 (set-face-attribute 'default nil :font "Monaco 18")
 
