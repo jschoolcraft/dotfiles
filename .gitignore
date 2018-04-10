@@ -15,6 +15,7 @@ home/.emacs.d/smex-items
 home/.emacs.d/bookmarks
 home/.emacs.d/projectile-bookmarks.eld
 home/.emacs.d/projectile.cache
+home/.emacs.d/network-security.data
 dotdirs/.weechat/urlserver_list.txt
 dotdirs/.weechat/sec.conf
 home/.config/fish/fishd*
