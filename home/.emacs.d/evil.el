@@ -4,7 +4,11 @@
 ;;; Code:
 
 (use-package evil
-  :ensure t)
+  :ensure t
+  :init
+  (setq evil-want-integration nil)
+  :config
+  (evil-mode 1))
 
 (use-package evil-leader
   :ensure t)

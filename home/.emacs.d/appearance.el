@@ -4,9 +4,6 @@
 
 ;;; Code:
 
-(use-package color-theme
-  :ensure t)
-
 (use-package base16-theme
   :ensure t)
 
@@ -31,8 +28,8 @@
 (use-package atom-one-dark-theme
   :ensure t)
 
-;; (load-theme 'base16-irblack)
-(load-theme 'atom-one-dark)
+(load-theme 'base16-irblack)
+;; (load-theme 'atom-one-dark)
 
 (set-face-attribute 'default nil :font "Monaco 18")
 
