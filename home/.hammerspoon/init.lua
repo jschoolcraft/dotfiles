@@ -45,3 +45,8 @@ Install:andUse("WindowScreenLeftAndRight",
 }
 )
 
+hs.hotkey.bind(hyper, "8", function()
+  local win = hs.window.focusedWindow()
+  hs.alert.show(hs.inspect(win:size()))
+  win:setSize(1920,1080)
+end)
