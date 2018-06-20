@@ -2,9 +2,11 @@
 ;;; Commentary:
 
 ;;; Code:
+(require 'use-package)
 
 (use-package evil
   :ensure t
+  :diminish undo-tree-mode
   :init
   (setq evil-want-integration nil)
   :config
