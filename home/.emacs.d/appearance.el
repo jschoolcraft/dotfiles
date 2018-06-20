@@ -31,6 +31,16 @@
 (load-theme 'base16-irblack)
 ;; (load-theme 'atom-one-dark)
 
+;; initial window
+(setq initial-frame-alist
+      '((width . 102)   ; characters in a line
+        (height . 54))) ; number of lines
+
+;; sebsequent frame
+(setq default-frame-alist
+      '((width . 100)   ; characters in a line
+        (height . 52))) ; number of lines
+
 (set-face-attribute 'default nil :font "Monaco 18")
 
 (setq inhibit-splash-screen t
