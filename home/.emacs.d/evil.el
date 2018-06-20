@@ -100,9 +100,9 @@
 (evil-leader/set-leader ";")
 (evil-leader/set-key
   "." 'find-tag
-  "t" 'helm-projectile-find-file
-  "f" 'helm-projectile-find-file
-  "b" 'helm-projectile-switch-to-buffer
+  "t" 'helm-find-files
+  "f" 'helm-find-files
+  "b" 'helm-mini
   "e" 'flycheck-list-errors
   "ag" 'projectile-ag
   "vs" 'split-window-right
