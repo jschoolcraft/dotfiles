@@ -143,7 +143,8 @@
 
     ;; Some initial langauges we want org-babel to support
     (org-babel-do-load-languages 'org-babel-load-languages
-                                 '((sh     . t)
+                                 '(
+                                        ;(sh     . t)
                                    (js     . t)
                                    (python . t)
                                    (ruby   . t)
