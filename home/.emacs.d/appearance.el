@@ -29,7 +29,6 @@
   :ensure t)
 
 (load-theme 'base16-irblack)
-;; (load-theme 'atom-one-dark)
 
 ;; initial window
 (setq initial-frame-alist
