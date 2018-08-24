@@ -9,6 +9,10 @@
 ;; https://github.com/howardabrams/dot-files/blob/master/emacs.org
 ;; https://github.com/joedicastro/dotfiles/tree/master/emacs/.emacs.d
 
+(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
+(when (file-exists-p custom-file)
+  (load custom-file))
+
 ;;; Code:
 (add-to-list 'package-archives '("mela-stable" . "https://stable.melpa.org/packages/"))
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
@@ -283,10 +287,6 @@
 (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
 
 (add-to-list 'load-path (expand-file-name "lib" user-emacs-directory))
-
-(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
-(when (file-exists-p custom-file)
-  (load custom-file))
 
 (defconst user-init-dir
           (cond ((boundp 'user-emacs-directory)
