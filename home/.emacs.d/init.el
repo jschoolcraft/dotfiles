@@ -14,36 +14,28 @@
   (load custom-file))
 
 ;;; Code:
+;; use package for most of our packages
 (add-to-list 'package-archives '("mela-stable" . "https://stable.melpa.org/packages/"))
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
 (add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/"))
-
-(setq use-package-always-pin "melpa")
-
 (package-initialize)
-(package-refresh-contents)
 
-; Let's use use-package
-(unless (package-installed-p 'use-package)
-  (package-refresh-contents)
+(when (not package-archive-contents)
+  (package-refresh-contents))
+
+(when (not (package-installed-p 'use-package))
   (package-install 'use-package))
 
 (require 'use-package)
-(provide 'setup-package)
 
-;; Some Emacs Lisp enhancements that I'll probably never use
-;; stolen from: https://github.com/howardabrams/dot-files/blob/master/emacs.org#init-file-support
-(require 'cl)
+;;(setq use-package-always-pin "melpa")
+(customize-set-variable 'use-package-always-ensure t)
+(customize-set-variable 'use-package-always-defer t)
 
-(use-package dash
-  :ensure t
-  :config (eval-after-load "dash" '(dash-enable-font-lock)))
-
-(use-package s
-  :ensure t)
-
-(use-package f
-  :ensure t)
+(customize-set-variable 'load-prefer-newer t)
+(use-package auto-compile
+  :defer nil
+  :config (auto-compile-on-load-mode))
 
 ;; UTF-8
 (set-terminal-coding-system  'utf-8)
@@ -92,8 +84,7 @@
   :diminish company-mode)
 
 (use-package projectile
-  :ensure t
-  :defer 1
+  :defer 2
   :config
   (projectile-mode)
   (setq projectile-enable-caching t)
@@ -105,8 +96,6 @@
                   (projectile-project-name)))))
 
 (use-package highlight-symbol
-  :ensure t
-  :defer t
   :diminish ""
   :config
   (setq-default highlight-symbol-idle-delay 1.5))
@@ -143,7 +132,6 @@
 
 ;; flycheck
 (use-package flycheck
-  :ensure t
   :init
   (add-hook 'after-init-hook 'global-flycheck-mode)
   :config
@@ -202,25 +190,17 @@
   :defer t)
 
 (use-package which-key
-  :ensure t
-  :diminish ""
   :config
   (which-key-mode t))
 
-(use-package restclient
-  :ensure t
-  :defer t)
+(use-package restclient)
 
 (use-package markdown-mode
-  :ensure t
-  :mode ("\\.\\(m\\(ark\\)?down\\|md\\)$" . markdown-mode))
 
-(use-package yaml-mode
-  :ensure t
-  :defer t)
+(use-package yaml-mode)
+(use-package haml-mode)
 
 (use-package ruby-mode
-  :ensure t
   :mode "\\.rb\\'"
   :mode "Rakefile\\'"
   :mode "Fastfile\\'"
@@ -236,21 +216,14 @@
   (add-hook 'ruby-mode 'superword-mode))
 
 (use-package web-mode
-  :ensure t
-  :mode "\\.erb\\'")
 
-(use-package haml-mode
-  :ensure t
-  :defer t)
 
 ;; helps find the source of an error
 (use-package bug-hunter
-  :ensure t
   :commands (bug-hunter-file bug-hunter-init-file))
 
 ;; deft
 (use-package deft
-  :ensure t
   :commands (deft)
   :config
   (setq deft-extensions '("txt" "tex" "org"))
@@ -258,8 +231,6 @@
   (setq deft-directory "~/Dropbox/jschoolcraft/notes"))
 
 (use-package web-mode
-  :ensure t
-  :defer t
   :config
   (setq web-mode-attr-indent-offset 2)
   (setq web-mode-code-indent-offset 2)
@@ -271,9 +242,6 @@
 ;; editorconfig
 ;; for consistency among developers on a project
 (use-package editorconfig
-  :ensure t
-  :defer t
-  :diminish ""
   :config
   (editorconfig-mode 1))
 

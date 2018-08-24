@@ -5,7 +5,6 @@
 (require 'use-package)
 
 (use-package evil
-  :ensure t
   :diminish undo-tree-mode
   :init
   (setq evil-want-integration nil)
@@ -13,7 +12,6 @@
   (evil-mode 1))
 
 (use-package evil-leader
-  :ensure t)
 
 (use-package evil-nerd-commenter
   :ensure t)
