@@ -4,12 +4,15 @@
 ; stolen from: http://mph.puddingbowl.org/2014/12/org-mode-face-lift/
 
 ;;; Other Sources:
-; https://github.com/joedicastro/dotfiles/tree/master/emacs/.emacs.d#org-mode-settings
+;; https://github.com/joedicastro/dotfiles/tree/master/emacs/.emacs.d#org-mode-settings
+;; https://mollermara.com/blog/Fast-refiling-in-org-mode-with-hydras/
+;; https://github.com/brainlessdeveloper/emacs.d/blob/master/config.org#gtd
+;; https://thraxys.wordpress.com/2016/01/14/pimp-up-your-org-agenda/
+;; https://emacs.cafe/emacs/orgmode/gtd/2017/06/30/orgmode-gtd.html
+;; https://zzamboni.org/post/my-emacs-configuration-with-commentary/
 
 ;;; Code:
-(use-package org
-  :ensure t
-  :defer t
+(use-package org-plus-contrib
   :config
   (progn
     ;; set the modules enabled by default
@@ -41,7 +44,6 @@
 
     ;; refiling
     ;; all of this stolen from https://blog.aaronbieber.com/2017/03/19/organizing-notes-with-refile.html
-    ;; look at this https://mollermara.com/blog/Fast-refiling-in-org-mode-with-hydras/
     (setq org-refile-targets '((org-agenda-files :maxlevel . 4))
           org-refile-use-outline-path 'file
           org-outline-path-complete-in-steps nil
@@ -123,6 +125,7 @@
 
     ;; tasks management
     (setq org-log-done t)
+    (setq org-log-into-drawer 'LOGBOOK)
     ;; (setq org-clock-idle-time nil)
 
     ;; agenda & diary
@@ -133,6 +136,12 @@
                              "~/Dropbox/org/project.org"
                              "~/Dropbox/org/clients/"))
     (setq org-agenda-inhibit-startup t)
+    (setq org-agenda-ndays 7)
+    (setq org-agenda-show-all-dates t)
+    (setq org-agenda-skip-deadline-if-done t)
+    (setq org-agenda-skip-scheduled-if-done t)
+    (setq org-agenda-start-on-weekday nil)
+    (setq org-deadline-warning-days 14)
 
     ;; show images inline
     ;; only works in GUI, but is a nice feature to have
@@ -159,10 +168,15 @@
   )
 
 (use-package org-bullets
-  :ensure t
+  :pin melpa
   :config
-  (progn
-    (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))))
+  (add-hook 'org-mode-hook 'org-bullets-mode 1))
+  ;;(add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
+
+
+;; Setting the foreground color to nil causes the ellipsis to take the color of its heading.
+(custom-set-faces
+ '(org-ellipsis ((t (:foreground nil)))))
 
 '(org-agenda-date ((t (:inherit org-agenda-structure :weight semi-bold :height 1.2))) t)
 '(org-date ((t (:foreground "Purple" :underline t :height 0.8 :family "Helvetica Neue"))))
@@ -181,6 +195,8 @@
 
 (require 'org-install)
 (require 'ob-tangle)
+
+
 
 ;; should be able to use this, according to:
 ;; https://github.com/heikkil/emacs-literal-config/blob/master/emacs.org#url-copying
@@ -203,6 +219,15 @@
 ;;                           (sequence "⚑ WAITING(w)" "|")
 ;;                           (sequence "|" "✘ CANCELED(c)")))
 
+;; this exists in orgmode/contrib
+;; could be installed with (use-package org-plus-contrib)
+;; but it's messing with org-bullets
+(use-package org-mac-link
+  :ensure nil
+  :after org
+  :bind (:map org-mode-map
+              ("C-c g" . org-mac-grab-link)))
+
 ;; just evaluate, don't ask me
 (setq org-confirm-babel-evaluate nil)
 
@@ -218,19 +243,20 @@
   (add-hook 'org-mode-hook 'evil-org-mode)
   (add-hook 'evil-org-mode-hook
             (lambda ()
-              (evil-org-set-key-theme)))
-   (evil-leader/set-key-for-mode 'org-mode
-     "." 'hydra-org-state/body
-     "r" 'org-refile
-     "s" 'org-schedule
-     "d" 'org-deadline
-     "t" 'org-todo
-     "T" 'org-show-todo-tree
-     "v" 'org-mark-element
-     "a" 'org-agenda
-     "c" 'org-archive-subtree
-     "l" 'evil-org-open-links
-     "C" 'org-resolve-clocks))
+              (evil-org-set-key-theme))))
+
+;; (evil-leader/set-key-for-mode 'org-mode
+;;   "." 'hydra-org-state/body
+;;   "r" 'org-refile
+;;   "s" 'org-schedule
+;;   "d" 'org-deadline
+;;   "t" 'org-todo
+;;   "T" 'org-show-todo-tree
+;;   "v" 'org-mark-element
+;;   "a" 'org-agenda
+;;   "c" 'org-archive-subtree
+;;   "l" 'evil-org-open-links
+;;   "C" 'org-resolve-clocks)
 
 ;; Define a transient state for quick navigation
 ; (defhydra hydra-org-state ()
@@ -259,24 +285,6 @@
 ;   ("K" org-shiftup)
 ;   ("t" org-todo))
 
-;; exporting
-(use-package ox-html
-  :init
-  (setq org-html-postamble nil)
-  (setq org-export-with-section-numbers nil)
-  (setq org-export-with-toc nil)
-  (setq org-html-head-extra "
-     <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,400italic,700italic&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
-     <link href='http://fonts.googleapis.com/css?family=Source+Code+Pro:400,700' rel='stylesheet' type='text/css'>
-     <style type='text/css'>
-        body {
-           font-family: 'Source Sans Pro', sans-serif;
-        }
-        pre, code {
-           font-family: 'Source Code Pro', monospace;
-        }
-     </style>"))
-
 ;;; this is here for the alfred workflow
 ;;   all of this was stolen from:
 ;;   https://github.com/jjasghar/alfred-org-capture/blob/master/el/alfred-org-capture.el
@@ -290,6 +298,38 @@
                 ))
   (select-frame-by-name "remember")
   (org-capture))
+
+;; (use-package yankpad
+;;   :init
+;;   (setq yankpad-file (concat org-directory "/yankpad.org"))
+;;   :bind
+;;   ([f7]  . yankpad-map)
+;;   ([f12] . yankpad-expand)
+;;   :config
+;;   ;; If you want to expand snippets with hippie-expand
+;;   (add-to-list 'hippie-expand-try-functions-list #'yankpad-expand))
+
+;; org mode
+;; https://github.com/Somelauw/evil-org-mode
+(use-package evil-org
+  :after org
+  :config
+  (add-hook 'org-mode-hook 'evil-org-mode)
+  (add-hook 'evil-org-mode-hook
+            (lambda ()
+              (evil-org-set-key-theme)))
+  (require 'evil-org-agenda)
+  (evil-org-agenda-set-keys))
+
+;; might be useful inside org-mode, we'll see
+;; (evil-leader/set-key-for-mode 'org-mode
+;;   "A" 'org-archive-subtree
+;;   "a" 'org-agenda
+;;   "c" 'org-capture
+;;   "d" 'org-deadline
+;;   "l" 'evil-org-open-links
+;;   "s" 'org-schedule
+;;   "t" 'org-todo)
 
 (provide 'orgmode)
 ;;; orgmode.el ends here

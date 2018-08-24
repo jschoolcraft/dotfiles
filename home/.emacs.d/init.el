@@ -73,59 +73,34 @@
   (setq ag-reuse-buffers t)
   (setq ag-reuse-window t))
 
-(use-package company
-  :ensure t
-  :init
-  (setq company-dabbrev-ignore-case t
-        company-show-numbers t)
-  (add-hook 'after-init-hook 'global-company-mode)
-  :config
-  (add-to-list 'company-backends 'company-math-symbols-unicode)
-  :diminish company-mode)
+;; helm & projectile
+(use-package helm
+  :config (helm-mode t))
+
+; globally enable fuzzy matching in helm
+; (customize-set-variable 'helm-mode-fuzzy-match t)
+; (customize-set-variable 'helm-completion-in-region-fuzzy-match t)
 
 (use-package projectile
   :defer 2
+  :diminish projectile-mode
   :config
-  (projectile-mode)
-  (setq projectile-enable-caching t)
-  (setq projectile-completion-system 'helm)
-  (setq projectile-sort-order (quote recently-active))
-  (setq projectile-mode-line
-        '(:eval
-          (format " Proj[%s]"
-                  (projectile-project-name)))))
+  ;(setq projectile-indexing-method 'git)
+  (projectile-global-mode))
+
+(use-package helm-projectile)
+(use-package helm-ag)
+
+;; auto-completion
+(use-package company
+  :diminish company-mode
+  :hook
+  (after-init . global-company-mode))
 
 (use-package highlight-symbol
   :diminish ""
   :config
   (setq-default highlight-symbol-idle-delay 1.5))
-
-(use-package helm
-  :ensure t
-  :diminish helm-mode
-  :commands helm-mode
-  :config
-  (helm-mode 1)
-  (setq helm-buffers-fuzzy-matching t
-        helm-autoresize-mode t
-        helm-M-x-fuzzy-match                  t
-        helm-bookmark-show-location           t
-        helm-buffers-fuzzy-matching           t
-        helm-completion-in-region-fuzzy-match t
-        helm-file-cache-fuzzy-match           t
-        helm-imenu-fuzzy-match                t
-        helm-mode-fuzzy-match                 t
-        helm-locate-fuzzy-match               t
-        helm-quick-update                     t
-        helm-recentf-fuzzy-match              t
-        helm-semantic-fuzzy-match             t))
-
-(use-package helm-projectile
-  :ensure t
-  :commands (helm-projectile helm-projectile-switch-project))
-
-(use-package helm-ag
-  :ensure t)
 
 (setq helm-ag-base-command "ag --hidden --nocolor --nogroup --ignore-case")
 (helm-projectile-on)
@@ -133,69 +108,78 @@
 ;; flycheck
 (use-package flycheck
   :init
-  (add-hook 'after-init-hook 'global-flycheck-mode)
-  :config
-  (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc))
-  (setq flycheck-highlighting-mode 'lines))
+  (setq flycheck-indication-mode nil)
+  (setq flycheck-display-errors-delay nil)
+  (setq flycheck-idle-change-delay 2)
+  (setq flycheck-highlighting-mode 'lines)
+  ;;   (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc))
+  (global-flycheck-mode))
+;; (flycheck-add-mode 'javascript-eslint 'web-mode)
+
+;; Make sure eslint does not try to --print-config after each buffer opens.
+;; Here’s a related Flycheck: https://github.com/flycheck/flycheck/issues/1129
+(with-eval-after-load 'flycheck
+  (advice-add 'flycheck-eslint-config-exists-p :override (lambda() t)))
 
 (custom-set-faces
  '(flycheck-error ((((class color)) (:underline "Red"))))
  '(flycheck-warning ((((class color)) (:underline "Orange")))))
 
-(use-package yasnippet
-  :ensure t
-  :defer t
-  :init
-  (yas-global-mode 1)
-  :config
-  (yas-reload-all)
-  (setq yas-snippet-dirs '("~/.emacs.d/snippets"
-                           "~/.emacs.d/remote-snippets"))
-  (setq yas-indent-line nil)
-  (setq tab-always-indent 'complete)
-  (setq yas-prompt-functions '(yas-completing-prompt
-                               yas-ido-prompt
-                               yas-dropdown-prompt))
-  (define-key yas-minor-mode-map (kbd "<escape>") 'yas-exit-snippet))
+;; ;; make sure eslint is from local project
+;; (defun my/use-eslint-from-node-modules ()
+;;   (let* ((root (locate-dominating-file
+;;                 (or (buffer-file-name) default-directory)
+;;                 "node_modules"))
+;;          (eslint (and root
+;;                       (expand-file-name "node_modules/eslint/bin/eslint.js"
+;;                                         root))))
+;;     (when (and eslint (file-executable-p eslint))
+;;       (setq-local flycheck-javascript-eslint-executable eslint))))
+;; (add-hook 'flycheck-mode-hook #'my/use-eslint-from-node-modules)
+
+;; no idea
+;;(use-package yasnippet
+;;  :init
+;;  (yas-global-mode 1)
+;;  :config
+;;  (yas-reload-all)
+;;  (setq yas-snippet-dirs '("~/.emacs.d/snippets"
+;;                           "~/.emacs.d/remote-snippets"))
+;;  (setq yas-indent-line nil)
+;;  (setq tab-always-indent 'complete)
+;;  (setq yas-prompt-functions '(yas-completing-prompt
+;;                               yas-ido-prompt
+;;                               yas-dropdown-prompt))
+;;  (define-key yas-minor-mode-map (kbd "<escape>") 'yas-exit-snippet))
+
+(use-package yasnippet)
 
 ;; git related stuffs
 (use-package magit
   :ensure t
-  :defer t
-  :config
-  (setq magit-branch-arguments nil)
-  (setq magit-push-always-verify nil)
-  (setq magit-last-seen-setup-instructions "1.4.0")
-  (magit-define-popup-switch 'magit-log-popup ?f "first parent" "--first-parent"))
+  :config (setq magit-diff-refine-hunk 'all))
 
-(use-package git-gutter-fringe
-  :ensure t
-  :defer t
-  :diminish (git-gutter-mode . "")
+(use-package diff-hl
   :init
-  (global-git-gutter-mode +1)
-  (setq-default indicate-buffer-boundaries 'left)
-  (setq-default indicate-empty-lines +1))
+  (setq diff-hl-side 'right))
 
-(use-package gitconfig-mode
-  :ensure t
-  :defer t)
-
-(use-package gitignore-mode
-  :ensure t
-  :defer t)
-
-(use-package gitattributes-mode
-  :ensure t
-  :defer t)
+(global-diff-hl-mode 1)
+(diff-hl-margin-mode 1)
+(diff-hl-flydiff-mode 1)
 
 (use-package which-key
+  :defer nil
+  :diminish which-key-mode
   :config
   (which-key-mode t))
 
 (use-package restclient)
 
 (use-package markdown-mode
+  :mode (("README\\.md\\'" . gfm-mode)
+         ("\\.md\\'" . markdown-mode)
+         ("\\.markdown\\'" . markdown-mode))
+  :init (setq markdown-command "multimarkdown"))
 
 (use-package yaml-mode)
 (use-package haml-mode)
@@ -216,7 +200,22 @@
   (add-hook 'ruby-mode 'superword-mode))
 
 (use-package web-mode
+  :init
+    (setq web-mode-content-types-alist '(("jsx" . "\\.tsx\\'")))
+    (setq web-mode-content-types-alist '(("jsx" . "\\.js\\'")))
+  :config
+    (add-to-list 'auto-mode-alist '("\\.erb?\\'" . web-mode))
+    (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
+    (add-to-list 'auto-mode-alist '("\\.js[x]?\\'" . web-mode))
+    (add-to-list 'auto-mode-alist '("\\.ts[x]?\\'" . web-mode)))
 
+;; (use-package add-node-modules-path
+;;   :ensure t)
+
+(eval-after-load 'web-mode
+    '(progn
+       (add-hook 'web-mode-hook #'add-node-modules-path)
+       (add-hook 'web-mode-hook #'prettier-js-mode)))
 
 ;; helps find the source of an error
 (use-package bug-hunter
@@ -244,15 +243,6 @@
 (use-package editorconfig
   :config
   (editorconfig-mode 1))
-
-(add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.[agj]sp\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.as[cp]x\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
 
 (add-to-list 'load-path (expand-file-name "lib" user-emacs-directory))
 
