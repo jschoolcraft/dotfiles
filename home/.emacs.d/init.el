@@ -277,6 +277,15 @@
 (load-user-file "orgmode.el")
 (load-user-file "appearance.el")
 
+; Make files easier to distinguish
+(use-package uniquify
+  :defer 1
+  :ensure nil
+  :custom
+  (uniquify-after-kill-buffer-p t)
+  (uniquify-buffer-name-style 'post-forward)
+  (uniquify-strip-common-suffix t))
+
 ; Kill backups
 (setq auto-save-default nil
       auto-save-list-file-prefix nil
