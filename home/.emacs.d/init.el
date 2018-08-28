@@ -20,19 +20,26 @@
 (add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/"))
 (package-initialize)
 
-(when (not package-archive-contents)
-  (package-refresh-contents))
-
-(when (not (package-installed-p 'use-package))
+;;Bootstrap `use-package'
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
   (package-install 'use-package))
 
-(require 'use-package)
+; (unless (package-installed-p 'org)
+;   (package-refresh-contents)
+;   (package-install 'org))
+;
+; (unless (package-installed-p 'org-plus-contrib)
+;   (package-refresh-contents)
+;   (package-install 'org-plus-contrib))
 
-;;(setq use-package-always-pin "melpa")
+(eval-when-compile
+  (require 'use-package))
+
 (customize-set-variable 'use-package-always-ensure t)
 (customize-set-variable 'use-package-always-defer t)
-
 (customize-set-variable 'load-prefer-newer t)
+
 (use-package auto-compile
   :defer nil
   :config (auto-compile-on-load-mode))
@@ -50,7 +57,7 @@
 (setq echo-keystrokes 0.25) ;display unfinished keystroke more quickly (defaults 1 second)
 
 ;;  big fast machines now
-(setq gc-cons-threshold 50000000)
+(setq gc-cons-threshold (* 500 1024 1024))
 (setq gnutls-min-prime-bits 4096)
 
 (use-package diminish
