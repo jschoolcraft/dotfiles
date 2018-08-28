@@ -86,8 +86,7 @@
 (line-number-mode 1)
 
 (use-package linum-relative
-  :ensure t)
-(linum-relative-on)
+  :hook
+  (after-init . linum-relative-on))
 
-
-;;; appearance.el ends here
+(provide 'appearance)
