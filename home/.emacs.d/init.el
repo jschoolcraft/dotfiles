@@ -33,16 +33,17 @@
 ;   (package-refresh-contents)
 ;   (package-install 'org-plus-contrib))
 
-(eval-when-compile
-  (require 'use-package))
+;(eval-when-compile
+  ;(require 'use-package))
+(require 'use-package)
 
 (customize-set-variable 'use-package-always-ensure t)
 (customize-set-variable 'use-package-always-defer t)
 (customize-set-variable 'load-prefer-newer t)
 
-(use-package auto-compile
-  :defer nil
-  :config (auto-compile-on-load-mode))
+;(use-package auto-compile
+  ;:defer nil
+  ;:config (auto-compile-on-load-mode))
 
 ;; UTF-8
 (set-terminal-coding-system  'utf-8)
