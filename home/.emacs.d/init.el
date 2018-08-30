@@ -726,6 +726,12 @@
 (org-mode . (lambda () (add-hook 'after-save-hook 'org-babel-tangle
                                  'run-at-end 'only-in-org-mode)))
 
+(add-to-list 'org-structure-template-alist
+	       '("el" "#+BEGIN_SRC emacs-lisp\n?\n#+END_SRC"))
+
+(use-package ox-twbs
+  :ensure t)
+
 (use-package base16-theme)
 (use-package moe-theme)
 (use-package alect-themes)
