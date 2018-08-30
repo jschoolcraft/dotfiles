@@ -37,9 +37,9 @@
     (customize-set-variable 'use-package-always-defer t)
     (customize-set-variable 'load-prefer-newer t)
 
-    ;(use-package auto-compile
-      ;:defer nil
-      ;:config (auto-compile-on-load-mode))
+    (use-package auto-compile
+      :defer nil
+      :config (auto-compile-on-load-mode))
 
     ;; UTF-8
     (set-terminal-coding-system  'utf-8)
@@ -441,7 +441,7 @@
 ;;; Code:
 (use-package org
   :ensure org-plus-contrib
-  :pin 'gnu
+  :pin "gnu"
   :defer t
   :config
   (progn
