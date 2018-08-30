@@ -17,6 +17,8 @@ home/.emacs.d/projectile-bookmarks.eld
 home/.emacs.d/projectile.cache
 home/.emacs.d/network-security.data
 home/.emacs.d/custom.el
+home/.emacs.d/places
+home/.emacs.d/.org-id-locations
 home/.weechat/urlserver_list.txt
 home/.weechat/sec.conf
 home/.config/fish/fishd*
