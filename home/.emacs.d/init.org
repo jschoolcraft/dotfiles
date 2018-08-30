@@ -18,7 +18,7 @@ I've been inspired by and stolen configuration from loads of places
 
 - https://github.com/joedicastro/dotfiles/tree/master/emacs
 - https://github.com/howardabrams/dot-files/blob/master/emacs.org
-- https://github.com/joedicastro/dotfiles/tree/master/emacs/.emacs.d
+- https://github.com/zzamboni/dot-emacs
 
 * General
 
