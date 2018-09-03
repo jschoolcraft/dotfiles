@@ -3,27 +3,23 @@
 ;; This file is programmatically generated from the corresponding .org file in this directory
 ;; You should make any changes there and regenerate it from Emacs org-mode using org-babel-tangle
 
-;;; config --- my configuration
-    ;;; Commentary:
+(setq user-full-name "Jeff Schoolcraft")
+(setq user-mail-address "jschoolcraft@aissaclabs.com")
 
-    ;(require 'cl)
-    (require 'package)
+(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
+(when (file-exists-p custom-file)
+  (load custom-file))
 
-    ;; places to look for config options
-    ;; https://github.com/joedicastro/dotfiles/tree/master/emacs
-    ;; https://github.com/howardabrams/dot-files/blob/master/emacs.org
-    ;; https://github.com/joedicastro/dotfiles/tree/master/emacs/.emacs.d
+(require 'package)
+(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
+(add-to-list 'package-archives '("gnu"       . "https://elpa.gnu.org/packages/"))
+(add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/") t)
+(add-to-list 'package-archives '("mela-stable" . "https://stable.melpa.org/packages/"))
+(package-initialize)
 
-    (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
-    (when (file-exists-p custom-file)
-      (load custom-file))
-
-    ;;; Code:
+;;; Code:
     ;; use package for most of our packages
-    (add-to-list 'package-archives '("gnu"       . "https://elpa.gnu.org/packages/"))
-    (add-to-list 'package-archives '("mela-stable" . "https://stable.melpa.org/packages/"))
-    (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
-    (package-initialize)
 
     ;;Bootstrap `use-package'
     (unless (package-installed-p 'use-package)
@@ -702,9 +698,9 @@
 ; (use-package atom-one-dark-theme)
 
 (use-package base16-theme
-:disabled
-:config
-(load-theme 'base16-irblack))
+  :disabled
+  :config
+  (load-theme 'base16-irblack t))
 
 (use-package doom-themes
   :custom
