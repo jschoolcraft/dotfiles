@@ -52,10 +52,31 @@
 
 (use-package restart-emacs)
 
+(setq select-enable-clipboard t)
+
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
+
+(setq auto-save-default nil
+      auto-save-list-file-prefix nil
+      make-backup-files nil)
+
 (use-package evil
   :defer nil
   :init
   (setq evil-want-integration nil)
+  :bind
+    ;; moving around windows
+    (:map evil-normal-state-map
+     ("C-h" . 'evil-window-left)
+     ("C-j" . 'evil-window-down)
+     ("C-k" . 'evil-window-up)
+     ("C-l" . 'evil-window-right)
+    )
+    ;; swap 0 and ^ so 0 goes back to first non-whitespace character
+    (:map evil-motion-state-map
+     ("0" . 'evil-first-non-blank)
+     ("^" . 'evil-beginning-of-line)
+    )
   :config
   (evil-mode 1))
 
@@ -70,15 +91,22 @@
   :config
     (evil-escape-mode t))
 
-;; the basics
-
-;; loads of stuff
+;; (defun minibuffer-keyboard-quit ()
+;; (interactive)
+;; (if (and delete-selection-mode transient-mark-mode mark-active)
+;;     (setq deactivate-mark  t)
+;; (when (get-buffer "*Completions*") (delete-windows-on "*Completions*"))
+;; (abort-recursive-edit)))
 ;;
+;; (define-key evil-visual-state-map [escape] 'keyboard-quit)
+;; (define-key minibuffer-local-map [escape] 'minibuffer-keyboard-quit)
+;; (define-key minibuffer-local-ns-map [escape] 'minibuffer-keyboard-quit)
+;; (define-key minibuffer-local-completion-map [escape] 'minibuffer-keyboard-quit)
+;; (define-key minibuffer-local-must-match-map [escape] 'minibuffer-keyboard-quit)
+;; (define-key minibuffer-local-isearch-map [escape] 'minibuffer-keyboard-quit)
 
-
-;; https://github.com/cofi/evil-leader
-;; alternative using hydra: https://github.com/noctuid/evil-guide/wiki#using-hydra-for-leader-key
 (use-package evil-leader
+  :after evil
   :defer nil
   :config
   (global-evil-leader-mode))
@@ -128,10 +156,6 @@
 (setq evil-overriding-maps nil)
 (setq evil-intercept-maps nil)
 
-;; swap 0 and ^ so 0 goes back to first non-whitespace character
-;(define-key evil-motion-state-map (kbd "0") 'evil-first-non-blank)
-;(define-key evil-motion-state-map (kbd "^") 'evil-beginning-of-line)
-
 (evil-leader/set-leader ";")
 (evil-leader/set-key
   "." 'find-tag
@@ -159,14 +183,6 @@
 ;; (define-key evil-visual-state-map (kbd ";") 'evil-ex)
 ;; (define-key evil-motion-state-map (kbd ";") 'evil-ex)
 
-;; moving around windows
-(eval-after-load "evil"
-  '(progn
-     (define-key evil-normal-state-map (kbd "C-h") 'evil-window-left)
-     (define-key evil-normal-state-map (kbd "C-j") 'evil-window-down)
-     (define-key evil-normal-state-map (kbd "C-k") 'evil-window-up)
-     (define-key evil-normal-state-map (kbd "C-l") 'evil-window-right)))
-
 (use-package diminish
   :ensure t
   :demand t
@@ -176,8 +192,15 @@
   :diminish auto-fill-function
   :diminish subword-mode)
 
+(use-package flyspell
+  :defer 1
+  :hook (text-mode . flyspell-mode)
+  :diminish
+  :bind (:map flyspell-mouse-map
+              ([down-mouse-3] . #'flyspell-correct-word)
+              ([mouse-3]      . #'undefined)))
+
 (use-package magit
-  :ensure t
   :config (setq magit-diff-refine-hunk 'all))
 
 (use-package evil-magit
@@ -312,59 +335,12 @@
   :hook
   ('prog-mode 'rainbow-delimiters-mode))
 
-;; no idea
-;;(use-package yasnippet
-;;  :init
-;;  (yas-global-mode 1)
-;;  :config
-;;  (yas-reload-all)
-;;  (setq yas-snippet-dirs '("~/.emacs.d/snippets"
-;;                           "~/.emacs.d/remote-snippets"))
-;;  (setq yas-indent-line nil)
-;;  (setq tab-always-indent 'complete)
-;;  (setq yas-prompt-functions '(yas-completing-prompt
-;;                               yas-ido-prompt
-;;                               yas-dropdown-prompt))
-;;  (define-key yas-minor-mode-map (kbd "<escape>") 'yas-exit-snippet))
+(use-package yasnippet
+  :disabled)
 
-;(use-package yasnippet)
-
-
-
-
-;; helps find the source of an error
 (use-package bug-hunter
   :commands (bug-hunter-file bug-hunter-init-file))
 
-;; deft
-(use-package deft
-  :commands (deft)
-  :config
-  (setq deft-extensions '("txt" "tex" "org"))
-  (setq deft-use-filename-as-title t)
-  (setq deft-directory "~/Dropbox/jschoolcraft/notes"))
-
-
-;; editorconfig
-;; for consistency among developers on a project
-(use-package editorconfig
-  :config
-  (editorconfig-mode 1))
-
-(add-to-list 'load-path (expand-file-name "lib" user-emacs-directory))
-
-(defconst user-init-dir
-          (cond ((boundp 'user-emacs-directory)
-                 user-emacs-directory)
-                ((boundp 'user-init-directory)
-                 user-init-directory)
-                (t "~/.emacs.d/")))
-
-
-;; system clipboard
-(setq select-enable-clipboard t)
-
-; Make files easier to distinguish
 (use-package uniquify
   :defer 1
   :ensure nil
@@ -373,24 +349,16 @@
   (uniquify-buffer-name-style 'post-forward)
   (uniquify-strip-common-suffix t))
 
-; Kill backups
-(setq auto-save-default nil
-      auto-save-list-file-prefix nil
-      make-backup-files nil)
+(use-package deft
+  :commands (deft)
+  :config
+  (setq deft-extensions '("txt" "tex" "org"))
+  (setq deft-use-filename-as-title t)
+  (setq deft-directory "~/Dropbox/jschoolcraft/notes"))
 
-; Hate whitespace
-(add-hook 'before-save-hook 'delete-trailing-whitespace)
-
-;; electric-pair-mode
-;; smartish parens/pairs stuff
-(electric-pair-mode)
-
-;; put that custom bullshit somewhere else
-(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
-(load custom-file 'noerror)
-
-(put 'narrow-to-page 'disabled nil)
-(put 'narrow-to-region 'disabled nil)
+(use-package editorconfig
+  :config
+  (editorconfig-mode 1))
 
 (use-package markdown-mode
   :mode (("README\\.md\\'" . gfm-mode)
@@ -488,44 +456,25 @@
   :config
   (add-to-list 'auto-mode-alist '("components\\/.*\\.jsx\\'" . rjsx-mode)))
 
-;(use-package web-mode
-;  :init
-;    (setq web-mode-content-types-alist '(("jsx" . "\\.tsx\\'")))
-;    (setq web-mode-content-types-alist '(("jsx" . "\\.js\\'")))
-;  :config
-;    (add-to-list 'auto-mode-alist '("\\.erb?\\'" . web-mode))
-;    (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
-;    (add-to-list 'auto-mode-alist '("\\.js[x]?\\'" . web-mode))
-;    (add-to-list 'auto-mode-alist '("\\.ts[x]?\\'" . web-mode)))
+(use-package web-mode
+  :init
+    (setq web-mode-content-types-alist '(("jsx" . "\\.tsx\\'")))
+    (setq web-mode-content-types-alist '(("jsx" . "\\.js\\'")))
+  :config
+    (add-to-list 'auto-mode-alist '("\\.erb?\\'" . web-mode))
+    (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
+    (add-to-list 'auto-mode-alist '("\\.js[x]?\\'" . web-mode))
+    (add-to-list 'auto-mode-alist '("\\.ts[x]?\\'" . web-mode)))
 
-;(use-package web-mode
-;  :config
-;  (setq web-mode-attr-indent-offset 2)
-;  (setq web-mode-code-indent-offset 2)
-;  (setq web-mode-css-indent-offset 2)
-;  (setq web-mode-indent-style 2)
-;  (setq web-mode-markup-indent-offset 2)
-;  (setq web-mode-sql-indent-offset 2))
-;; (use-package add-node-modules-path
-;;   :ensure t)
-
-(eval-after-load 'web-mode
-    '(progn
-       (add-hook 'web-mode-hook #'add-node-modules-path)
-       (add-hook 'web-mode-hook #'prettier-js-mode)))
-
-; stolen from: http://mph.puddingbowl.org/2014/12/org-mode-face-lift/
-; https://github.com/joedicastro/dotfiles/tree/master/emacs/.emacs.d#org-mode-settings
-
-;;; Code:
 (use-package org
   :pin "gnu"
+  :custom
+  (org-src-fontify-natively  t)
+  (org-src-tab-acts-natively t)
   :config
   ; (progn
 
   ;   ;; highlight code blocks syntax
-  ;   (setq org-src-fontify-natively  t
-  ;         org-src-tab-acts-natively t)
 
   ;   ; set the modules enabled by default
   ;   (setq org-modules '(
@@ -630,7 +579,7 @@
 ;(use-package org-mac-link
 ;  :disabled)
 
-(setq org-ellipsis "⤵")
+;(setq org-ellipsis "⤵")
 (use-package org-bullets
   :config
   (progn
@@ -808,27 +757,8 @@
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
 
-(use-package spaceline
-  :custom
-    (powerline-image-apple-rgb t)
-        (spaceline-buffer-size-p nil)
-        (spaceline-flycheck-error-p nil)
-        (spaceline-flycheck-warning-p nil)
-        (spaceline-flycheck-info-p nil)
-        (spaceline-minor-modes-p nil)
-        (spaceline-projectile-root-p nil)
-        (spaceline-version-control-p nil)
-        (spaceline-org-pomodoro-p t)
-        (powerline-default-separator 'box)
-        (spaceline-separator-dir-left '(right . right))
-        (spaceline-separator-dir-right '(left . left))
-        (spaceline-window-numbers-unicode t)
-        (spaceline-highlight-face-func 'spaceline-highlight-face-evil-state)
-        (spaceline-workspace-numbers-unicode t)
-  :config
-  (require 'spaceline-config)
-  (spaceline-emacs-theme)
-  (setq spaceline-highlight-face-func 'spaceline-highlight-face-evil-state))
+(use-package powerline)
+(use-package powerline-evil)
 
 (set-face-attribute 'default nil :font "Monaco 18")
 
