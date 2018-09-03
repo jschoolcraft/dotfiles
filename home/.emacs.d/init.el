@@ -263,8 +263,14 @@
     (flycheck-idle-change-delay 2)
     (flycheck-highlighting-mode 'lines)
     ;;   (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc))
+   :diminish
    :config
-    (global-flycheck-mode))
+    (global-flycheck-mode)
+    (use-package flycheck-pos-tip
+       :config
+       (flycheck-pos-tip-mode))
+    (use-package helm-flycheck
+       :after helm))
   ;; (flycheck-add-mode 'javascript-eslint 'web-mode)
 
   ;; Make sure eslint does not try to --print-config after each buffer opens.
@@ -289,6 +295,7 @@
   ;; (add-hook 'flycheck-mode-hook #'my/use-eslint-from-node-modules)
 
 (use-package smartparens
+  :disabled
   :diminish smartparens-mode
   :custom
   (sp-base-key-bindings 'paredit)
@@ -297,10 +304,13 @@
   :init
   (sp-use-paredit-bindings)
   (show-smartparens-global-mode t)
-  :config
-  (use-package smartparens-config)
   :hook
   ('prog-mode 'smartparens-mode))
+
+(use-package rainbow-delimiters
+  :disabled
+  :hook
+  ('prog-mode 'rainbow-delimiters-mode))
 
 ;; no idea
 ;;(use-package yasnippet
@@ -321,55 +331,6 @@
 
 
 
-(use-package markdown-mode
-  :mode (("README\\.md\\'" . gfm-mode)
-         ("\\.md\\'" . markdown-mode)
-         ("\\.markdown\\'" . markdown-mode))
-  :init (setq markdown-command "multimarkdown"))
-
-(use-package yaml-mode)
-(use-package haml-mode)
-
-(use-package ruby-mode
-  :mode "\\.rb\\'"
-  :mode "Rakefile\\'"
-  :mode "Fastfile\\'"
-  :mode "Matchfile\\'"
-  :mode "Gemfile\\'"
-  :mode "Berksfile\\'"
-  :mode "Vagrantfile\\'"
-  :interpreter "ruby"
-
-  :init
-  (setq ruby-indent-level 2
-        ruby-indent-tabs-mode nil)
-  (add-hook 'ruby-mode 'superword-mode))
-
-;(use-package web-mode
-;  :init
-;    (setq web-mode-content-types-alist '(("jsx" . "\\.tsx\\'")))
-;    (setq web-mode-content-types-alist '(("jsx" . "\\.js\\'")))
-;  :config
-;    (add-to-list 'auto-mode-alist '("\\.erb?\\'" . web-mode))
-;    (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
-;    (add-to-list 'auto-mode-alist '("\\.js[x]?\\'" . web-mode))
-;    (add-to-list 'auto-mode-alist '("\\.ts[x]?\\'" . web-mode)))
-
-;(use-package web-mode
-;  :config
-;  (setq web-mode-attr-indent-offset 2)
-;  (setq web-mode-code-indent-offset 2)
-;  (setq web-mode-css-indent-offset 2)
-;  (setq web-mode-indent-style 2)
-;  (setq web-mode-markup-indent-offset 2)
-;  (setq web-mode-sql-indent-offset 2))
-;; (use-package add-node-modules-path
-;;   :ensure t)
-
-(eval-after-load 'web-mode
-    '(progn
-       (add-hook 'web-mode-hook #'add-node-modules-path)
-       (add-hook 'web-mode-hook #'prettier-js-mode)))
 
 ;; helps find the source of an error
 (use-package bug-hunter
@@ -430,6 +391,128 @@
 
 (put 'narrow-to-page 'disabled nil)
 (put 'narrow-to-region 'disabled nil)
+
+(use-package markdown-mode
+  :mode (("README\\.md\\'" . gfm-mode)
+         ("\\.md\\'" . markdown-mode)
+         ("\\.markdown\\'" . markdown-mode))
+  :init (setq markdown-command "multimarkdown"))
+
+(use-package yaml-mode)
+
+(use-package haml-mode)
+
+(use-package ruby-mode
+  :mode (
+         "Berksfile\\'"
+         "Capfile\\'"
+         "Fastfile\\'"
+         "Gemfile\\'"
+         "Guardfile\\'"
+         "Matchfile\\'"
+         "Rakefile\\'"
+         "Thorfile\\'"
+         "Vagrantfile\\'"
+         "\\.cap\\'"
+         "\\.gemspec\\'"
+         "\\.jbuilder\\'"
+         "\\.rabl\\'"
+         "\\.rake\\'"
+         "\\.rb\\'"
+         "\\.ru\\'"
+         "\\.thor\\'"
+         )
+  :init
+  (setq ruby-indent-level 2
+        ruby-indent-tabs-mode nil)
+  (add-hook 'ruby-mode 'superword-mode))
+
+(use-package ruby-tools
+  :diminish ""
+  :hook
+  ('ruby-mode 'ruby-tools-mode)
+  :config
+  (ruby-tools-mode t))
+
+(use-package rbenv
+  :disabled
+  :defer 25
+  :init
+  (setq rbenv-show-active-ruby-in-modeline nil)
+  :config
+  (global-rbenv-mode t))
+
+(use-package json-mode)
+
+(use-package js2-mode
+  :mode "\\.js\\'"
+  :hook
+  ('js2-mode 'js2-imenu-extras-mode)
+  :config
+  (setq-default js-indent-level 2)
+  (setq-default js-auto-indent-flag nil))
+
+(use-package skewer-mode
+  :disabled
+  :hook
+  ('js2-mode 'skewer-mode))
+
+(use-package js2-refactor
+  :disabled
+  :init
+  (add-hook 'js2-mode-hook 'js2-refactor-mode)
+  :bind (:map js2-mode-map
+              ("C-k" . js2r-kill))
+  )
+
+(use-package company-tern
+  :disabled
+  :init
+  ;; (add-to-list 'company-backends 'company-tern)
+  (add-hook 'js2-mode-hook (lambda () (tern-mode)))
+
+  :config
+  ;; Disable completion keybindings, as we use xref-js2 instead
+  (define-key tern-mode-keymap (kbd "M-.") nil)
+  (define-key tern-mode-keymap (kbd "M-,") nil)
+  )
+
+(use-package indium
+  :disabled
+  :hook
+  ('js-mode 'indium-interaction-mode))
+
+(use-package rjsx-mode
+  :disabled
+  :mode "\\.jsx\\'"
+  :config
+  (add-to-list 'auto-mode-alist '("components\\/.*\\.jsx\\'" . rjsx-mode)))
+
+;(use-package web-mode
+;  :init
+;    (setq web-mode-content-types-alist '(("jsx" . "\\.tsx\\'")))
+;    (setq web-mode-content-types-alist '(("jsx" . "\\.js\\'")))
+;  :config
+;    (add-to-list 'auto-mode-alist '("\\.erb?\\'" . web-mode))
+;    (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
+;    (add-to-list 'auto-mode-alist '("\\.js[x]?\\'" . web-mode))
+;    (add-to-list 'auto-mode-alist '("\\.ts[x]?\\'" . web-mode)))
+
+;(use-package web-mode
+;  :config
+;  (setq web-mode-attr-indent-offset 2)
+;  (setq web-mode-code-indent-offset 2)
+;  (setq web-mode-css-indent-offset 2)
+;  (setq web-mode-indent-style 2)
+;  (setq web-mode-markup-indent-offset 2)
+;  (setq web-mode-sql-indent-offset 2))
+;; (use-package add-node-modules-path
+;;   :ensure t)
+
+(eval-after-load 'web-mode
+    '(progn
+       (add-hook 'web-mode-hook #'add-node-modules-path)
+       (add-hook 'web-mode-hook #'prettier-js-mode)))
 
 ; stolen from: http://mph.puddingbowl.org/2014/12/org-mode-face-lift/
 ; https://github.com/joedicastro/dotfiles/tree/master/emacs/.emacs.d#org-mode-settings
@@ -724,6 +807,28 @@
 (menu-bar-mode -1)
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
+
+(use-package spaceline
+  :custom
+    (powerline-image-apple-rgb t)
+        (spaceline-buffer-size-p nil)
+        (spaceline-flycheck-error-p nil)
+        (spaceline-flycheck-warning-p nil)
+        (spaceline-flycheck-info-p nil)
+        (spaceline-minor-modes-p nil)
+        (spaceline-projectile-root-p nil)
+        (spaceline-version-control-p nil)
+        (spaceline-org-pomodoro-p t)
+        (powerline-default-separator 'box)
+        (spaceline-separator-dir-left '(right . right))
+        (spaceline-separator-dir-right '(left . left))
+        (spaceline-window-numbers-unicode t)
+        (spaceline-highlight-face-func 'spaceline-highlight-face-evil-state)
+        (spaceline-workspace-numbers-unicode t)
+  :config
+  (require 'spaceline-config)
+  (spaceline-emacs-theme)
+  (setq spaceline-highlight-face-func 'spaceline-highlight-face-evil-state))
 
 (set-face-attribute 'default nil :font "Monaco 18")
 

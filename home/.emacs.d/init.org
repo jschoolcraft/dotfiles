@@ -448,8 +448,14 @@ On the fly linting.
       (flycheck-idle-change-delay 2)
       (flycheck-highlighting-mode 'lines)
       ;;   (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc))
+     :diminish
      :config
-      (global-flycheck-mode))
+      (global-flycheck-mode)
+      (use-package flycheck-pos-tip
+         :config
+         (flycheck-pos-tip-mode))
+      (use-package helm-flycheck
+         :after helm))
     ;; (flycheck-add-mode 'javascript-eslint 'web-mode)
 
     ;; Make sure eslint does not try to --print-config after each buffer opens.
@@ -480,6 +486,7 @@ Minor mode for Emacs that deals with parens pairs and tries to be smart about it
 
 #+BEGIN_SRC emacs-lisp
 (use-package smartparens
+  :disabled
   :diminish smartparens-mode
   :custom
   (sp-base-key-bindings 'paredit)
@@ -488,11 +495,23 @@ Minor mode for Emacs that deals with parens pairs and tries to be smart about it
   :init
   (sp-use-paredit-bindings)
   (show-smartparens-global-mode t)
-  :config
-  (use-package smartparens-config)
   :hook
   ('prog-mode 'smartparens-mode))
 #+END_SRC
+
+** [[https://github.com/Fanael/rainbow-delimiters][rainbow-delimiters]]
+
+Emacs rainbow delimiters mode
+
+#+BEGIN_SRC emacs-lisp
+(use-package rainbow-delimiters
+  :disabled
+  :hook
+  ('prog-mode 'rainbow-delimiters-mode))
+
+#+END_SRC
+
+** Snippets
 
 #+begin_src emacs-lisp
 
@@ -516,55 +535,6 @@ Minor mode for Emacs that deals with parens pairs and tries to be smart about it
 
 
 
-        (use-package markdown-mode
-          :mode (("README\\.md\\'" . gfm-mode)
-                 ("\\.md\\'" . markdown-mode)
-                 ("\\.markdown\\'" . markdown-mode))
-          :init (setq markdown-command "multimarkdown"))
-
-        (use-package yaml-mode)
-        (use-package haml-mode)
-
-        (use-package ruby-mode
-          :mode "\\.rb\\'"
-          :mode "Rakefile\\'"
-          :mode "Fastfile\\'"
-          :mode "Matchfile\\'"
-          :mode "Gemfile\\'"
-          :mode "Berksfile\\'"
-          :mode "Vagrantfile\\'"
-          :interpreter "ruby"
-
-          :init
-          (setq ruby-indent-level 2
-                ruby-indent-tabs-mode nil)
-          (add-hook 'ruby-mode 'superword-mode))
-
-        ;(use-package web-mode
-        ;  :init
-        ;    (setq web-mode-content-types-alist '(("jsx" . "\\.tsx\\'")))
-        ;    (setq web-mode-content-types-alist '(("jsx" . "\\.js\\'")))
-        ;  :config
-        ;    (add-to-list 'auto-mode-alist '("\\.erb?\\'" . web-mode))
-        ;    (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
-        ;    (add-to-list 'auto-mode-alist '("\\.js[x]?\\'" . web-mode))
-        ;    (add-to-list 'auto-mode-alist '("\\.ts[x]?\\'" . web-mode)))
-
-        ;(use-package web-mode
-        ;  :config
-        ;  (setq web-mode-attr-indent-offset 2)
-        ;  (setq web-mode-code-indent-offset 2)
-        ;  (setq web-mode-css-indent-offset 2)
-        ;  (setq web-mode-indent-style 2)
-        ;  (setq web-mode-markup-indent-offset 2)
-        ;  (setq web-mode-sql-indent-offset 2))
-        ;; (use-package add-node-modules-path
-        ;;   :ensure t)
-
-        (eval-after-load 'web-mode
-            '(progn
-               (add-hook 'web-mode-hook #'add-node-modules-path)
-               (add-hook 'web-mode-hook #'prettier-js-mode)))
 
         ;; helps find the source of an error
         (use-package bug-hunter
@@ -627,6 +597,201 @@ Minor mode for Emacs that deals with parens pairs and tries to be smart about it
         (put 'narrow-to-region 'disabled nil)
 #+end_src
 
+* Languages
+
+** markdown
+
+#+BEGIN_SRC emacs-lisp
+  (use-package markdown-mode
+    :mode (("README\\.md\\'" . gfm-mode)
+           ("\\.md\\'" . markdown-mode)
+           ("\\.markdown\\'" . markdown-mode))
+    :init (setq markdown-command "multimarkdown"))
+#+END_SRC
+
+** yaml
+
+#+BEGIN_SRC emacs-lisp
+  (use-package yaml-mode)
+#+END_SRC
+
+** haml
+
+#+BEGIN_SRC emacs-lisp
+  (use-package haml-mode)
+#+END_SRC
+
+** ruby
+
+#+BEGIN_SRC emacs-lisp
+    (use-package ruby-mode
+      :mode (
+             "Berksfile\\'"
+             "Capfile\\'"
+             "Fastfile\\'"
+             "Gemfile\\'"
+             "Guardfile\\'"
+             "Matchfile\\'"
+             "Rakefile\\'"
+             "Thorfile\\'"
+             "Vagrantfile\\'"
+             "\\.cap\\'"
+             "\\.gemspec\\'"
+             "\\.jbuilder\\'"
+             "\\.rabl\\'"
+             "\\.rake\\'"
+             "\\.rb\\'"
+             "\\.ru\\'"
+             "\\.thor\\'"
+             )
+      :init
+      (setq ruby-indent-level 2
+            ruby-indent-tabs-mode nil)
+      (add-hook 'ruby-mode 'superword-mode))
+#+END_SRC
+
+[[https://github.com/rejeep/ruby-tools.el][ruby-tools]] Collection of handy functions for Emacs ruby-mode
+
+#+BEGIN_SRC emacs-lisp
+(use-package ruby-tools
+  :diminish ""
+  :hook
+  ('ruby-mode 'ruby-tools-mode)
+  :config
+  (ruby-tools-mode t))
+
+#+END_SRC
+
+[[https://github.com/senny/rbenv.el][rbenv]] use rbenv to manage your Ruby versions within Emacs
+
+#+BEGIN_SRC emacs-lisp
+(use-package rbenv
+  :disabled
+  :defer 25
+  :init
+  (setq rbenv-show-active-ruby-in-modeline nil)
+  :config
+  (global-rbenv-mode t))
+
+#+END_SRC
+
+** javascript
+
+Trying to get emacs to be a decent editor for React Native projects.  Still have a ways to go and some things to look at, including:
+
+- https://emacs.cafe/emacs/javascript/setup/2017/04/23/emacs-setup-javascript.html
+- https://emacs.cafe/emacs/javascript/setup/2017/05/09/emacs-setup-javascript-2.html
+
+[[https://github.com/joshwnj/json-mode][json-mode]] Major mode for editing JSON files with emacs
+
+#+BEGIN_SRC emacs-lisp
+  (use-package json-mode)
+#+END_SRC
+
+[[https://github.com/mooz/js2-mode][js2-mode]] Improved JavaScript editing mode
+
+#+BEGIN_SRC emacs-lisp
+(use-package js2-mode
+  :mode "\\.js\\'"
+  :hook
+  ('js2-mode 'js2-imenu-extras-mode)
+  :config
+  (setq-default js-indent-level 2)
+  (setq-default js-auto-indent-flag nil))
+#+END_SRC
+
+Here's some stuff I've just copied from https://github.com/chief/.emacs.d/ that I'm stashing here as a placeholder to look at in the future.
+
+[[https://github.com/skeeto/skewer-mode][skewer-mode]] Provides live interaction with JavaScript, CSS, and HTML in a web browser. Expressions are sent on-the-fly from an editing buffer to be evaluated in the browser, just like Emacs does with an inferior Lisp process in Lisp modes.
+
+#+BEGIN_SRC emacs-lisp
+(use-package skewer-mode
+  :disabled
+  :hook
+  ('js2-mode 'skewer-mode))
+#+END_SRC
+
+[[https://github.com/magnars/js2-refactor.el][js2-refactor]] A JavaScript refactoring library for emacs
+
+#+BEGIN_SRC emacs-lisp
+(use-package js2-refactor
+  :disabled
+  :init
+  (add-hook 'js2-mode-hook 'js2-refactor-mode)
+  :bind (:map js2-mode-map
+              ("C-k" . js2r-kill))
+  )
+#+END_SRC
+
+[[https://github.com/proofit404/company-tern][company-tern]] a Tern backend for company-mode
+
+#+BEGIN_SRC emacs-lisp
+(use-package company-tern
+  :disabled
+  :init
+  ;; (add-to-list 'company-backends 'company-tern)
+  (add-hook 'js2-mode-hook (lambda () (tern-mode)))
+
+  :config
+  ;; Disable completion keybindings, as we use xref-js2 instead
+  (define-key tern-mode-keymap (kbd "M-.") nil)
+  (define-key tern-mode-keymap (kbd "M-,") nil)
+  )
+#+END_SRC
+
+[[https://indium.readthedocs.io/en/latest/setup.html][indium]] A JavaScript development environment for Emacs
+
+#+BEGIN_SRC emacs-lisp
+(use-package indium
+  :disabled
+  :hook
+  ('js-mode 'indium-interaction-mode))
+#+END_SRC
+
+[[https://github.com/felipeochoa/rjsx-mode][rjsx-mode]] Emacs major modes for various Git configuration files
+
+#+BEGIN_SRC emacs-lisp
+(use-package rjsx-mode
+  :disabled
+  :mode "\\.jsx\\'"
+  :config
+  (add-to-list 'auto-mode-alist '("components\\/.*\\.jsx\\'" . rjsx-mode)))
+#+END_SRC
+
+** Web Mode
+
+#+BEGIN_SRC emacs-lisp
+
+
+
+
+
+        ;(use-package web-mode
+        ;  :init
+        ;    (setq web-mode-content-types-alist '(("jsx" . "\\.tsx\\'")))
+        ;    (setq web-mode-content-types-alist '(("jsx" . "\\.js\\'")))
+        ;  :config
+        ;    (add-to-list 'auto-mode-alist '("\\.erb?\\'" . web-mode))
+        ;    (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
+        ;    (add-to-list 'auto-mode-alist '("\\.js[x]?\\'" . web-mode))
+        ;    (add-to-list 'auto-mode-alist '("\\.ts[x]?\\'" . web-mode)))
+
+        ;(use-package web-mode
+        ;  :config
+        ;  (setq web-mode-attr-indent-offset 2)
+        ;  (setq web-mode-code-indent-offset 2)
+        ;  (setq web-mode-css-indent-offset 2)
+        ;  (setq web-mode-indent-style 2)
+        ;  (setq web-mode-markup-indent-offset 2)
+        ;  (setq web-mode-sql-indent-offset 2))
+        ;; (use-package add-node-modules-path
+        ;;   :ensure t)
+
+        (eval-after-load 'web-mode
+            '(progn
+               (add-hook 'web-mode-hook #'add-node-modules-path)
+               (add-hook 'web-mode-hook #'prettier-js-mode)))
+#+END_SRC
 * Org
 
 #+begin_src emacs-lisp
@@ -961,7 +1126,34 @@ Getting rid of all the window chrome/treatments/bars/etc.
 (scroll-bar-mode -1)
 #+END_SRC
 
+** Spaceline
+
+#+BEGIN_SRC emacs-lisp
+(use-package spaceline
+  :custom
+    (powerline-image-apple-rgb t)
+	(spaceline-buffer-size-p nil)
+	(spaceline-flycheck-error-p nil)
+	(spaceline-flycheck-warning-p nil)
+	(spaceline-flycheck-info-p nil)
+	(spaceline-minor-modes-p nil)
+	(spaceline-projectile-root-p nil)
+	(spaceline-version-control-p nil)
+	(spaceline-org-pomodoro-p t)
+	(powerline-default-separator 'box)
+	(spaceline-separator-dir-left '(right . right))
+	(spaceline-separator-dir-right '(left . left))
+	(spaceline-window-numbers-unicode t)
+	(spaceline-highlight-face-func 'spaceline-highlight-face-evil-state)
+	(spaceline-workspace-numbers-unicode t)
+  :config
+  (require 'spaceline-config)
+  (spaceline-emacs-theme)
+  (setq spaceline-highlight-face-func 'spaceline-highlight-face-evil-state))
+#+END_SRC
+
 ** Everything else
+
 #+begin_src emacs-lisp
 
 (set-face-attribute 'default nil :font "Monaco 18")
