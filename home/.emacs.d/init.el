@@ -416,6 +416,7 @@
   "mx" 'helm-M-x
   "p" 'helm-show-kill-ring
   "oc" 'org-capture
+  "ot" 'org-babel-tangle
   "q" 'evil-quit
   "g" 'magit
   "l" 'org-mac-grab-link
@@ -701,8 +702,16 @@
 ; (use-package atom-one-dark-theme)
 
 (use-package base16-theme
+:disabled
 :config
 (load-theme 'base16-irblack))
+
+(use-package doom-themes
+  :custom
+    (doom-themes-enabled-bold t)
+    (doom-themes-enabled-italic t)
+  :config
+    (load-theme 'doom-one t))
 
 (setq initial-frame-alist
       '((width . 102)   ; characters in a line
