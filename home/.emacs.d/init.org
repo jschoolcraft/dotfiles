@@ -50,9 +50,8 @@ I've been inspired by and stolen configuration from loads of places
       (package-refresh-contents)
       (package-install 'use-package))
 
-    ;(eval-when-compile
-      ;(require 'use-package))
-    (require 'use-package)
+    (eval-when-compile
+      (require 'use-package))
 
     (customize-set-variable 'use-package-always-ensure t)
     (customize-set-variable 'use-package-always-defer t)
@@ -101,6 +100,7 @@ I've been inspired by and stolen configuration from loads of places
     ;; helm & projectile
 ; stolen straight from https://github.com/zzamboni/dot-emacs/blob/master/init.org
   (use-package helm
+    :disabled
     :defer 1
     :diminish helm-mode
     :bind
@@ -148,8 +148,8 @@ I've been inspired by and stolen configuration from loads of places
       ;(setq projectile-indexing-method 'git)
       (projectile-global-mode))
 
-    (use-package helm-projectile)
-    (use-package helm-ag)
+;    (use-package helm-projectile)
+;    (use-package helm-ag)
 
     ;; auto-completion
     (use-package company
@@ -163,7 +163,7 @@ I've been inspired by and stolen configuration from loads of places
       (setq-default highlight-symbol-idle-delay 1.5))
 
     (setq helm-ag-base-command "ag --hidden --nocolor --nogroup --ignore-case")
-    (helm-projectile-on)
+    ; (helm-projectile-on)
 
     ;; flycheck
     (use-package flycheck
@@ -212,7 +212,7 @@ I've been inspired by and stolen configuration from loads of places
     ;;                               yas-dropdown-prompt))
     ;;  (define-key yas-minor-mode-map (kbd "<escape>") 'yas-exit-snippet))
 
-    (use-package yasnippet)
+    ;(use-package yasnippet)
 
     ;; git related stuffs
     (use-package magit
@@ -220,12 +220,13 @@ I've been inspired by and stolen configuration from loads of places
       :config (setq magit-diff-refine-hunk 'all))
 
     (use-package diff-hl
+      :disabled
       :init
       (setq diff-hl-side 'right))
 
-    (global-diff-hl-mode 1)
-    (diff-hl-margin-mode 1)
-    (diff-hl-flydiff-mode 1)
+    ;(global-diff-hl-mode 1)
+    ;(diff-hl-margin-mode 1)
+    ;(diff-hl-flydiff-mode 1)
 
     (use-package which-key
       :defer nil
@@ -259,16 +260,24 @@ I've been inspired by and stolen configuration from loads of places
             ruby-indent-tabs-mode nil)
       (add-hook 'ruby-mode 'superword-mode))
 
-    (use-package web-mode
-      :init
-        (setq web-mode-content-types-alist '(("jsx" . "\\.tsx\\'")))
-        (setq web-mode-content-types-alist '(("jsx" . "\\.js\\'")))
-      :config
-        (add-to-list 'auto-mode-alist '("\\.erb?\\'" . web-mode))
-        (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
-        (add-to-list 'auto-mode-alist '("\\.js[x]?\\'" . web-mode))
-        (add-to-list 'auto-mode-alist '("\\.ts[x]?\\'" . web-mode)))
+    ;(use-package web-mode
+    ;  :init
+    ;    (setq web-mode-content-types-alist '(("jsx" . "\\.tsx\\'")))
+    ;    (setq web-mode-content-types-alist '(("jsx" . "\\.js\\'")))
+    ;  :config
+    ;    (add-to-list 'auto-mode-alist '("\\.erb?\\'" . web-mode))
+    ;    (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
+    ;    (add-to-list 'auto-mode-alist '("\\.js[x]?\\'" . web-mode))
+    ;    (add-to-list 'auto-mode-alist '("\\.ts[x]?\\'" . web-mode)))
 
+    ;(use-package web-mode
+    ;  :config
+    ;  (setq web-mode-attr-indent-offset 2)
+    ;  (setq web-mode-code-indent-offset 2)
+    ;  (setq web-mode-css-indent-offset 2)
+    ;  (setq web-mode-indent-style 2)
+    ;  (setq web-mode-markup-indent-offset 2)
+    ;  (setq web-mode-sql-indent-offset 2))
     ;; (use-package add-node-modules-path
     ;;   :ensure t)
 
@@ -289,14 +298,6 @@ I've been inspired by and stolen configuration from loads of places
       (setq deft-use-filename-as-title t)
       (setq deft-directory "~/Dropbox/jschoolcraft/notes"))
 
-    (use-package web-mode
-      :config
-      (setq web-mode-attr-indent-offset 2)
-      (setq web-mode-code-indent-offset 2)
-      (setq web-mode-css-indent-offset 2)
-      (setq web-mode-indent-style 2)
-      (setq web-mode-markup-indent-offset 2)
-      (setq web-mode-sql-indent-offset 2))
 
     ;; editorconfig
     ;; for consistency among developers on a project
@@ -473,158 +474,119 @@ I've been inspired by and stolen configuration from loads of places
 
 ;;; Code:
 (use-package org
-  :ensure org-plus-contrib
   :pin "gnu"
-  :defer t
   :config
-  (progn
-    ;; set the modules enabled by default
-    ;(setq org-modules '(
-    ;                    org-bbdb
-    ;                    org-bibtex
-    ;                    org-docview
-    ;                    org-mhe
-    ;                    org-rmail
-    ;                    org-crypt
-    ;                    org-protocol
-    ;                    org-gnus
-    ;                    org-id
-    ;                    org-info
-    ;                    org-habit
-    ;                    org-irc
-    ;                    org-annotate-file
-    ;                    org-eval
-    ;                    org-expiry
-    ;                    org-man
-    ;                    org-panel
-    ;                    org-toc))
-    ;; set default directories
-    (setq org-directory "~/Dropbox/org"
-          org-default-notes-file (concat org-directory "/notes.org"))
+  ; (progn
 
-    ;; set the archive
-    (setq org-archive-location "~/Dropbox/org/archive/%s_archive::datetree/** Archived")
+  ;   ;; highlight code blocks syntax
+  ;   (setq org-src-fontify-natively  t
+  ;         org-src-tab-acts-natively t)
 
-    ;; refiling
-    ;; all of this stolen from https://blog.aaronbieber.com/2017/03/19/organizing-notes-with-refile.html
-    ;; look at this https://mollermara.com/blog/Fast-refiling-in-org-mode-with-hydras/
-    (setq org-refile-targets '((org-agenda-files :maxlevel . 4))
-          org-refile-use-outline-path 'file
-          org-outline-path-complete-in-steps nil
-          org-refile-allow-creating-parent-nodes 'confirm)
+  ;   ; set the modules enabled by default
+  ;   (setq org-modules '(
+  ;                       org-bbdb
+  ;                       org-bibtex
+  ;                       org-docview
+  ;                       org-mhe
+  ;                       org-rmail
+  ;                       org-crypt
+  ;                       org-protocol
+  ;                       org-gnus
+  ;                       org-id
+  ;                       org-info
+  ;                       org-habit
+  ;                       org-irc
+  ;                       org-annotate-file
+  ;                       org-eval
+  ;                       org-expiry
+  ;                       org-man
+  ;                       org-panel
+  ;                       org-toc))
 
-    ;; Template Expansions (for reference, from: https://orgmode.org/manual/Template-expansion.html#Template-expansion)
-    ;; %[file]     Insert the contents of the file given by file.
-    ;; %(sexp)     Evaluate Elisp sexp and replace with the result.
-    ;;                   For convenience, %:keyword (see below) placeholders
-    ;;                   within the expression will be expanded prior to this.
-    ;;                   The sexp must return a string.
-    ;; %<...>      The result of format-time-string on the ... format specification.
-    ;; %t          Timestamp, date only.
-    ;; %T          Timestamp, with date and time.
-    ;; %u, %U      Like the above, but inactive timestamps.
-    ;; %i          Initial content, the region when capture is called while the
-    ;;             region is active.
-    ;;             The entire text will be indented like %i itself.
-    ;; %a          Annotation, normally the link created with org-store-link.
-    ;; %A          Like %a, but prompt for the description part.
-    ;; %l          Like %a, but only insert the literal link.
-    ;; %c          Current kill ring head.
-    ;; %x          Content of the X clipboard.
-    ;; %k          Title of the currently clocked task.
-    ;; %K          Link to the currently clocked task.
-    ;; %n          User name (taken from user-full-name).
-    ;; %f          File visited by current buffer when org-capture was called.
-    ;; %F          Full path of the file or directory visited by current buffer.
-    ;; %:keyword   Specific information for certain link types, see below.
-    ;; %^g         Prompt for tags, with completion on tags in target file.
-    ;; %^G         Prompt for tags, with completion all tags in all agenda files.
-    ;; %^t         Like %t, but prompt for date.  Similarly %^T, %^u, %^U.
-    ;;             You may define a prompt like %^{Birthday}t.
-    ;; %^C         Interactive selection of which kill or clip to use.
-    ;; %^L         Like %^C, but insert as link.
-    ;; %^{prop}p   Prompt the user for a value for property prop.
-    ;; %^{prompt}  prompt the user for a string and replace this sequence with it.
-    ;;             You may specify a default value and a completion table with
-    ;;             %^{prompt|default|completion2|completion3...}.
-    ;;             The arrow keys access a prompt-specific history.
-    ;; %\1 … %\N Insert the text entered at the Nth %^{prompt}, where N is
-    ;;             a number, starting from 1.(90)
-    ;; %?          After completing the template, position cursor here.
+  ;   ;; set default directories
+  ;   (setq org-directory "~/Dropbox/org"
+  ;         org-default-notes-file (concat org-directory "/notes.org"))
 
-    ;; capture templates
-    (setq org-capture-templates
-          '(
-            ("t" "Todo" entry (file+headline "~/Dropbox/org/gtd.org" "Tasks")
-             "* TODO %?\n  %i\n  %a")
-            ("r" "TODO" entry (file+headline "~/Dropbox/org/gtd.org" "Tasks")
-             "* TODO %^{Task}  %^G\n   %?\n  %a")
-            ("j" "Journal" entry (file+datetree "~/Dropbox/org/journal.org")
-             "* %?\nEntered on %U\n  %i\n  %a")
-            ("m" "Meeting")
-            ("mb" "Bibleschools" entry (file+datetree "~/Dropbox/org/clients/BibleSchools.org")
-             "* %?\nEntered on %U\n  %i\n")
-            ("mn" "NADE" entry (file+datetree "~/Dropbox/org/clients/NADE.org")
-             "* %?\nEntered on %U\n  %i\n")
-            ("mr" "Roth" entry (file+datetree "~/Dropbox/org/clients/Roth.org")
-             "* %?\nEntered on %U\n  %i\n")
-            ("ms" "SkillScout" entry (file+datetree "~/Dropbox/org/clients/SkillScout.org")
-             "* %?\nEntered on %U\n  %i\n")
-            ("mw" "SZW" entry (file+datetree "~/Dropbox/org/clients/Subzero.org")
-             "* %?\nEntered on %U\n  %i\n")
-            ("i" "Inbox" entry (file+datetree "~/Dropbox/org/inbox.org")
-             "* %?\nEntered on %U\n  %i\n  %a")
-            ("I" "Read Later" entry (file+datetree "~/Dropbox/org/inbox.org")
-             "* %?\n  %i\n %c\n")
-            ("n" "Notes" entry (file+headline "~/Dropbox/org/notes.org" "Notes")
-             "* %^{Header}  %^G\n  %U\n\n  %?")
-            ("l" "Link" entry (file+headline "~/Dropbox/org/links.org" "Links")
-             "* %? %^L %^g \n%T" :prepend t)
-            ))
+  ;   ;; refiling
+  ;   ;; all of this stolen from https://blog.aaronbieber.com/2017/03/19/organizing-notes-with-refile.html
+  ;   ;; look at this https://mollermara.com/blog/Fast-refiling-in-org-mode-with-hydras/
+  ;   (setq org-refile-targets '((org-agenda-files :maxlevel . 4))
+  ;         org-refile-use-outline-path 'file
+  ;         org-outline-path-complete-in-steps nil
+  ;         org-refile-allow-creating-parent-nodes 'confirm)
 
-    ;; highlight code blocks syntax
-    (setq org-src-fontify-natively  t
-          org-src-tab-acts-natively t)
-    (add-to-list 'org-src-lang-modes (quote ("dot" . graphviz-dot)))
 
-    ;; tasks management
-    (setq org-log-done t)
-    ;; (setq org-clock-idle-time nil)
+  ;   ;; capture templates
+  ;   (setq org-capture-templates
+  ;         '(
+  ;           ("t" "Todo" entry (file+headline "~/Dropbox/org/gtd.org" "Tasks")
+  ;            "* TODO %?\n  %i\n  %a")
+  ;           ("r" "TODO" entry (file+headline "~/Dropbox/org/gtd.org" "Tasks")
+  ;            "* TODO %^{Task}  %^G\n   %?\n  %a")
+  ;           ("j" "Journal" entry (file+datetree "~/Dropbox/org/journal.org")
+  ;            "* %?\nEntered on %U\n  %i\n  %a")
+  ;           ("m" "Meeting")
+  ;           ("mb" "Bibleschools" entry (file+datetree "~/Dropbox/org/clients/BibleSchools.org")
+  ;            "* %?\nEntered on %U\n  %i\n")
+  ;           ("mn" "NADE" entry (file+datetree "~/Dropbox/org/clients/NADE.org")
+  ;            "* %?\nEntered on %U\n  %i\n")
+  ;           ("mr" "Roth" entry (file+datetree "~/Dropbox/org/clients/Roth.org")
+  ;            "* %?\nEntered on %U\n  %i\n")
+  ;           ("ms" "SkillScout" entry (file+datetree "~/Dropbox/org/clients/SkillScout.org")
+  ;            "* %?\nEntered on %U\n  %i\n")
+  ;           ("mw" "SZW" entry (file+datetree "~/Dropbox/org/clients/Subzero.org")
+  ;            "* %?\nEntered on %U\n  %i\n")
+  ;           ("i" "Inbox" entry (file+datetree "~/Dropbox/org/inbox.org")
+  ;            "* %?\nEntered on %U\n  %i\n  %a")
+  ;           ("I" "Read Later" entry (file+datetree "~/Dropbox/org/inbox.org")
+  ;            "* %?\n  %i\n %c\n")
+  ;           ("n" "Notes" entry (file+headline "~/Dropbox/org/notes.org" "Notes")
+  ;            "* %^{Header}  %^G\n  %U\n\n  %?")
+  ;           ("l" "Link" entry (file+headline "~/Dropbox/org/links.org" "Links")
+  ;            "* %? %^L %^g \n%T" :prepend t)
+  ;           ))
 
-    ;; agenda & diary
-    (setq org-agenda-include-diary t)
-    (setq org-agenda-files '("~/Dropbox/org/"
-                             "~/Dropbox/org/personal.org"
-                             "~/Dropbox/org/technical.org"
-                             "~/Dropbox/org/project.org"
-                             "~/Dropbox/org/clients/"))
-    (setq org-agenda-inhibit-startup t)
+  ;   ;; tasks management
+  ;   (setq org-log-done t)
+  ;   ;; (setq org-clock-idle-time nil)
 
-    ;; show images inline
-    ;; only works in GUI, but is a nice feature to have
-    (when (window-system)
-      (setq org-startup-with-inline-images t))
-    ;; limit images width
-    (setq org-image-actual-width '(800))
+  ;   ;; agenda & diary
+  ;   (setq org-agenda-include-diary t)
+  ;   (setq org-agenda-files '("~/Dropbox/org/"
+  ;                            "~/Dropbox/org/personal.org"
+  ;                            "~/Dropbox/org/technical.org"
+  ;                            "~/Dropbox/org/project.org"
+  ;                            "~/Dropbox/org/clients/"))
+  ;   (setq org-agenda-inhibit-startup t)
 
-    ;; Some initial langauges we want org-babel to support
-    (org-babel-do-load-languages 'org-babel-load-languages
-                                 '((sh     . t)
-                                   (js     . t)
-                                   (python . t)
-                                   (ruby   . t)
-                                   (dot    . t)
-                                   (org . t)
-                                   (sqlite . t)
-                                   (perl   . t)))
+  ;   ;; show images inline
+  ;   ;; only works in GUI, but is a nice feature to have
+  ;   (when (window-system)
+  ;     (setq org-startup-with-inline-images t))
+  ;   ;; limit images width
+  ;   (setq org-image-actual-width '(800))
 
-    ;; refresh images after execution
-    (add-hook 'org-babel-after-execute-hook 'org-redisplay-inline-images)
-    )
+  ;   ;; Some initial langauges we want org-babel to support
+  ;   (org-babel-do-load-languages 'org-babel-load-languages
+  ;                                '((shell     . t)
+  ;                                  (js     . t)
+  ;                                  (python . t)
+  ;                                  (ruby   . t)
+  ;                                  (dot    . t)
+  ;                                  (org . t)
+  ;                                  (sqlite . t)
+  ;                                  (perl   . t)))
+
+  ;   ;; refresh images after execution
+  ;   (add-hook 'org-babel-after-execute-hook 'org-redisplay-inline-images)
+  ;   )
   )
 
+;(use-package org-mac-link
+;  :disabled)
+
+(setq org-ellipsis "⤵")
 (use-package org-bullets
-  :ensure t
   :config
   (progn
     (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))))
@@ -761,15 +723,8 @@ I've been inspired by and stolen configuration from loads of places
 This snippet makes literate programming a lot easier, as it tangles on save (another gem from [[https://github.com/zzamboni/dot-emacs/blob/master/init.org][zzamboni]])
 
 #+BEGIN_SRC emacs-lisp
-(org-mode . (lambda () (add-hook 'after-save-hook 'org-babel-tangle
-                                 'run-at-end 'only-in-org-mode)))
-#+END_SRC
-
-Make it easy to add an emacs-lisp source block with =<el==<TAB>=.
-
-#+BEGIN_SRC emacs-lisp
-(add-to-list 'org-structure-template-alist
-	       '("el" "#+BEGIN_SRC emacs-lisp\n?\n#+END_SRC"))
+;(org-mode . (lambda () (add-hook 'after-save-hook 'org-babel-tangle
+                                 ;'run-at-end 'only-in-org-mode)))
 #+END_SRC
 
 Use Twitter Bootstrap when exporting
@@ -781,21 +736,32 @@ Use Twitter Bootstrap when exporting
 
 * Appearance
 
-#+begin_src emacs-lisp
+** Theme
 
-(use-package base16-theme)
-(use-package moe-theme)
-(use-package alect-themes)
-(use-package molokai-theme)
-(use-package apropospriate-theme)
-(use-package color-theme-sanityinc-solarized)
-(use-package dracula-theme)
-(use-package atom-one-dark-theme)
+I'll occassionally try out other themes but I seem to always return to irblack.
 
-;(load-theme 'base16-irblack)
-(load-theme 'base16-irblack)
+#+BEGIN_SRC emacs-lisp
+; (use-package moe-theme)
+; (use-package alect-themes)
+; (use-package molokai-theme)
+; (use-package apropospriate-theme)
+; (use-package color-theme-sanityinc-solarized)
+; (use-package dracula-theme)
+; (use-package atom-one-dark-theme)
 
-;; initial window
+(use-package base16-theme
+:config
+(load-theme 'base16-irblack))
+
+#+END_SRC
+
+** Windows
+
+Setting the size of created windows.  This might exist somewhere else, but this is how I do it.
+
+The initial window
+
+#+BEGIN_SRC emacs-lisp
 (setq initial-frame-alist
       '((width . 102)   ; characters in a line
         (height . 54))) ; number of lines
@@ -805,6 +771,28 @@ Use Twitter Bootstrap when exporting
       '((width . 100)   ; characters in a line
         (height . 52))) ; number of lines
 
+#+END_SRC
+
+Subsequent windows
+
+#+BEGIN_SRC emacs-lisp
+(setq default-frame-alist
+      '((width . 100)   ; characters in a line
+        (height . 52))) ; number of lines
+
+#+END_SRC
+
+Getting rid of all the window chrome/treatments/bars/etc.
+
+#+BEGIN_SRC emacs-lisp
+(menu-bar-mode -1)
+(tool-bar-mode -1)
+(scroll-bar-mode -1)
+#+END_SRC
+
+** Everything else
+#+begin_src emacs-lisp
+
 (set-face-attribute 'default nil :font "Monaco 18")
 
 (setq inhibit-splash-screen t
@@ -813,10 +801,6 @@ Use Twitter Bootstrap when exporting
       initial-scratch-message ""
       visible-bell t)
 
-;; no bars, no gui menus
-(menu-bar-mode -1)
-(tool-bar-mode -1)
-(scroll-bar-mode -1)
 ;; replace yes/no questions with y/n
 (fset 'yes-or-no-p 'y-or-n-p)
 ;; show the empty lines at the end (bottom) of the buffer
