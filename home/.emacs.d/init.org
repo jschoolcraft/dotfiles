@@ -185,10 +185,6 @@ Hopefully [[https://github.com/syl20bnr/evil-escape][evil-escape]] fixes that.
 ;; loads of stuff
 ;;
 
-;; magit
-;; https://github.com/emacs-evil/evil-magit
-(use-package evil-magit
-  :after evil)
 
 ;; https://github.com/cofi/evil-leader
 ;; alternative using hydra: https://github.com/noctuid/evil-guide/wiki#using-hydra-for-leader-key
@@ -285,108 +281,221 @@ Hopefully [[https://github.com/syl20bnr/evil-escape][evil-escape]] fixes that.
 
 #+end_src
 
-* Unsorted Mess
+* Packages
+
+** [[https://github.com/myrjola/diminish.el][Diminish]]
+
+Limit the junk on the modeline.
+
+#+BEGIN_SRC emacs-lisp
+ (use-package diminish
+   :ensure t
+   :demand t
+   :diminish (visual-line-mode . "ω")
+   :diminish hs-minor-mode
+   :diminish abbrev-mode
+   :diminish auto-fill-function
+   :diminish subword-mode)
+#+END_SRC
+
+** git
+
+[[https://magit.vc/][Magit]].  One of the reasons I wanted to use emacs.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package magit
+    :ensure t
+    :config (setq magit-diff-refine-hunk 'all))
+
+#+END_SRC
+
+And of course [[https://github.com/emacs-evil/evil-magit][evil-magit]] as it's one of the few things not handled in evil-collection.
+
+#+BEGIN_SRC emacs-lisp
+(use-package evil-magit
+  :after evil)
+#+END_SRC
+
+Show uncommitted changes with [[https://github.com/dgutov/diff-hl][diff-hl]].  Not sure I'm sold on this yet, hence =disabled=.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package diff-hl
+    :disabled
+    :custom
+    (diff-hl-side 'right)
+    :config
+    (global-diff-hl-mode 1)
+    (diff-hl-margin-mode 1)
+    (diff-hl-flydiff-mode 1))
+#+END_SRC
+
+** The Silver Searcher
+
+#+BEGIN_SRC emacs-lisp
+  (use-package ag
+    :ensure    t
+    :commands  (ag ag-project)
+    :custom
+      (ag-highlight-search t)
+      (ag-highlight-search t)
+      (ag-reuse-buffers t)
+      (ag-reuse-window t)
+    :config
+    (add-to-list 'ag-arguments "--word-regexp"))
+    ;; (setq ag-executable "/usr/local/bin/ag")
+
+#+END_SRC
+
+** [[https://github.com/justbur/emacs-which-key][Which Key]]
+
+Shows context sensitive clues about what commands you can execute from where you are in a key sequence.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package which-key
+    :defer nil
+    :diminish which-key-mode
+    :config
+    (which-key-mode t))
+#+END_SRC
+
+** [[https://github.com/emacs-helm/helm][Helm]]
+
+Helm is a "incremental completion and selection narrowing framework."  It can be used in all kinds of places, with fuzzy search enabled, to get things done faster.
+
+#+BEGIN_SRC emacs-lisp
+ (use-package helm
+   :defer 1
+   :diminish helm-mode
+   :custom
+     (helm-autoresize-max-height 0)
+     (helm-autoresize-min-height 40)
+     (helm-M-x-fuzzy-match t)
+     (helm-buffers-fuzzy-matching t)
+     (helm-recentf-fuzzy-match t)
+     (helm-semantic-fuzzy-match t)
+     (helm-imenu-fuzzy-match t)
+     (helm-split-window-in-side-p nil)
+     (helm-move-to-line-cycle-in-source nil)
+     (helm-ff-search-library-in-sexp t)
+     (helm-scroll-amount 8)
+     (helm-echo-input-in-header-line nil)
+     (helm-mode-fuzzy-match t)
+     (helm-completion-in-region-fuzzy-match t)
+   :init
+   (helm-mode 1))
+#+END_SRC
+
+** [[https://github.com/bbatsov/projectile][Projectile]]
+
+Working with projects in emacs
+
+#+BEGIN_SRC emacs-lisp
+  (use-package projectile
+    :defer 2
+    :diminish projectile-mode
+    :config
+    ;(setq projectile-indexing-method 'git)
+    (projectile-global-mode))
+#+END_SRC
+
+** Helm Projectile
+
+#+BEGIN_SRC emacs-lisp
+(use-package helm-projectile
+   :after (helm projectile)
+   :config
+     (helm-projectile-on))
+#+END_SRC
+
+** Helm ag
+
+#+BEGIN_SRC emacs-lisp
+(use-package helm-ag
+  :after (helm ag))
+
+; not sure if I care about this yet or not
+;(setq helm-ag-base-command "ag --hidden --nocolor --nogroup --ignore-case")
+#+END_SRC
+
+** Autocompletion
+
+[[https://github.com/company-mode/company-mode][company]] stands for complete anything.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package company
+    :diminish company-mode
+    :hook
+    (after-init . global-company-mode))
+#+END_SRC
+
+** restclient
+
+[[https://github.com/pashky/restclient.el][restclient]] is a cool mode that let's emacs do things like interact with a REST API.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package restclient)
+#+END_SRC
+
+** [[https://github.com/flycheck/flycheck][flycheck]]
+
+On the fly linting.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package flycheck
+      :custom
+      (flycheck-indication-mode nil)
+      (flycheck-display-errors-delay nil)
+      (flycheck-idle-change-delay 2)
+      (flycheck-highlighting-mode 'lines)
+      ;;   (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc))
+     :config
+      (global-flycheck-mode))
+    ;; (flycheck-add-mode 'javascript-eslint 'web-mode)
+
+    ;; Make sure eslint does not try to --print-config after each buffer opens.
+    ;; Here’s a related Flycheck: https://github.com/flycheck/flycheck/issues/1129
+    (with-eval-after-load 'flycheck
+      (advice-add 'flycheck-eslint-config-exists-p :override (lambda() t)))
+
+    (custom-set-faces
+     '(flycheck-error ((((class color)) (:underline "Red"))))
+     '(flycheck-warning ((((class color)) (:underline "Orange")))))
+
+    ;; ;; make sure eslint is from local project
+    ;; (defun my/use-eslint-from-node-modules ()
+    ;;   (let* ((root (locate-dominating-file
+    ;;                 (or (buffer-file-name) default-directory)
+    ;;                 "node_modules"))
+    ;;          (eslint (and root
+    ;;                       (expand-file-name "node_modules/eslint/bin/eslint.js"
+    ;;                                         root))))
+    ;;     (when (and eslint (file-executable-p eslint))
+    ;;       (setq-local flycheck-javascript-eslint-executable eslint))))
+    ;; (add-hook 'flycheck-mode-hook #'my/use-eslint-from-node-modules)
+#+END_SRC
+
+** [[https://github.com/Fuco1/smartparens][smartparens]]
+
+Minor mode for Emacs that deals with parens pairs and tries to be smart about it.
+
+#+BEGIN_SRC emacs-lisp
+(use-package smartparens
+  :diminish smartparens-mode
+  :custom
+  (sp-base-key-bindings 'paredit)
+  (sp-autoskip-closing-pair 'always)
+  (sp-hybrid-kill-entire-symbol nil)
+  :init
+  (sp-use-paredit-bindings)
+  (show-smartparens-global-mode t)
+  :config
+  (use-package smartparens-config)
+  :hook
+  ('prog-mode 'smartparens-mode))
+#+END_SRC
+
 #+begin_src emacs-lisp
-        (use-package diminish
-          :ensure t
-          :demand t
-          :diminish (visual-line-mode . "ω")
-          :diminish hs-minor-mode
-          :diminish abbrev-mode
-          :diminish auto-fill-function
-          :diminish subword-mode)
 
-        (use-package ag
-          :ensure    t
-          :commands  (ag ag-project)
-          :init      (setq ag-highlight-search t)
-          :config
-          (add-to-list 'ag-arguments "--word-regexp")
-          ;; (setq ag-executable "/usr/local/bin/ag")
-          (setq ag-highlight-search t)
-          (setq ag-reuse-buffers t)
-          (setq ag-reuse-window t))
-
-        ;; helm & projectile
-    ; stolen straight from https://github.com/zzamboni/dot-emacs/blob/master/init.org
-      (use-package helm
-        :defer 1
-        :diminish helm-mode
-        :custom
-          (helm-autoresize-max-height 0)
-          (helm-autoresize-min-height 40)
-          (helm-M-x-fuzzy-match t)
-          (helm-buffers-fuzzy-matching t)
-          (helm-recentf-fuzzy-match t)
-          (helm-semantic-fuzzy-match t)
-          (helm-imenu-fuzzy-match t)
-          (helm-split-window-in-side-p nil)
-          (helm-move-to-line-cycle-in-source nil)
-          (helm-ff-search-library-in-sexp t)
-          (helm-scroll-amount 8)
-          (helm-echo-input-in-header-line nil)
-        :init
-        (helm-mode 1))
-
-        ; globally enable fuzzy matching in helm
-        ; (customize-set-variable 'helm-mode-fuzzy-match t)
-        ; (customize-set-variable 'helm-completion-in-region-fuzzy-match t)
-
-        (use-package projectile
-          :defer 2
-          :diminish projectile-mode
-          :config
-          ;(setq projectile-indexing-method 'git)
-          (projectile-global-mode))
-
-    ;    (use-package helm-projectile)
-    ;    (use-package helm-ag)
-
-        ;; auto-completion
-        (use-package company
-          :diminish company-mode
-          :hook
-          (after-init . global-company-mode))
-
-        (use-package highlight-symbol
-          :diminish ""
-          :config
-          (setq-default highlight-symbol-idle-delay 1.5))
-
-        (setq helm-ag-base-command "ag --hidden --nocolor --nogroup --ignore-case")
-        ; (helm-projectile-on)
-
-        ;; flycheck
-        (use-package flycheck
-          :init
-          (setq flycheck-indication-mode nil)
-          (setq flycheck-display-errors-delay nil)
-          (setq flycheck-idle-change-delay 2)
-          (setq flycheck-highlighting-mode 'lines)
-          ;;   (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc))
-          (global-flycheck-mode))
-        ;; (flycheck-add-mode 'javascript-eslint 'web-mode)
-
-        ;; Make sure eslint does not try to --print-config after each buffer opens.
-        ;; Here’s a related Flycheck: https://github.com/flycheck/flycheck/issues/1129
-        (with-eval-after-load 'flycheck
-          (advice-add 'flycheck-eslint-config-exists-p :override (lambda() t)))
-
-        (custom-set-faces
-         '(flycheck-error ((((class color)) (:underline "Red"))))
-         '(flycheck-warning ((((class color)) (:underline "Orange")))))
-
-        ;; ;; make sure eslint is from local project
-        ;; (defun my/use-eslint-from-node-modules ()
-        ;;   (let* ((root (locate-dominating-file
-        ;;                 (or (buffer-file-name) default-directory)
-        ;;                 "node_modules"))
-        ;;          (eslint (and root
-        ;;                       (expand-file-name "node_modules/eslint/bin/eslint.js"
-        ;;                                         root))))
-        ;;     (when (and eslint (file-executable-p eslint))
-        ;;       (setq-local flycheck-javascript-eslint-executable eslint))))
-        ;; (add-hook 'flycheck-mode-hook #'my/use-eslint-from-node-modules)
 
         ;; no idea
         ;;(use-package yasnippet
@@ -405,27 +514,7 @@ Hopefully [[https://github.com/syl20bnr/evil-escape][evil-escape]] fixes that.
 
         ;(use-package yasnippet)
 
-        ;; git related stuffs
-        (use-package magit
-          :ensure t
-          :config (setq magit-diff-refine-hunk 'all))
 
-        (use-package diff-hl
-          :disabled
-          :init
-          (setq diff-hl-side 'right))
-
-        ;(global-diff-hl-mode 1)
-        ;(diff-hl-margin-mode 1)
-        ;(diff-hl-flydiff-mode 1)
-
-        (use-package which-key
-          :defer nil
-          :diminish which-key-mode
-          :config
-          (which-key-mode t))
-
-        (use-package restclient)
 
         (use-package markdown-mode
           :mode (("README\\.md\\'" . gfm-mode)
@@ -831,7 +920,9 @@ I'll occassionally try out other themes but I seem to always return to irblack.
       (doom-themes-enabled-bold t)
       (doom-themes-enabled-italic t)
     :config
-      (load-theme 'doom-one t))
+      (load-theme 'doom-one t)
+      (doom-themes-visual-bell-config)
+      (doom-themes-org-config))
 
 #+END_SRC
 
