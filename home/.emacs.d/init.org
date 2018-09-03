@@ -28,7 +28,14 @@ I've been inspired by and stolen configuration from loads of places
 (setq user-mail-address "jschoolcraft@aissaclabs.com")
 #+END_SRC
 
-* General
+* Package Management
+
+** Performance tweaks
+
+#+BEGIN_SRC emacs-lisp
+ (setq gc-cons-threshold (* 512 1024 1024))
+ (setq gnutls-min-prime-bits 4096)
+#+END_SRC
 
 ** Customizations File
 
@@ -38,7 +45,7 @@ I've been inspired by and stolen configuration from loads of places
           (load custom-file))
 #+END_SRC
 
-** Package management
+** Package archives
 
 #+BEGIN_SRC emacs-lisp
   (require 'package)
@@ -50,44 +57,226 @@ I've been inspired by and stolen configuration from loads of places
   (package-initialize)
 #+END_SRC
 
+** use-package
+
+Trying to use [[https://github.com/jwiegley/use-package][use-package]] for all of our package needs
+
+We bootstrap it if we don't have it already.
+
+#+BEGIN_SRC emacs-lisp
+  (unless (package-installed-p 'use-package)
+    (package-refresh-contents)
+    (package-install 'use-package))
+
+  (eval-when-compile
+    (require 'use-package))
+#+END_SRC
+
+** Sane defaults
+
+If we're declaring =use-package= there's a pretty good chance we want it installed, so let's make that the default.
+
+#+BEGIN_SRC emacs-lisp
+  (customize-set-variable 'use-package-always-ensure t)
+#+END_SRC
+
+Let's also make **defer** the default.
+
+#+BEGIN_SRC emacs-lisp
+  (customize-set-variable 'use-package-always-defer t)
+#+END_SRC
+
+Use the newer package, even if it's not compiled.
+
+#+BEGIN_SRC emacs-lisp
+  (customize-set-variable 'load-prefer-newer t)
+#+END_SRC
+
+** Auto-compile
+
+#+BEGIN_SRC emacs-lisp
+  (use-package auto-compile
+    :defer nil
+    :config (auto-compile-on-load-mode))
+#+END_SRC
+
+* General
+
+** UTF-8
+
+#+BEGIN_SRC emacs-lisp
+  ;; UTF-8
+  (set-terminal-coding-system  'utf-8)
+  (set-keyboard-coding-system  'utf-8)
+  (set-language-environment    'utf-8)
+  (set-selection-coding-system 'utf-8)
+  (setq locale-coding-system   'utf-8)
+  (prefer-coding-system        'utf-8)
+  (setq-default buffer-file-coding-system 'utf-8-auto-unix)
+  (set-input-method nil)
+#+END_SRC
+
+** Keystroke
+
+Display unfinished keystrokes more quickly.
+
+#+BEGIN_SRC emacs-lisp
+  (setq echo-keystrokes 0.25) ;display unfinished keystroke more quickly (defaults 1 second)
+#+END_SRC
+
+* Evil
+
+I'm a vim user at heart.  I like modal editing and I have years of movement commands and leader sequences built into muscle memory and I'd like to keep all that.
+
+So we'll be using [[https://github.com/emacs-evil/evil][evil]].
+
+** The Basics
+
+#+BEGIN_SRC emacs-lisp
+(use-package evil
+  :defer nil
+  :init
+  (setq evil-want-integration nil)
+  :config
+  (evil-mode 1))
+#+END_SRC
+
+** More Evil
+
+Evil is a great start, but there's a lot more to do if we're going to wrangle emacs into an editor that works the way we want it to.
+
+[[https://github.com/emacs-evil/evil-collection][evil-collection]] provides loads of config, mostly (all?) keybindings for a bunch of things not covered by evil proper.
+
+#+BEGIN_SRC emacs-lisp
+(use-package evil-collection
+  :after evil
+  :custom (evil-collection-setup-minibuffer t)
+  :config
+  (evil-collection-init))
+#+END_SRC
+
+** [ESC]ing all the things
+
+Serious headaches when you're in, e.g. =helm-M-x= and all you want to do is quit the minibuffer and you're banging on =[ESC]= and nothing happens.
+
+Hopefully [[https://github.com/syl20bnr/evil-escape][evil-escape]] fixes that.
+
+#+BEGIN_SRC emacs-lisp
+(use-package evil-escape
+  :after evil
+  :config
+    (evil-escape-mode t))
+#+END_SRC
+
 #+begin_src emacs-lisp
 
+;; the basics
 
-        ;;; Code:
-        ;; use package for most of our packages
+;; loads of stuff
+;;
 
-        ;;Bootstrap `use-package'
-        (unless (package-installed-p 'use-package)
-          (package-refresh-contents)
-          (package-install 'use-package))
+;; magit
+;; https://github.com/emacs-evil/evil-magit
+(use-package evil-magit
+  :after evil)
 
-        (eval-when-compile
-          (require 'use-package))
+;; https://github.com/cofi/evil-leader
+;; alternative using hydra: https://github.com/noctuid/evil-guide/wiki#using-hydra-for-leader-key
+(use-package evil-leader
+  :defer nil
+  :config
+  (global-evil-leader-mode))
 
-        (customize-set-variable 'use-package-always-ensure t)
-        (customize-set-variable 'use-package-always-defer t)
-        (customize-set-variable 'load-prefer-newer t)
+;; https://github.com/linktohack/evil-commentary
+(use-package evil-commentary
+  :config
+  (evil-commentary-mode))
 
-        (use-package auto-compile
-          :defer nil
-          :config (auto-compile-on-load-mode))
+;; https://github.com/emacs-evil/evil-surround
+(use-package evil-surround
+  :config
+  (global-evil-surround-mode 1))
 
-        ;; UTF-8
-        (set-terminal-coding-system  'utf-8)
-        (set-keyboard-coding-system  'utf-8)
-        (set-language-environment    'utf-8)
-        (set-selection-coding-system 'utf-8)
-        (setq locale-coding-system   'utf-8)
-        (prefer-coding-system        'utf-8)
-        (setq-default buffer-file-coding-system 'utf-8-auto-unix)
-        (set-input-method nil)
+;; (use-package evil-visualstar
+;;   :ensure t
+;;   (global-evil-visualstar-mode 1))
 
-        (setq echo-keystrokes 0.25) ;display unfinished keystroke more quickly (defaults 1 second)
+;; https://github.com/cofi/evil-indent-textobject
+(use-package evil-indent-textobject)
 
-        ;;  big fast machines now
-        (setq gc-cons-threshold (* 500 1024 1024))
-        (setq gnutls-min-prime-bits 4096)
+;; https://github.com/redguardtoo/evil-matchit
+(use-package evil-matchit)
 
+(global-set-key [escape] 'evil-exit-emacs-state)
+
+; Set cursor colors depending on mode
+(when (display-graphic-p)
+  (setq evil-emacs-state-cursor '("red" box)
+        evil-normal-state-cursor '("green" box)
+        evil-visual-state-cursor '("orange" box)
+        evil-insert-state-cursor '("red" bar)
+        evil-replace-state-cursor '("red" bar)
+        evil-operator-state-cursor '("red" hollow)))
+
+(progn
+  (setq evil-default-state 'normal
+        evil-auto-indent t
+        evil-shift-width 2
+        evil-search-wrap t
+        evil-find-skip-newlines t
+        evil-move-cursor-back nil
+        evil-mode-line-format 'before
+        evil-esc-delay 0.001
+        evil-cross-lines t))
+
+(setq evil-overriding-maps nil)
+(setq evil-intercept-maps nil)
+
+;; swap 0 and ^ so 0 goes back to first non-whitespace character
+;(define-key evil-motion-state-map (kbd "0") 'evil-first-non-blank)
+;(define-key evil-motion-state-map (kbd "^") 'evil-beginning-of-line)
+
+(evil-leader/set-leader ";")
+(evil-leader/set-key
+  "." 'find-tag
+  "t" 'helm-find-files
+  "f" 'helm-find-files
+  "b" 'helm-mini
+  "e" 'flycheck-list-errors
+  "ag" 'projectile-ag
+  "vs" 'split-window-right
+  "hs" 'split-window-below
+  "mx" 'helm-M-x
+  "p" 'helm-show-kill-ring
+  "oc" 'org-capture
+  "ot" 'org-babel-tangle
+  "q" 'evil-quit
+  "g" 'magit
+  "l" 'org-mac-grab-link
+  )
+
+(defun fix-underscore-word ()
+  (modify-syntax-entry ?_ "w"))
+
+;; Make ";" behave like ":" in normal mode
+;; (define-key evil-normal-state-map (kbd ";") 'evil-ex)
+;; (define-key evil-visual-state-map (kbd ";") 'evil-ex)
+;; (define-key evil-motion-state-map (kbd ";") 'evil-ex)
+
+;; moving around windows
+(eval-after-load "evil"
+  '(progn
+     (define-key evil-normal-state-map (kbd "C-h") 'evil-window-left)
+     (define-key evil-normal-state-map (kbd "C-j") 'evil-window-down)
+     (define-key evil-normal-state-map (kbd "C-k") 'evil-window-up)
+     (define-key evil-normal-state-map (kbd "C-l") 'evil-window-right)))
+
+
+
+#+end_src
+
+* Unsorted Mess
+#+begin_src emacs-lisp
         (use-package diminish
           :ensure t
           :demand t
@@ -356,126 +545,6 @@ I've been inspired by and stolen configuration from loads of places
 
         (put 'narrow-to-page 'disabled nil)
         (put 'narrow-to-region 'disabled nil)
-#+end_src
-
-* Evil
-
-#+begin_src emacs-lisp
-
-;; the basics
-(use-package evil
-  :defer nil
-  :init
-  (setq evil-want-integration nil)
-  :config
-  (evil-mode 1))
-
-;; loads of stuff
-;; https://github.com/emacs-evil/evil-collection
-(use-package evil-collection
-  :after evil
-  :custom (evil-collection-setup-minibuffer t)
-  :config
-  (evil-collection-init))
-
-;; magit
-;; https://github.com/emacs-evil/evil-magit
-(use-package evil-magit
-  :after evil)
-
-;; https://github.com/cofi/evil-leader
-;; alternative using hydra: https://github.com/noctuid/evil-guide/wiki#using-hydra-for-leader-key
-(use-package evil-leader
-  :defer nil
-  :config
-  (global-evil-leader-mode))
-
-;; https://github.com/linktohack/evil-commentary
-(use-package evil-commentary
-  :config
-  (evil-commentary-mode))
-
-;; https://github.com/emacs-evil/evil-surround
-(use-package evil-surround
-  :config
-  (global-evil-surround-mode 1))
-
-;; (use-package evil-visualstar
-;;   :ensure t
-;;   (global-evil-visualstar-mode 1))
-
-;; https://github.com/cofi/evil-indent-textobject
-(use-package evil-indent-textobject)
-
-;; https://github.com/redguardtoo/evil-matchit
-(use-package evil-matchit)
-
-(global-set-key [escape] 'evil-exit-emacs-state)
-
-; Set cursor colors depending on mode
-(when (display-graphic-p)
-  (setq evil-emacs-state-cursor '("red" box)
-        evil-normal-state-cursor '("green" box)
-        evil-visual-state-cursor '("orange" box)
-        evil-insert-state-cursor '("red" bar)
-        evil-replace-state-cursor '("red" bar)
-        evil-operator-state-cursor '("red" hollow)))
-
-(progn
-  (setq evil-default-state 'normal
-        evil-auto-indent t
-        evil-shift-width 2
-        evil-search-wrap t
-        evil-find-skip-newlines t
-        evil-move-cursor-back nil
-        evil-mode-line-format 'before
-        evil-esc-delay 0.001
-        evil-cross-lines t))
-
-(setq evil-overriding-maps nil)
-(setq evil-intercept-maps nil)
-
-;; swap 0 and ^ so 0 goes back to first non-whitespace character
-;(define-key evil-motion-state-map (kbd "0") 'evil-first-non-blank)
-;(define-key evil-motion-state-map (kbd "^") 'evil-beginning-of-line)
-
-(evil-leader/set-leader ";")
-(evil-leader/set-key
-  "." 'find-tag
-  "t" 'helm-find-files
-  "f" 'helm-find-files
-  "b" 'helm-mini
-  "e" 'flycheck-list-errors
-  "ag" 'projectile-ag
-  "vs" 'split-window-right
-  "hs" 'split-window-below
-  "mx" 'helm-M-x
-  "p" 'helm-show-kill-ring
-  "oc" 'org-capture
-  "ot" 'org-babel-tangle
-  "q" 'evil-quit
-  "g" 'magit
-  "l" 'org-mac-grab-link
-  )
-
-(defun fix-underscore-word ()
-  (modify-syntax-entry ?_ "w"))
-
-;; Make ";" behave like ":" in normal mode
-;; (define-key evil-normal-state-map (kbd ";") 'evil-ex)
-;; (define-key evil-visual-state-map (kbd ";") 'evil-ex)
-;; (define-key evil-motion-state-map (kbd ";") 'evil-ex)
-
-;; moving around windows
-(eval-after-load "evil"
-  '(progn
-     (define-key evil-normal-state-map (kbd "C-h") 'evil-window-left)
-     (define-key evil-normal-state-map (kbd "C-j") 'evil-window-down)
-     (define-key evil-normal-state-map (kbd "C-k") 'evil-window-up)
-     (define-key evil-normal-state-map (kbd "C-l") 'evil-window-right)))
-
-
-
 #+end_src
 
 * Org
