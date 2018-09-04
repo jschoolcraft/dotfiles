@@ -472,108 +472,110 @@
   (org-src-fontify-natively  t)
   (org-src-tab-acts-natively t)
   :config
-  ; (progn
+   (progn
 
-  ;   ;; highlight code blocks syntax
+     ;; highlight code blocks syntax
 
-  ;   ; set the modules enabled by default
-  ;   (setq org-modules '(
-  ;                       org-bbdb
-  ;                       org-bibtex
-  ;                       org-docview
-  ;                       org-mhe
-  ;                       org-rmail
-  ;                       org-crypt
-  ;                       org-protocol
-  ;                       org-gnus
-  ;                       org-id
-  ;                       org-info
-  ;                       org-habit
-  ;                       org-irc
-  ;                       org-annotate-file
-  ;                       org-eval
-  ;                       org-expiry
-  ;                       org-man
-  ;                       org-panel
-  ;                       org-toc))
+     ; set the modules enabled by default
+     (setq org-modules '(
+                         org-bbdb
+                         org-bibtex
+                         org-docview
+                         org-mhe
+                         org-rmail
+                         org-crypt
+                         org-protocol
+                         org-gnus
+                         org-id
+                         org-info
+                         org-habit
+                         org-irc
+                         org-annotate-file
+                         org-eval
+                         org-expiry
+                         org-man
+                         org-panel
+                         org-toc))
 
-  ;   ;; set default directories
-  ;   (setq org-directory "~/Dropbox/org"
-  ;         org-default-notes-file (concat org-directory "/notes.org"))
+     ;; set default directories
+     (setq org-directory "~/Dropbox/org"
+           org-default-notes-file (concat org-directory "/notes.org"))
 
-  ;   ;; refiling
-  ;   ;; all of this stolen from https://blog.aaronbieber.com/2017/03/19/organizing-notes-with-refile.html
-  ;   ;; look at this https://mollermara.com/blog/Fast-refiling-in-org-mode-with-hydras/
-  ;   (setq org-refile-targets '((org-agenda-files :maxlevel . 4))
-  ;         org-refile-use-outline-path 'file
-  ;         org-outline-path-complete-in-steps nil
-  ;         org-refile-allow-creating-parent-nodes 'confirm)
+     ;; refiling
+     ;; all of this stolen from https://blog.aaronbieber.com/2017/03/19/organizing-notes-with-refile.html
+     ;; look at this https://mollermara.com/blog/Fast-refiling-in-org-mode-with-hydras/
+     (setq org-refile-targets '((org-agenda-files :maxlevel . 4))
+           org-refile-use-outline-path 'file
+           org-outline-path-complete-in-steps nil
+           org-refile-allow-creating-parent-nodes 'confirm)
 
 
-  ;   ;; capture templates
-  ;   (setq org-capture-templates
-  ;         '(
-  ;           ("t" "Todo" entry (file+headline "~/Dropbox/org/gtd.org" "Tasks")
-  ;            "* TODO %?\n  %i\n  %a")
-  ;           ("r" "TODO" entry (file+headline "~/Dropbox/org/gtd.org" "Tasks")
-  ;            "* TODO %^{Task}  %^G\n   %?\n  %a")
-  ;           ("j" "Journal" entry (file+datetree "~/Dropbox/org/journal.org")
-  ;            "* %?\nEntered on %U\n  %i\n  %a")
-  ;           ("m" "Meeting")
-  ;           ("mb" "Bibleschools" entry (file+datetree "~/Dropbox/org/clients/BibleSchools.org")
-  ;            "* %?\nEntered on %U\n  %i\n")
-  ;           ("mn" "NADE" entry (file+datetree "~/Dropbox/org/clients/NADE.org")
-  ;            "* %?\nEntered on %U\n  %i\n")
-  ;           ("mr" "Roth" entry (file+datetree "~/Dropbox/org/clients/Roth.org")
-  ;            "* %?\nEntered on %U\n  %i\n")
-  ;           ("ms" "SkillScout" entry (file+datetree "~/Dropbox/org/clients/SkillScout.org")
-  ;            "* %?\nEntered on %U\n  %i\n")
-  ;           ("mw" "SZW" entry (file+datetree "~/Dropbox/org/clients/Subzero.org")
-  ;            "* %?\nEntered on %U\n  %i\n")
-  ;           ("i" "Inbox" entry (file+datetree "~/Dropbox/org/inbox.org")
-  ;            "* %?\nEntered on %U\n  %i\n  %a")
-  ;           ("I" "Read Later" entry (file+datetree "~/Dropbox/org/inbox.org")
-  ;            "* %?\n  %i\n %c\n")
-  ;           ("n" "Notes" entry (file+headline "~/Dropbox/org/notes.org" "Notes")
-  ;            "* %^{Header}  %^G\n  %U\n\n  %?")
-  ;           ("l" "Link" entry (file+headline "~/Dropbox/org/links.org" "Links")
-  ;            "* %? %^L %^g \n%T" :prepend t)
-  ;           ))
+     ;; capture templates
+     (setq org-capture-templates
+           '(
+             ("t" "Todo" entry (file+headline "~/Dropbox/org/gtd.org" "Tasks")
+              "* TODO %?\n  %i\n  %a")
+             ("r" "TODO" entry (file+headline "~/Dropbox/org/gtd.org" "Tasks")
+              "* TODO %^{Task}  %^G\n   %?\n  %a")
+             ("j" "Journal" entry (file+datetree "~/Dropbox/org/journal.org")
+              "* %?\nEntered on %U\n  %i\n  %a")
+             ("m" "Meeting")
+             ("mb" "Bibleschools" entry (file+datetree "~/Dropbox/org/clients/BibleSchools.org")
+              "* %?\nEntered on %U\n  %i\n")
+             ("mn" "NADE" entry (file+datetree "~/Dropbox/org/clients/NADE.org")
+              "* %?\nEntered on %U\n  %i\n")
+             ("mr" "Roth" entry (file+datetree "~/Dropbox/org/clients/Roth.org")
+              "* %?\nEntered on %U\n  %i\n")
+             ("ms" "SkillScout" entry (file+datetree "~/Dropbox/org/clients/SkillScout.org")
+              "* %?\nEntered on %U\n  %i\n")
+             ("mw" "SZW" entry (file+datetree "~/Dropbox/org/clients/Subzero.org")
+              "* %?\nEntered on %U\n  %i\n")
+             ("i" "Inbox" entry (file+datetree "~/Dropbox/org/inbox.org")
+              "* %?\nEntered on %U\n  %i\n  %a")
+             ("I" "Read Later" entry (file+datetree "~/Dropbox/org/inbox.org")
+              "* %?\n  %i\n %c\n")
+             ("n" "Notes" entry (file+headline "~/Dropbox/org/notes.org" "Notes")
+              "* %^{Header}  %^G\n  %U\n\n  %?")
+             ("l" "Link" entry (file+headline "~/Dropbox/org/links.org" "Links")
+              "* %? %^L %^g \n%T" :prepend t)
+             ))
 
-  ;   ;; tasks management
-  ;   (setq org-log-done t)
-  ;   ;; (setq org-clock-idle-time nil)
+     ;; tasks management
+     (setq org-log-done t)
+     ;; (setq org-clock-idle-time nil)
 
-  ;   ;; agenda & diary
-  ;   (setq org-agenda-include-diary t)
-  ;   (setq org-agenda-files '("~/Dropbox/org/"
-  ;                            "~/Dropbox/org/personal.org"
-  ;                            "~/Dropbox/org/technical.org"
-  ;                            "~/Dropbox/org/project.org"
-  ;                            "~/Dropbox/org/clients/"))
-  ;   (setq org-agenda-inhibit-startup t)
+     ;; agenda & diary
+     (setq org-agenda-include-diary t)
+     (setq org-agenda-files '("~/Dropbox/org/"
+                              "~/Dropbox/org/personal.org"
+                              "~/Dropbox/org/technical.org"
+                              "~/Dropbox/org/project.org"
+                              "~/Dropbox/org/clients/"))
+     (setq org-agenda-inhibit-startup t)
 
-  ;   ;; show images inline
-  ;   ;; only works in GUI, but is a nice feature to have
-  ;   (when (window-system)
-  ;     (setq org-startup-with-inline-images t))
-  ;   ;; limit images width
-  ;   (setq org-image-actual-width '(800))
+     ;; show images inline
+     ;; only works in GUI, but is a nice feature to have
+     (when (window-system)
+       (setq org-startup-with-inline-images t))
+     ;; limit images width
+     (setq org-image-actual-width '(800))
 
-  ;   ;; Some initial langauges we want org-babel to support
-  ;   (org-babel-do-load-languages 'org-babel-load-languages
-  ;                                '((shell     . t)
-  ;                                  (js     . t)
-  ;                                  (python . t)
-  ;                                  (ruby   . t)
-  ;                                  (dot    . t)
-  ;                                  (org . t)
-  ;                                  (sqlite . t)
-  ;                                  (perl   . t)))
+     ;; Some initial langauges we want org-babel to support
+     (org-babel-do-load-languages 'org-babel-load-languages
+                                  '((js     . t)
+                                    (python . t)
+                                    (ruby   . t)
+                                    (dot    . t)
+                                    (org . t)
+                                    (sqlite . t)
+                                    (perl   . t)))
 
-  ;   ;; refresh images after execution
-  ;   (add-hook 'org-babel-after-execute-hook 'org-redisplay-inline-images)
-  ;   )
+     ;; refresh images after execution
+     (add-hook 'org-babel-after-execute-hook 'org-redisplay-inline-images)
+     (add-hook 'after-save-hook 'org-babel-tangle
+                                'run-at-end
+                                'only-in-org-mode)
+     )
   )
 
 ;(use-package org-mac-link
