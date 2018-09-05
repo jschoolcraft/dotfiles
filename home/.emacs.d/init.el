@@ -22,10 +22,12 @@
 
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
-  (package-install 'use-package))
+  (package-install 'use-package)
+  (package-install 'diminish))
 
 (eval-when-compile
-  (require 'use-package))
+  (require 'use-package)
+  (require 'diminish))
 
 (customize-set-variable 'use-package-always-ensure t)
 
@@ -478,7 +480,7 @@
   (org-src-fontify-natively  t)
   (org-src-tab-acts-natively t)
 
-  ; directories
+                                        ; directories
   (org-directory "~/Dropbox/org")
   (org-default-notes-file (concat org-directory "/notes.org"))
 
@@ -579,6 +581,8 @@
                                    (sqlite . t)
                                    (perl   . t)))
 
+    ;; easy elisp source blocks
+    (add-to-list 'org-structure-template-alist '("el" "#+BEGIN_SRC emacs-lisp :tangle yes?\n\n#+END_SRC"))
     ;; refresh images after execution
     (add-hook 'org-babel-after-execute-hook 'org-redisplay-inline-images)
     (add-hook 'after-save-hook 'org-babel-tangle
@@ -649,7 +653,7 @@
 
 
 
-;;; this is here for the alfred workflow
+  ;;; this is here for the alfred workflow
 ;;   all of this was stolen from:
 ;;   https://github.com/jjasghar/alfred-org-capture/blob/master/el/alfred-org-capture.el
 ;; for this to work the server has to be started: M-x start-server
