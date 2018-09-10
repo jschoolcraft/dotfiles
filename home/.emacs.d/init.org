@@ -982,10 +982,11 @@ Lot's of places to find inspiration for orgmode config, but here are a few that 
                                           ;  :disabled)
 
                                           ;(setq org-ellipsis "⤵")
-  (use-package org-bullets
-    :config
-    (progn
-      (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))))
+(use-package org-bullets
+  :after org
+  :hook (org-mode . (lambda () (org-bullets-mode 1)))
+  :config
+  (setq org-bullets-bullet-list '("◉" "⚫")))
 
   '(org-agenda-date ((t (:inherit org-agenda-structure :weight semi-bold :height 1.2))) t)
   '(org-date ((t (:foreground "Purple" :underline t :height 0.8 :family "Helvetica Neue"))))
