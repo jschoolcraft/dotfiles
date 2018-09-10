@@ -305,15 +305,15 @@ There are a couple other options to evil-leader:
 (evil-leader/set-leader ";")
 (evil-leader/set-key
   "." 'find-tag
-  "t" 'helm-find-files
-  "f" 'helm-find-files
-  "b" 'helm-mini
+  "t" 'counsel-find-files
+  "f" 'counsel-find-files
+  "b" 'counsel-ibuffer
   "e" 'flycheck-list-errors
   "ag" 'projectile-ag
   "vs" 'split-window-right
   "hs" 'split-window-below
-  "mx" 'helm-M-x
-  "p" 'helm-show-kill-ring
+  "mx" 'counsel-M-x
+  "p" 'counsel-yank-pop
   "oc" 'org-capture
   "ot" 'org-babel-tangle
   "q" 'evil-quit
@@ -424,26 +424,65 @@ Shows context sensitive clues about what commands you can execute from where you
 Helm is a "incremental completion and selection narrowing framework."  It can be used in all kinds of places, with fuzzy search enabled, to get things done faster.
 
 #+BEGIN_SRC emacs-lisp
- (use-package helm
-   :defer 1
-   :diminish helm-mode
-   :custom
-     (helm-autoresize-max-height 0)
-     (helm-autoresize-min-height 40)
-     (helm-M-x-fuzzy-match t)
-     (helm-buffers-fuzzy-matching t)
-     (helm-recentf-fuzzy-match t)
-     (helm-semantic-fuzzy-match t)
-     (helm-imenu-fuzzy-match t)
-     (helm-split-window-in-side-p nil)
-     (helm-move-to-line-cycle-in-source nil)
-     (helm-ff-search-library-in-sexp t)
-     (helm-scroll-amount 8)
-     (helm-echo-input-in-header-line nil)
-     (helm-mode-fuzzy-match t)
-     (helm-completion-in-region-fuzzy-match t)
-   :init
-   (helm-mode 1))
+  (use-package helm
+    :disabled
+    :defer 1
+    :diminish helm-mode
+    :custom
+      (helm-autoresize-max-height 0)
+      (helm-autoresize-min-height 40)
+      (helm-M-x-fuzzy-match t)
+      (helm-buffers-fuzzy-matching t)
+      (helm-recentf-fuzzy-match t)
+      (helm-semantic-fuzzy-match t)
+      (helm-imenu-fuzzy-match t)
+      (helm-split-window-in-side-p nil)
+      (helm-move-to-line-cycle-in-source nil)
+      (helm-ff-search-library-in-sexp t)
+      (helm-scroll-amount 8)
+      (helm-echo-input-in-header-line nil)
+      (helm-mode-fuzzy-match t)
+      (helm-completion-in-region-fuzzy-match t)
+    :init
+    (helm-mode 1))
+#+END_SRC
+
+** Ivy, Swiper, Counsel, oh my
+
+Ivy dependency.
+
+#+BEGIN_SRC emacs-lisp
+(use-package smex)
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+  (use-package ivy
+    :diminish ivy-mode
+    :custom
+    (ivy-initial-inputs-alist nil)
+    :config
+    (ivy-mode t))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+(use-package counsel
+    :bind (("M-x" . counsel-M-x)))
+    ;:chords (("yy" . counsel-yank-pop)))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+  (use-package swiper
+    :bind (("M-s" . swiper)))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+  (use-package ivy-hydra)
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+ (use-package avy)
+;    :chords (("jj" . avy-goto-char-2)
+;             ("jl" . avy-goto-line)))
 #+END_SRC
 
 ** [[https://github.com/bbatsov/projectile][Projectile]]
@@ -459,23 +498,32 @@ Working with projects in emacs
     (projectile-global-mode))
 #+END_SRC
 
+** Counsel Projetile
+
+#+BEGIN_SRC emacs-lisp
+(use-package counsel-projectile
+  :after (counsel projectile))
+#+END_SRC
+
 ** Helm Projectile
 
 #+BEGIN_SRC emacs-lisp
-(use-package helm-projectile
-   :after (helm projectile)
-   :config
-     (helm-projectile-on))
+  (use-package helm-projectile
+    :disabled
+    :after (helm projectile)
+    :config
+    (helm-projectile-on))
 #+END_SRC
 
 ** Helm ag
 
 #+BEGIN_SRC emacs-lisp
-(use-package helm-ag
-  :after (helm ag))
+  (use-package helm-ag
+    :disabled
+    :after (helm ag))
 
-; not sure if I care about this yet or not
-;(setq helm-ag-base-command "ag --hidden --nocolor --nogroup --ignore-case")
+                                          ; not sure if I care about this yet or not
+                                          ;(setq helm-ag-base-command "ag --hidden --nocolor --nogroup --ignore-case")
 #+END_SRC
 
 ** Autocompletion
@@ -516,6 +564,7 @@ On the fly linting.
          :config
          (flycheck-pos-tip-mode))
       (use-package helm-flycheck
+         :disabled
          :after helm))
     ;; (flycheck-add-mode 'javascript-eslint 'web-mode)
 
@@ -1116,6 +1165,15 @@ Getting rid of all the window chrome/treatments/bars/etc.
 #+END_SRC
 
 ** Everything else
+
+#+BEGIN_SRC emacs-lisp
+  (use-package golden-ratio
+    :custom
+    (golden-ratio-adjust-factor .8)
+    (golden-ratio-wide-adjust-factor .8)
+    :config
+    (golden-ratio-mode 1))
+#+END_SRC
 
 #+begin_src emacs-lisp
 

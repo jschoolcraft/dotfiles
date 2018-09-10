@@ -165,15 +165,15 @@
 (evil-leader/set-leader ";")
 (evil-leader/set-key
   "." 'find-tag
-  "t" 'helm-find-files
-  "f" 'helm-find-files
-  "b" 'helm-mini
+  "t" 'counsel-find-files
+  "f" 'counsel-find-files
+  "b" 'counsel-ibuffer
   "e" 'flycheck-list-errors
   "ag" 'projectile-ag
   "vs" 'split-window-right
   "hs" 'split-window-below
-  "mx" 'helm-M-x
-  "p" 'helm-show-kill-ring
+  "mx" 'counsel-M-x
+  "p" 'counsel-yank-pop
   "oc" 'org-capture
   "ot" 'org-babel-tangle
   "q" 'evil-quit
@@ -240,6 +240,7 @@
   (which-key-mode t))
 
 (use-package helm
+  :disabled
   :defer 1
   :diminish helm-mode
   :custom
@@ -260,6 +261,28 @@
   :init
   (helm-mode 1))
 
+(use-package smex)
+
+(use-package ivy
+  :diminish ivy-mode
+  :custom
+  (ivy-initial-inputs-alist nil)
+  :config
+  (ivy-mode t))
+
+(use-package counsel
+    :bind (("M-x" . counsel-M-x)))
+    ;:chords (("yy" . counsel-yank-pop)))
+
+(use-package swiper
+  :bind (("M-s" . swiper)))
+
+(use-package ivy-hydra)
+
+(use-package avy)
+;    :chords (("jj" . avy-goto-char-2)
+;             ("jl" . avy-goto-line)))
+
 (use-package projectile
   :defer 2
   :diminish projectile-mode
@@ -267,16 +290,21 @@
   ;(setq projectile-indexing-method 'git)
   (projectile-global-mode))
 
+(use-package counsel-projectile
+  :after (counsel projectile))
+
 (use-package helm-projectile
-   :after (helm projectile)
-   :config
-     (helm-projectile-on))
+  :disabled
+  :after (helm projectile)
+  :config
+  (helm-projectile-on))
 
 (use-package helm-ag
+  :disabled
   :after (helm ag))
 
-; not sure if I care about this yet or not
-;(setq helm-ag-base-command "ag --hidden --nocolor --nogroup --ignore-case")
+                                        ; not sure if I care about this yet or not
+                                        ;(setq helm-ag-base-command "ag --hidden --nocolor --nogroup --ignore-case")
 
 (use-package company
   :diminish company-mode
@@ -299,6 +327,7 @@
        :config
        (flycheck-pos-tip-mode))
     (use-package helm-flycheck
+       :disabled
        :after helm))
   ;; (flycheck-add-mode 'javascript-eslint 'web-mode)
 
@@ -732,6 +761,13 @@
 
 (use-package powerline)
 (use-package powerline-evil)
+
+(use-package golden-ratio
+  :custom
+  (golden-ratio-adjust-factor .8)
+  (golden-ratio-wide-adjust-factor .8)
+  :config
+  (golden-ratio-mode 1))
 
 (set-face-attribute 'default nil :font "Monaco 18")
 
