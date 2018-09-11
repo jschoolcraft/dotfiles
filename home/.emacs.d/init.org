@@ -146,6 +146,13 @@ Hate trailing whitespace
   (add-hook 'before-save-hook 'delete-trailing-whitespace)
 #+END_SRC
 
+#+BEGIN_SRC emacs-lisp
+(defun jas/reload-init-file ()
+  (interactive)
+  (load-file "~/.emacs.d/init.el"))
+(evil-leader/set-key "r" 'jas/reload-init-file)
+#+END_SRC
+
 ** Backups
 
 #+BEGIN_SRC emacs-lisp
@@ -676,6 +683,12 @@ For consistency among developers when I'm working on projects with other people.
           (editorconfig-mode 1))
 #+END_SRC
 
+** Expand Region
+
+#+BEGIN_SRC emacs-lisp
+(use-package expand-region)
+#+END_SRC
+
 * Languages
 
 ** markdown
@@ -1121,9 +1134,9 @@ I'll occassionally try out other themes but I seem to always return to irblack.
       (doom-themes-enabled-bold t)
       (doom-themes-enabled-italic t)
     :config
-      (load-theme 'doom-one t)
       (doom-themes-visual-bell-config)
-      (doom-themes-org-config))
+      (doom-themes-org-config)
+      (load-theme 'doom-one t))
 
 #+END_SRC
 
