@@ -12,14 +12,85 @@
 #+author: Jeff Schoolcraft
 #+email: jschoolcraft@aissaclabs.com
 
+
+* Table of Contents                                                             :TOC_2_gh:
+- [[#references][References]]
+  - [[#ive-been-inspired-by-and-stolen-configuration-from-loads-of-places][I've been inspired by and stolen configuration from loads of places]]
+  - [[#things-id-like-to-steal-from-probably][Things I'd like to steal from, probably]]
+- [[#personal-information][Personal Information]]
+- [[#package-management][Package Management]]
+  - [[#performance-tweaks][Performance tweaks]]
+  - [[#customizations-file][Customizations File]]
+  - [[#package-archives][Package archives]]
+  - [[#use-package][use-package]]
+  - [[#sane-defaults][Sane defaults]]
+  - [[#auto-compile][Auto-compile]]
+- [[#general][General]]
+  - [[#utf-8][UTF-8]]
+  - [[#keystroke][Keystroke]]
+  - [[#conveniences][Conveniences]]
+  - [[#backups][Backups]]
+- [[#evil][Evil]]
+  - [[#the-basics][The Basics]]
+  - [[#more-evil][More Evil]]
+  - [[#evil-org-mode][evil-org-mode]]
+  - [[#escaping-all-the-things][escaping all the things]]
+  - [[#evil-leader][Evil Leader]]
+- [[#packages][Packages]]
+  - [[#diminish][Diminish]]
+  - [[#flyspell][flyspell]]
+  - [[#git][git]]
+  - [[#the-silver-searcher][The Silver Searcher]]
+  - [[#which-key][Which Key]]
+  - [[#helm][Helm]]
+  - [[#ivy-swiper-counsel-oh-my][Ivy, Swiper, Counsel, oh my]]
+  - [[#projectile][Projectile]]
+  - [[#counsel-projetile][Counsel Projetile]]
+  - [[#helm-projectile][Helm Projectile]]
+  - [[#helm-ag][Helm ag]]
+  - [[#autocompletion][Autocompletion]]
+  - [[#restclient][restclient]]
+  - [[#flycheck][flycheck]]
+  - [[#smartparens][smartparens]]
+  - [[#rainbow-delimiters][rainbow-delimiters]]
+  - [[#snippets][Snippets]]
+  - [[#bug-hunter][bug hunter]]
+  - [[#unique-filenames][Unique Filenames]]
+  - [[#deft][Deft]]
+  - [[#editorconfig][Editorconfig]]
+  - [[#expand-region][Expand Region]]
+  - [[#undo-tree][undo-tree]]
+- [[#languages][Languages]]
+  - [[#markdown][markdown]]
+  - [[#yaml][yaml]]
+  - [[#haml][haml]]
+  - [[#ruby][ruby]]
+  - [[#javascript][javascript]]
+  - [[#web-mode][Web Mode]]
+- [[#org][Org]]
+- [[#appearance][Appearance]]
+  - [[#theme][Theme]]
+  - [[#windows][Windows]]
+  - [[#powerline][Powerline]]
+  - [[#everything-else][Everything else]]
+
 * References
 
-I've been inspired by and stolen configuration from loads of places
+** I've been inspired by and stolen configuration from loads of places
 
 - https://github.com/joedicastro/dotfiles/tree/master/emacs
 - https://github.com/howardabrams/dot-files/blob/master/emacs.org
 - https://github.com/zzamboni/dot-emacs
 - https://github.com/brainlessdeveloper/emacs.d/blob/master/config.org
+
+** Things I'd like to steal from, probably
+
+- https://github.com/mclear-tools/dotemacs/blob/master/config.org
+- https://wolfecub.github.io/dotfiles/
+- https://jamiecollinson.com/blog/my-emacs-config/
+- https://github.com/sykora/etc/blob/master/emacs/init-4.el (for hydras in conjunction with general bound keys)
+- https://github.com/deviantfero/.emacs.d/blob/master/init.el (for javascript setup for react native)
+- https://github.com/magiking/dotfiles/blob/master/emacs/.emacs.d/init.el (mostly because of the capture template files)
 
 * Personal Information
 
@@ -49,10 +120,8 @@ I've been inspired by and stolen configuration from loads of places
 
 #+BEGIN_SRC emacs-lisp
   (require 'package)
-  (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
-  (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
-  (add-to-list 'package-archives '("gnu"       . "https://elpa.gnu.org/packages/"))
   (add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/") t)
+  (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
   (add-to-list 'package-archives '("mela-stable" . "https://stable.melpa.org/packages/"))
   (package-initialize)
 #+END_SRC
@@ -85,7 +154,7 @@ If we're declaring =use-package= there's a pretty good chance we want it install
 Let's also make **defer** the default.
 
 #+BEGIN_SRC emacs-lisp
-  (customize-set-variable 'use-package-always-defer t)
+ ;(customize-set-variable 'use-package-always-defer t)
 #+END_SRC
 
 Use the newer package, even if it's not compiled.
@@ -146,12 +215,6 @@ Hate trailing whitespace
   (add-hook 'before-save-hook 'delete-trailing-whitespace)
 #+END_SRC
 
-#+BEGIN_SRC emacs-lisp
-(defun jas/reload-init-file ()
-  (interactive)
-  (load-file "~/.emacs.d/init.el"))
-(evil-leader/set-key "r" 'jas/reload-init-file)
-#+END_SRC
 
 ** Backups
 
@@ -216,7 +279,7 @@ Evil is a great start, but there's a lot more to do if we're going to wrangle em
               (lambda () (evil-org-set-key-theme))))
 #+END_SRC
 
-** [ESC]ing all the things
+** escaping all the things
 
 Serious headaches when you're in, e.g. =helm-M-x= and all you want to do is quit the minibuffer and you're banging on =[ESC]= and nothing happens.
 
@@ -339,6 +402,15 @@ There are a couple other options to evil-leader:
 ;; (define-key evil-motion-state-map (kbd ";") 'evil-ex)
 
 #+end_src
+
+Reload =init.el=
+
+#+BEGIN_SRC emacs-lisp
+(defun jas/reload-init-file ()
+  (interactive)
+  (load-file "~/.emacs.d/init.el"))
+(evil-leader/set-key "r" 'jas/reload-init-file)
+#+END_SRC
 
 * Packages
 
@@ -689,6 +761,20 @@ For consistency among developers when I'm working on projects with other people.
 (use-package expand-region)
 #+END_SRC
 
+** undo-tree
+
+Want to bind commands to:
+
+- =undo-tree-undo=
+- =undo-tree-redo=
+
+#+BEGIN_SRC emacs-lisp :tangle yes
+  (use-package undo-tree
+    :diminish
+    :config
+    (global-undo-mode 1))
+#+END_SRC
+
 * Languages
 
 ** markdown
@@ -874,201 +960,208 @@ Lot's of places to find inspiration for orgmode config, but here are a few that 
 - https://github.com/joedicastro/dotfiles/tree/master/emacs/.emacs.d#org-mode-settings
 
 #+begin_src emacs-lisp
-  (use-package org
-    :pin "gnu"
-    :custom
-    (org-src-fontify-natively  t)
-    (org-src-tab-acts-natively t)
+      (use-package org
+        :pin "gnu"
+        :custom
+        (org-src-fontify-natively  t)
+        (org-src-tab-acts-natively t)
 
-                                          ; directories
-    (org-directory "~/Dropbox/org")
-    (org-default-notes-file (concat org-directory "/notes.org"))
-
-
-    ;; refiling
-    ;; all of this stolen from https://blog.aaronbieber.com/2017/03/19/organizing-notes-with-refile.html
-    ;; look at this https://mollermara.com/blog/Fast-refiling-in-org-mode-with-hydras/
-    (org-refile-targets '((org-agenda-files :maxlevel . 4)))
-    (org-refile-use-outline-path 'file)
-    (org-outline-path-complete-in-steps nil)
-    (org-refile-allow-creating-parent-nodes 'confirm)
-
-    (org-log-done t)
-    :config
-    (progn
-
-      ;; highlight code blocks syntax
-
-                                          ; set the modules enabled by default
-      (setq org-modules '(
-                          org-bbdb
-                          org-bibtex
-                          org-docview
-                          org-mhe
-                          org-rmail
-                          org-crypt
-                          org-protocol
-                          org-gnus
-                          org-id
-                          org-info
-                          org-habit
-                          org-irc
-                          org-annotate-file
-                          org-eval
-                          org-expiry
-                          org-man
-                          org-panel
-                          org-toc))
+                                              ; directories
+        (org-directory "~/Dropbox/org")
+        (org-default-notes-file (concat org-directory "/notes.org"))
 
 
+        ;; refiling
+        ;; all of this stolen from https://blog.aaronbieber.com/2017/03/19/organizing-notes-with-refile.html
+        ;; look at this https://mollermara.com/blog/Fast-refiling-in-org-mode-with-hydras/
+        (org-refile-targets '((org-agenda-files :maxlevel . 4)))
+        (org-refile-use-outline-path 'file)
+        (org-outline-path-complete-in-steps nil)
+        (org-refile-allow-creating-parent-nodes 'confirm)
 
-      ;; capture templates
-      (setq org-capture-templates
-            '(
-              ("t" "Todo" entry (file+headline "~/Dropbox/org/gtd.org" "Tasks")
-               "* TODO %?\n  %i\n  %a")
-              ("r" "TODO" entry (file+headline "~/Dropbox/org/gtd.org" "Tasks")
-               "* TODO %^{Task}  %^G\n   %?\n  %a")
-              ("j" "Journal" entry (file+datetree "~/Dropbox/org/journal.org")
-               "* %?\nEntered on %U\n  %i\n  %a")
-              ("m" "Meeting")
-              ("mb" "Bibleschools" entry (file+datetree "~/Dropbox/org/clients/BibleSchools.org")
-               "* %?\nEntered on %U\n  %i\n")
-              ("mn" "NADE" entry (file+datetree "~/Dropbox/org/clients/NADE.org")
-               "* %?\nEntered on %U\n  %i\n")
-              ("mr" "Roth" entry (file+datetree "~/Dropbox/org/clients/Roth.org")
-               "* %?\nEntered on %U\n  %i\n")
-              ("ms" "SkillScout" entry (file+datetree "~/Dropbox/org/clients/SkillScout.org")
-               "* %?\nEntered on %U\n  %i\n")
-              ("mw" "SZW" entry (file+datetree "~/Dropbox/org/clients/Subzero.org")
-               "* %?\nEntered on %U\n  %i\n")
-              ("i" "Inbox" entry (file+datetree "~/Dropbox/org/inbox.org")
-               "* %?\nEntered on %U\n  %i\n  %a")
-              ("I" "Read Later" entry (file+datetree "~/Dropbox/org/inbox.org")
-               "* %?\n  %i\n %c\n")
-              ("n" "Notes" entry (file+headline "~/Dropbox/org/notes.org" "Notes")
-               "* %^{Header}  %^G\n  %U\n\n  %?")
-              ("l" "Link" entry (file+headline "~/Dropbox/org/links.org" "Links")
-               "* %? %^L %^g \n%T" :prepend t)
-              ))
+        (org-log-done t)
+        :config
+        (progn
 
-      ;; tasks management
-      ;; (setq org-clock-idle-time nil)
+          ;; highlight code blocks syntax
+  (setq org-ellipsis "↴")
 
-      ;; agenda & diary
-      (setq org-agenda-include-diary t)
-      (setq org-agenda-files '("~/Dropbox/org/"
-                               "~/Dropbox/org/personal.org"
-                               "~/Dropbox/org/technical.org"
-                               "~/Dropbox/org/project.org"
-                               "~/Dropbox/org/clients/"))
-      (setq org-agenda-inhibit-startup t)
-
-      ;; show images inline
-      ;; only works in GUI, but is a nice feature to have
-      (when (window-system)
-        (setq org-startup-with-inline-images t))
-      ;; limit images width
-      (setq org-image-actual-width '(800))
-
-      ;; Some initial langauges we want org-babel to support
-      (org-babel-do-load-languages 'org-babel-load-languages
-                                   '((js     . t)
-                                     (python . t)
-                                     (ruby   . t)
-                                     (dot    . t)
-                                     (org . t)
-                                     (sqlite . t)
-                                     (perl   . t)))
-
-      ;; easy elisp source blocks
-      (add-to-list 'org-structure-template-alist '("el" "#+BEGIN_SRC emacs-lisp :tangle yes?\n\n#+END_SRC"))
-      ;; refresh images after execution
-      (add-hook 'org-babel-after-execute-hook 'org-redisplay-inline-images)
-      (add-hook 'after-save-hook 'org-babel-tangle
-                'run-at-end
-                'only-in-org-mode)
-      )
-    )
-
-                                          ;(use-package org-mac-link
-                                          ;  :disabled)
-
-                                          ;(setq org-ellipsis "⤵")
-(use-package org-bullets
-  :after org
-  :hook (org-mode . (lambda () (org-bullets-mode 1)))
-  :config
-  (setq org-bullets-bullet-list '("◉" "⚫")))
-
-  '(org-agenda-date ((t (:inherit org-agenda-structure :weight semi-bold :height 1.2))) t)
-  '(org-date ((t (:foreground "Purple" :underline t :height 0.8 :family "Helvetica Neue"))))
-  '(org-done ((t (:foreground "gray57" :weight light))))
-  '(org-level-1 ((t (:weight semi-bold :height 1.1 :family "Helvetica Neue"))))
-  '(org-level-2 ((t (:inherit outline-2 :weight semi-bold :height 1.1))))
-  '(org-level-3 ((t (:inherit outline-3 :weight bold :family "Helvetica Neue"))))
-  '(org-level-5 ((t (:inherit outline-5 :family "Helvetica Neue"))))
-  '(org-link ((t (:inherit link :weight normal))))
-  '(org-meta-line ((t (:inherit font-lock-comment-face :height 0.8))))
-  '(org-property-value ((t (:height 0.9 :family "Helvetica Neue"))) t)
-  '(org-special-keyword ((t (:inherit font-lock-keyword-face :height 0.8 :family "Helvetica Neue"))))
-  '(org-table ((t (:foreground "dim gray" :height 0.9 :family "Menlo"))))
-  '(org-tag ((t (:foreground "dark gray" :weight bold :height 0.8))))
-  '(org-todo ((t (:foreground "#e67e22" :weight bold))))
-
-  (require 'org-install)
-  (require 'ob-tangle)
-
-  ;; should be able to use this, according to:
-  ;; https://github.com/heikkil/emacs-literal-config/blob/master/emacs.org#url-copying
-  ;; https://orgmode.org/worg/org-contrib/org-mac-link.html
-  ;; (use-package org-mac-link
-  ;;   :ensure t
-  ;;   :if (eq system-type 'darwin)
-  ;;   :bind ("C-c v" . my/quick-url-note)
-  ;;   :config
-  ;;   (defun my/quick-url-note ()
-  ;;     "Fastest way to capture a web page link"
-  ;;     (interactive)
-  ;;     (org-capture nil "n")
-  ;;     (org-mac-chrome-insert-frontmost-url)
-  ;;     (org-capture-finalize)))
-
-  ;; todo states
-  ;; https://thraxys.wordpress.com/2016/01/14/pimp-up-your-org-agenda/
-  ;; you can add UTF-8 bits to sequence keywords, something like:
-  ;; (setq org-todo-keywords '((sequence "☛ TODO(t)" "|" "<img draggable="false" class="emoji" alt="✔" src="https://s0.wp.com/wp-content/mu-plugins/wpcom-smileys/twemoji/2/svg/2714.svg"> DONE(d)")
-  ;;                           (sequence "⚑ WAITING(w)" "|")
-  ;;                           (sequence "|" "✘ CANCELED(c)")))
-
-  ;; todo state triggers
-  ;; automatically do things based on todo state
-  ;; http://doc.norang.ca/org-mode.html#ToDoStateTriggers
-
-  ;; just evaluate, don't ask me
-  (setq org-confirm-babel-evaluate nil)
-
-  ;; syntax highlighting code blocks
-  (setq org-src-fontify-natively t)
-  (setq org-src-tab-acts-natively t)
+                                              ; set the modules enabled by default
+          (setq org-modules '(
+                              org-bbdb
+                              org-bibtex
+                              org-docview
+                              org-mhe
+                              org-rmail
+                              org-crypt
+                              org-protocol
+                              org-gnus
+                              org-id
+                              org-info
+                              org-habit
+                              org-irc
+                              org-annotate-file
+                              org-eval
+                              org-expiry
+                              org-man
+                              org-panel
+                              org-toc))
 
 
 
-    ;;; this is here for the alfred workflow
-  ;;   all of this was stolen from:
-  ;;   https://github.com/jjasghar/alfred-org-capture/blob/master/el/alfred-org-capture.el
-  ;; for this to work the server has to be started: M-x start-server
-  (defun make-orgcapture-frame ()
-    "Create a new frame and run org-capture."
-    (interactive)
-    (make-frame '((name . "remember") (width . 80) (height . 16)
-                  (top . 400) (left . 300)
-                  (font . "-apple-Monaco-medium-normal-normal-*-13-*-*-*-m-0-iso10646-1")
+          ;; capture templates
+          (setq org-capture-templates
+                '(
+                  ("t" "Todo" entry (file+headline "~/Dropbox/org/gtd.org" "Tasks")
+                   "* TODO %?\n  %i\n  %a")
+                  ("r" "TODO" entry (file+headline "~/Dropbox/org/gtd.org" "Tasks")
+                   "* TODO %^{Task}  %^G\n   %?\n  %a")
+                  ("j" "Journal" entry (file+datetree "~/Dropbox/org/journal.org")
+                   "* %?\nEntered on %U\n  %i\n  %a")
+                  ("m" "Meeting")
+                  ("mb" "Bibleschools" entry (file+datetree "~/Dropbox/org/clients/BibleSchools.org")
+                   "* %?\nEntered on %U\n  %i\n")
+                  ("mn" "NADE" entry (file+datetree "~/Dropbox/org/clients/NADE.org")
+                   "* %?\nEntered on %U\n  %i\n")
+                  ("mr" "Roth" entry (file+datetree "~/Dropbox/org/clients/Roth.org")
+                   "* %?\nEntered on %U\n  %i\n")
+                  ("ms" "SkillScout" entry (file+datetree "~/Dropbox/org/clients/SkillScout.org")
+                   "* %?\nEntered on %U\n  %i\n")
+                  ("mw" "SZW" entry (file+datetree "~/Dropbox/org/clients/Subzero.org")
+                   "* %?\nEntered on %U\n  %i\n")
+                  ("i" "Inbox" entry (file+datetree "~/Dropbox/org/inbox.org")
+                   "* %?\nEntered on %U\n  %i\n  %a")
+                  ("I" "Read Later" entry (file+datetree "~/Dropbox/org/inbox.org")
+                   "* %?\n  %i\n %c\n")
+                  ("n" "Notes" entry (file+headline "~/Dropbox/org/notes.org" "Notes")
+                   "* %^{Header}  %^G\n  %U\n\n  %?")
+                  ("l" "Link" entry (file+headline "~/Dropbox/org/links.org" "Links")
+                   "* %? %^L %^g \n%T" :prepend t)
                   ))
-    (select-frame-by-name "remember")
-    (org-capture))
+
+          ;; tasks management
+          ;; (setq org-clock-idle-time nil)
+
+          ;; agenda & diary
+          (setq org-agenda-include-diary t)
+          (setq org-agenda-files '("~/Dropbox/org/"
+                                   "~/Dropbox/org/personal.org"
+                                   "~/Dropbox/org/technical.org"
+                                   "~/Dropbox/org/project.org"
+                                   "~/Dropbox/org/clients/"))
+          (setq org-agenda-inhibit-startup t)
+
+          ;; show images inline
+          ;; only works in GUI, but is a nice feature to have
+          (when (window-system)
+            (setq org-startup-with-inline-images t))
+          ;; limit images width
+          (setq org-image-actual-width '(800))
+
+          ;; Some initial langauges we want org-babel to support
+          (org-babel-do-load-languages 'org-babel-load-languages
+                                       '((js     . t)
+                                         (python . t)
+                                         (ruby   . t)
+                                         (dot    . t)
+                                         (org . t)
+                                         (sqlite . t)
+                                         (perl   . t)))
+
+          ;; easy elisp source blocks
+          (add-to-list 'org-structure-template-alist '("el" "#+BEGIN_SRC emacs-lisp\n?\n#+END_SRC"))
+          ;; refresh images after execution
+          (add-hook 'org-babel-after-execute-hook 'org-redisplay-inline-images)
+          (add-hook 'after-save-hook 'org-babel-tangle
+                    'run-at-end
+                    'only-in-org-mode)
+          )
+        )
+
+                                              ;(use-package org-mac-link
+                                              ;  :disabled)
+
+                                              ;(setq org-ellipsis "⤵")
+    (use-package org-bullets
+      :after org
+      :hook (org-mode . (lambda () (org-bullets-mode 1))))
+
+      '(org-agenda-date ((t (:inherit org-agenda-structure :weight semi-bold :height 1.2))) t)
+      '(org-date ((t (:foreground "Purple" :underline t :height 0.8 :family "Helvetica Neue"))))
+      '(org-done ((t (:foreground "gray57" :weight light))))
+      '(org-level-1 ((t (:weight semi-bold :height 1.1 :family "Helvetica Neue"))))
+      '(org-level-2 ((t (:inherit outline-2 :weight semi-bold :height 1.1))))
+      '(org-level-3 ((t (:inherit outline-3 :weight bold :family "Helvetica Neue"))))
+      '(org-level-5 ((t (:inherit outline-5 :family "Helvetica Neue"))))
+      '(org-link ((t (:inherit link :weight normal))))
+      '(org-meta-line ((t (:inherit font-lock-comment-face :height 0.8))))
+      '(org-property-value ((t (:height 0.9 :family "Helvetica Neue"))) t)
+      '(org-special-keyword ((t (:inherit font-lock-keyword-face :height 0.8 :family "Helvetica Neue"))))
+      '(org-table ((t (:foreground "dim gray" :height 0.9 :family "Menlo"))))
+      '(org-tag ((t (:foreground "dark gray" :weight bold :height 0.8))))
+      '(org-todo ((t (:foreground "#e67e22" :weight bold))))
+
+      (require 'org-install)
+      (require 'ob-tangle)
+
+      ;; should be able to use this, according to:
+      ;; https://github.com/heikkil/emacs-literal-config/blob/master/emacs.org#url-copying
+      ;; https://orgmode.org/worg/org-contrib/org-mac-link.html
+      ;; (use-package org-mac-link
+      ;;   :ensure t
+      ;;   :if (eq system-type 'darwin)
+      ;;   :bind ("C-c v" . my/quick-url-note)
+      ;;   :config
+      ;;   (defun my/quick-url-note ()
+      ;;     "Fastest way to capture a web page link"
+      ;;     (interactive)
+      ;;     (org-capture nil "n")
+      ;;     (org-mac-chrome-insert-frontmost-url)
+      ;;     (org-capture-finalize)))
+
+      ;; todo states
+      ;; https://thraxys.wordpress.com/2016/01/14/pimp-up-your-org-agenda/
+      ;; you can add UTF-8 bits to sequence keywords, something like:
+      ;; (setq org-todo-keywords '((sequence "☛ TODO(t)" "|" "<img draggable="false" class="emoji" alt="✔" src="https://s0.wp.com/wp-content/mu-plugins/wpcom-smileys/twemoji/2/svg/2714.svg"> DONE(d)")
+      ;;                           (sequence "⚑ WAITING(w)" "|")
+      ;;                           (sequence "|" "✘ CANCELED(c)")))
+
+      ;; todo state triggers
+      ;; automatically do things based on todo state
+      ;; http://doc.norang.ca/org-mode.html#ToDoStateTriggers
+
+      ;; just evaluate, don't ask me
+      (setq org-confirm-babel-evaluate nil)
+
+      ;; syntax highlighting code blocks
+      (setq org-src-fontify-natively t)
+      (setq org-src-tab-acts-natively t)
+
+
+
+        ;;; this is here for the alfred workflow
+      ;;   all of this was stolen from:
+      ;;   https://github.com/jjasghar/alfred-org-capture/blob/master/el/alfred-org-capture.el
+      ;; for this to work the server has to be started: M-x start-server
+      (defun make-orgcapture-frame ()
+        "Create a new frame and run org-capture."
+        (interactive)
+        (make-frame '((name . "remember") (width . 80) (height . 16)
+                      (top . 400) (left . 300)
+                      (font . "-apple-Monaco-medium-normal-normal-*-13-*-*-*-m-0-iso10646-1")
+                      ))
+        (select-frame-by-name "remember")
+        (org-capture))
 
 #+end_src
+
+Table of Contents
+
+#+BEGIN_SRC emacs-lisp
+(use-package toc-org
+  :after org
+  :init (add-hook 'org-mode-hook #'toc-org-enable))
+#+END_SRC
 
 #+BEGIN_SRC emacs-lisp
   ;; evil keys
@@ -1182,10 +1275,22 @@ Getting rid of all the window chrome/treatments/bars/etc.
 (use-package powerline-evil)
 #+END_SRC
 
+#+BEGIN_SRC emacs-lisp
+(use-package spaceline
+  :ensure t
+  :config
+  (require 'spaceline-config)
+  (setq powerline-default-separator (quote bar))
+  (spaceline-highlight-face-evil-state)
+  (spaceline-toggle-minor-modes-off)
+  (spaceline-spacemacs-theme))
+#+END_SRC
+
 ** Everything else
 
 #+BEGIN_SRC emacs-lisp
   (use-package golden-ratio
+    :diminish
     :custom
     (golden-ratio-adjust-factor .8)
     (golden-ratio-wide-adjust-factor .8)
@@ -1195,7 +1300,7 @@ Getting rid of all the window chrome/treatments/bars/etc.
 
 #+begin_src emacs-lisp
 
-(set-face-attribute 'default nil :font "Monaco 18")
+(set-face-attribute 'default nil :font "Monaco 16")
 
 (setq inhibit-splash-screen t
       inhibit-startup-message t
