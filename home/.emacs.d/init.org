@@ -768,7 +768,7 @@ Want to bind commands to:
 - =undo-tree-undo=
 - =undo-tree-redo=
 
-#+BEGIN_SRC emacs-lisp :tangle yes
+#+BEGIN_SRC emacs-lisp
   (use-package undo-tree
     :diminish
     :config
