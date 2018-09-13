@@ -26,6 +26,7 @@
   - [[#sane-defaults][Sane defaults]]
   - [[#auto-compile][Auto-compile]]
 - [[#general][General]]
+  - [[#path][Path]]
   - [[#utf-8][UTF-8]]
   - [[#keystroke][Keystroke]]
   - [[#conveniences][Conveniences]]
@@ -172,6 +173,14 @@ Use the newer package, even if it's not compiled.
 #+END_SRC
 
 * General
+
+** Path
+
+I install loads of stuff from [[https://brew.sh/][homebrew]] and only use a mac.  If I use this on other systems then i'll need some sort of conditinals.
+
+#+BEGIN_SRC emacs-lisp
+(setq exec-path (append exec-path '("/usr/local/bin")))
+#+END_SRC
 
 ** UTF-8
 
@@ -950,7 +959,7 @@ Here's some stuff I've just copied from https://github.com/chief/.emacs.d/ that 
       (add-to-list 'auto-mode-alist '("\\.ts[x]?\\'" . web-mode)))
 #+END_SRC
 
-* Org
+* TODO Org
 
 Org is one of the reasons I keep coming back to emacs.
 
@@ -1185,6 +1194,17 @@ Table of Contents
       "c" 'org-archive-subtree
       "l" 'evil-org-open-links
       "C" 'org-resolve-clocks))
+#+END_SRC
+
+A package to download web pages into an org mode document.  https://github.com/alphapapa/org-web-tools
+
+Pretty cool, clip a link from a browser and you can =org-web-tools-insert-web-page-as-entry= to insert the link as a subheading and the readable web page too.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package org-web-tools
+    :after org
+    :config
+    (setq org-web-tools-pandoc-sleep-time 0.5))
 #+END_SRC
 
 This snippet makes literate programming a lot easier, as it tangles on save (another gem from [[https://github.com/zzamboni/dot-emacs/blob/master/init.org][zzamboni]])
