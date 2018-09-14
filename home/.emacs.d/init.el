@@ -5,8 +5,17 @@
 (setq user-full-name "Jeff Schoolcraft")
 (setq user-mail-address "jschoolcraft@aissaclabs.com")
 
-(setq gc-cons-threshold (* 512 1024 1024))
-(setq gnutls-min-prime-bits 4096)
+(defun jas/config-setup-hook ()
+  (eval-and-compile
+  (setq gc-cons-threshold most-positive-fixnum
+        gc-cons-percentage 0.6)))
+
+(defun jas/config-exit-hook ()
+  (setq gc-cons-threshold 80000
+      gc-cons-percentage 0.1))
+
+(add-hook 'before-init-hook #'cpm/config-setup-hook)
+(add-hook 'after-init-hook  #'cpm/config-exit-hook)
 
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 (when (file-exists-p custom-file)

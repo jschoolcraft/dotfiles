@@ -104,17 +104,30 @@
 
 ** Performance tweaks
 
+Straight stealing this from https://github.com/mclear-tools/dotemacs/blob/master/config.org#garbage-collection
+
+Okay, I did change =cpm= to =jas= because ego.
+
 #+BEGIN_SRC emacs-lisp
- (setq gc-cons-threshold (* 512 1024 1024))
- (setq gnutls-min-prime-bits 4096)
+(defun jas/config-setup-hook ()
+  (eval-and-compile
+  (setq gc-cons-threshold most-positive-fixnum
+        gc-cons-percentage 0.6)))
+
+(defun jas/config-exit-hook ()
+  (setq gc-cons-threshold 80000
+      gc-cons-percentage 0.1))
+
+(add-hook 'before-init-hook #'cpm/config-setup-hook)
+(add-hook 'after-init-hook  #'cpm/config-exit-hook)
 #+END_SRC
 
 ** Customizations File
 
 #+BEGIN_SRC emacs-lisp
-        (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
-        (when (file-exists-p custom-file)
-          (load custom-file))
+  (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
+  (when (file-exists-p custom-file)
+    (load custom-file))
 #+END_SRC
 
 ** Package archives
