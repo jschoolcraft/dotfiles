@@ -224,3 +224,7 @@ fi
 # }}}
 
 # vim:foldmethod=marker:foldlevel=0
+
+. $HOME/.asdf/asdf.sh
+
+. $HOME/.asdf/completions/asdf.bash
