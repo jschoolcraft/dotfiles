@@ -52,6 +52,10 @@
     # uncrustify (code beautifier)
     ~/.uncrustify.cfg: home/.uncrustify.cfg
 
+    # asdf
+    ~/.asdfrc: home/.asdfrc
+    ~/.default-gems: home/.default-gems
+
     # ruby
     ~/.gemrc: home/.gemrc
 
