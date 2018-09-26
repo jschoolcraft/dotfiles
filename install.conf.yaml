@@ -66,10 +66,7 @@
     ~/.weechat: home/.weechat
 
 - brewfile:
-    file: home/.Brewfile
-    force: true
-    # no-upgrade: false
-    verbose: true
+    - home/.Brewfile
 
 - shell:
     - [git submodule update --init --recursive, Installing submodules]
