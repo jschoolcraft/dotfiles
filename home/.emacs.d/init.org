@@ -118,8 +118,8 @@ Okay, I did change =cpm= to =jas= because ego.
   (setq gc-cons-threshold 80000
       gc-cons-percentage 0.1))
 
-(add-hook 'before-init-hook #'cpm/config-setup-hook)
-(add-hook 'after-init-hook  #'cpm/config-exit-hook)
+(add-hook 'before-init-hook #'jas/config-setup-hook)
+(add-hook 'after-init-hook  #'jas/config-exit-hook)
 #+END_SRC
 
 ** Customizations File
@@ -693,6 +693,8 @@ On the fly linting.
     ;; (add-hook 'flycheck-mode-hook #'my/use-eslint-from-node-modules)
 #+END_SRC
 
+Might also want to check out this: https://codewinds.com/blog/2015-04-02-emacs-flycheck-eslint-jsx.html
+
 ** [[https://github.com/Fuco1/smartparens][smartparens]]
 
 Minor mode for Emacs that deals with parens pairs and tries to be smart about it.
@@ -1250,6 +1252,12 @@ A quick function to publish and open current buffer using twbs.  Stolen from: ht
                         (file-name-as-directory (expand-file-name dest))
                         (file-name-sans-extension rel)
                         ".html"))))
+#+END_SRC
+
+org-export with pandoc
+
+#+BEGIN_SRC emacs-lisp
+(use-package ox-pandoc)
 #+END_SRC
 
 Make sure we can highlight source blocks

@@ -14,8 +14,8 @@
   (setq gc-cons-threshold 80000
       gc-cons-percentage 0.1))
 
-(add-hook 'before-init-hook #'cpm/config-setup-hook)
-(add-hook 'after-init-hook  #'cpm/config-exit-hook)
+(add-hook 'before-init-hook #'jas/config-setup-hook)
+(add-hook 'after-init-hook  #'jas/config-exit-hook)
 
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 (when (file-exists-p custom-file)
@@ -767,6 +767,8 @@
                         (file-name-as-directory (expand-file-name dest))
                         (file-name-sans-extension rel)
                         ".html"))))
+
+(use-package ox-pandoc)
 
 (use-package htmlize)
 
