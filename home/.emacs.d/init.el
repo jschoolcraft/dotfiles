@@ -573,35 +573,6 @@
 
 
 
-        ;; capture templates
-        (setq org-capture-templates
-              '(
-                ("t" "Todo" entry (file+headline "~/Dropbox/org/gtd.org" "Tasks")
-                 "* TODO %?\n  %i\n  %a")
-                ("r" "TODO" entry (file+headline "~/Dropbox/org/gtd.org" "Tasks")
-                 "* TODO %^{Task}  %^G\n   %?\n  %a")
-                ("j" "Journal" entry (file+datetree "~/Dropbox/org/journal.org")
-                 "* %?\nEntered on %U\n  %i\n  %a")
-                ("m" "Meeting")
-                ("mb" "Bibleschools" entry (file+datetree "~/Dropbox/org/clients/BibleSchools.org")
-                 "* %?\nEntered on %U\n  %i\n")
-                ("mn" "NADE" entry (file+datetree "~/Dropbox/org/clients/NADE.org")
-                 "* %?\nEntered on %U\n  %i\n")
-                ("mr" "Roth" entry (file+datetree "~/Dropbox/org/clients/Roth.org")
-                 "* %?\nEntered on %U\n  %i\n")
-                ("ms" "SkillScout" entry (file+datetree "~/Dropbox/org/clients/SkillScout.org")
-                 "* %?\nEntered on %U\n  %i\n")
-                ("mw" "SZW" entry (file+datetree "~/Dropbox/org/clients/Subzero.org")
-                 "* %?\nEntered on %U\n  %i\n")
-                ("i" "Inbox" entry (file+datetree "~/Dropbox/org/inbox.org")
-                 "* %?\nEntered on %U\n  %i\n  %a")
-                ("I" "Read Later" entry (file+datetree "~/Dropbox/org/inbox.org")
-                 "* %?\n  %i\n %c\n")
-                ("n" "Notes" entry (file+headline "~/Dropbox/org/notes.org" "Notes")
-                 "* %^{Header}  %^G\n  %U\n\n  %?")
-                ("l" "Link" entry (file+headline "~/Dropbox/org/links.org" "Links")
-                 "* %? %^L %^g \n%T" :prepend t)
-                ))
 
         ;; tasks management
         ;; (setq org-clock-idle-time nil)
@@ -742,6 +713,51 @@
     "c" 'org-archive-subtree
     "l" 'evil-org-open-links
     "C" 'org-resolve-clocks))
+
+(setq org-capture-templates nil)
+
+(add-to-list 'org-capture-templates
+             '("t" "Todo" entry (file+headline "~/Dropbox/org/gtd.org" "Tasks")
+               "* TODO %?\n  %i\n  %a"))
+
+(add-to-list 'org-capture-templates
+             '("r" "TODO" entry (file+headline "~/Dropbox/org/gtd.org" "Tasks")
+               "* TODO %^{Task}  %^G\n   %?\n  %a"))
+
+(add-to-list 'org-capture-templates
+             '("j" "Journal" entry (file+datetree "~/Dropbox/org/journal.org")
+               "* %?\nEntered on %U\n  %i\n  %a"))
+
+(add-to-list 'org-capture-templates
+             '("m" "Meeting"))
+
+(add-to-list 'org-capture-templates
+             '("mr" "Roth" entry (file+datetree "~/Dropbox/org/clients/Roth.org")
+               "* %?\nEntered on %U\n  %i\n"))
+
+(add-to-list 'org-capture-templates
+             '("ms" "SkillScout" entry (file+datetree "~/Dropbox/org/clients/SkillScout.org")
+               "* %?\nEntered on %U\n  %i\n"))
+
+(add-to-list 'org-capture-templates
+             '("mw" "SZW" entry (file+datetree "~/Dropbox/org/clients/Subzero.org")
+               "* %?\nEntered on %U\n  %i\n"))
+
+(add-to-list 'org-capture-templates
+             '("i" "Inbox" entry (file+datetree "~/Dropbox/org/inbox.org")
+               "* %?\nEntered on %U\n  %i\n  %a"))
+
+(add-to-list 'org-capture-templates
+             '("I" "Read Later" entry (file+datetree "~/Dropbox/org/inbox.org")
+               "* %?\n  %i\n %c\n"))
+
+(add-to-list 'org-capture-templates
+             '("n" "Notes" entry (file+headline "~/Dropbox/org/notes.org" "Notes")
+               "* %^{Header}  %^G\n  %U\n\n  %?"))
+
+(add-to-list 'org-capture-templates
+             '("l" "Link" entry (file+headline "~/Dropbox/org/links.org" "Links")
+               "* %? %^L %^g \n%T" :prepend t))
 
 (use-package org-web-tools
   :after org
