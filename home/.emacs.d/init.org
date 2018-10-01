@@ -1272,6 +1272,13 @@ Capture a "read later" type link
                  "* %? %^L %^g \n%T" :prepend t))
 #+END_SRC
 
+Meal plan for the week
+
+#+BEGIN_SRC emacs-lisp
+  (add-to-list 'org-capture-templates
+               '("f" "Meal Plan" entry (file+datetree "~/Dropbox/org/menu.org")
+                 "* %?\nEntered on %U\n  %i\n"))
+#+END_SRC
 A package to download web pages into an org mode document.  https://github.com/alphapapa/org-web-tools
 
 Pretty cool, clip a link from a browser and you can =org-web-tools-insert-web-page-as-entry= to insert the link as a subheading and the readable web page too.

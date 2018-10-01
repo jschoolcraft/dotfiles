@@ -759,6 +759,10 @@
              '("l" "Link" entry (file+headline "~/Dropbox/org/links.org" "Links")
                "* %? %^L %^g \n%T" :prepend t))
 
+(add-to-list 'org-capture-templates
+             '("f" "Meal Plan" entry (file+datetree "~/Dropbox/org/menu.org")
+               "* %?\nEntered on %U\n  %i\n"))
+
 (use-package org-web-tools
   :after org
   :config
