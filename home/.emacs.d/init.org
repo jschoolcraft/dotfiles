@@ -1239,6 +1239,13 @@ First we set up the prefix of a multi-key capture sequence.
                  "* %?\nEntered on %U\n  %i\n"))
 #+END_SRC
 
+Capture a generic phone call/meeting
+#+BEGIN_SRC emacs-lisp
+  (add-to-list 'org-capture-templates
+               '("p" "Phone" entry (file+datetree "~/Dropbox/org/inbox.org")
+                 "* %?\nEntered on %U\n  %i\n"))
+#+END_SRC
+
 Inbox, deal with it later
 
 #+BEGIN_SRC emacs-lisp
@@ -1279,6 +1286,7 @@ Meal plan for the week
                '("f" "Meal Plan" entry (file+datetree "~/Dropbox/org/menu.org")
                  "* %?\nEntered on %U\n  %i\n"))
 #+END_SRC
+
 A package to download web pages into an org mode document.  https://github.com/alphapapa/org-web-tools
 
 Pretty cool, clip a link from a browser and you can =org-web-tools-insert-web-page-as-entry= to insert the link as a subheading and the readable web page too.

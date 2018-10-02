@@ -744,6 +744,10 @@
                "* %?\nEntered on %U\n  %i\n"))
 
 (add-to-list 'org-capture-templates
+             '("p" "Phone" entry (file+datetree "~/Dropbox/org/inbox.org")
+               "* %?\nEntered on %U\n  %i\n"))
+
+(add-to-list 'org-capture-templates
              '("i" "Inbox" entry (file+datetree "~/Dropbox/org/inbox.org")
                "* %?\nEntered on %U\n  %i\n  %a"))
 
