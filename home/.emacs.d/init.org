@@ -92,6 +92,7 @@
 - https://github.com/sykora/etc/blob/master/emacs/init-4.el (for hydras in conjunction with general bound keys)
 - https://github.com/deviantfero/.emacs.d/blob/master/init.el (for javascript setup for react native)
 - https://github.com/magiking/dotfiles/blob/master/emacs/.emacs.d/init.el (mostly because of the capture template files)
+- http://www.bartuka.com/pages-output/personal-emacs-configuration/
 
 * Personal Information
 
