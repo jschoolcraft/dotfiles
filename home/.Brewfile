@@ -2,6 +2,7 @@ tap 'caskroom/cask'
 
 cask 'alfred'
 cask 'atom'
+cask 'blockblock' # https://objective-see.com/products/blockblock.html
 cask 'dash'
 cask 'dropbox'
 cask 'emacs'
@@ -13,6 +14,7 @@ cask 'karabiner-elements'
 cask 'keepingyouawake'
 cask 'mactex'
 cask 'nvalt'
+cask 'oversight' # https://objective-see.com/products/oversight.html
 cask 'skitch'
 cask 'skype'
 cask 'slack'
