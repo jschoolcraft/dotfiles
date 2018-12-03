@@ -68,7 +68,6 @@ brew 'imagemagick'
 brew 'ispell'
 brew 'lua'
 brew 'm-cli' # https://github.com/rgcr/m-cli
-brew 'macvim'
 brew 'mas'
 brew 'memcached'
 brew 'myrepos'
