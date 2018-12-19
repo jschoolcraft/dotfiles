@@ -20,6 +20,7 @@ cask 'skype'
 cask 'slack'
 cask 'sourcetree'
 cask 'sublime-text'
+cask 'visual-studio-code'
 
 tap 'homebrew/cask-fonts'
 cask 'font-anonymous-pro'
