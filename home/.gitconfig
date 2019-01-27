@@ -44,12 +44,16 @@
 	keepTemporaries = false
 	prompt = false
 [alias]
+  # aliases
+  aliases = config --get-regexp alias
+
   # adding
   a = add
   aa = add --all
 
   # branch
   b = branch -v
+  bclean = "!f() { git branch --merged ${1-master} | grep -v " ${1-master}$" | xargs -r git branch -d; }; f"
 
   # commit
   c      = commit -m
@@ -57,6 +61,8 @@
   ci     = commit
   amend  = commit --amend
   ammend = commit --amend
+  amendf = commit --amend --no-edit
+  squash = "!f(){ git reset --soft HEAD~${1} && git commit --edit -m\"$(git log --format=%B --reverse HEAD..HEAD@{1})\"; };f"
 
   # checkout
   co = checkout
@@ -110,7 +116,7 @@
   svnl = svn log --oneline --show-commit
 [difftool "sourcetree"]
 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-	path = 
+	path =
 [mergetool "sourcetree"]
 	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
 	trustExitCode = true
