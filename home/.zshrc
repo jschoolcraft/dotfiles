@@ -70,6 +70,8 @@ typeset -U path
 # Add our directories.
 path=("$HOME/bin" $path)
 path=("$HOME/.fzf/bin" $path)
+path=("/usr/local/sbin" $path)
+path=("/usr/local/bin" $path)
 
 # Using the (N-/) glob qualifier we can remove paths that do not exist.
 path=($^path(N-/))
@@ -80,6 +82,7 @@ export ANDROID_HOME=$HOME/Library/Android/sdk
 export PATH=$PATH:$ANDROID_HOME/tools
 export PATH=$PATH:$ANDROID_HOME/tools/bin
 export PATH=$PATH:$ANDROID_HOME/platform-tools
+
 
 # Completion {{{
 # ==========
@@ -226,5 +229,4 @@ fi
 # vim:foldmethod=marker:foldlevel=0
 
 . $HOME/.asdf/asdf.sh
-
 . $HOME/.asdf/completions/asdf.bash
