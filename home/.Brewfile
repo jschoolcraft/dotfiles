@@ -15,6 +15,7 @@ cask 'keepingyouawake'
 cask 'mactex'
 cask 'nvalt'
 cask 'oversight' # https://objective-see.com/products/oversight.html
+cask 'quicklook-json'
 cask 'skitch'
 cask 'skype'
 cask 'slack'
