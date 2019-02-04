@@ -70,8 +70,8 @@
 
 - shell:
     - [git submodule update --init --recursive, Installing submodules]
-    - [pip3 install --upgrade neovim, neovim package]
-    - [pip3 install neovim, neovim python3 interface]
+    - [pip3 install --upgrade pynvim, neovim python package]
+    - [pip2 install --upgrade pynvim, neovim python package]
     - command: nvim +PlugInstall! +PlugUpdate! +PlugClean! +qa
       stdout: true
       stderr: true
