@@ -176,8 +176,8 @@
 (evil-leader/set-leader ";")
 (evil-leader/set-key
   "." 'find-tag
-  "t" 'counsel-find-files
-  "f" 'counsel-find-files
+  "t" 'counsel-projectile-find-files
+  "f" 'counsel-projectile-find-files
   "b" 'counsel-ibuffer
   "e" 'flycheck-list-errors
   "ag" 'projectile-ag

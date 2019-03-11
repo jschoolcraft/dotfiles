@@ -291,6 +291,12 @@ Evil is a great start, but there's a lot more to do if we're going to wrangle em
     (evil-collection-init))
 #+END_SRC
 
+*** TODO Sort out this error
+Warning (evil-collection): Make sure to set `evil-want-keybinding' to nil before loading evil or evil-collection.
+
+See https://github.com/emacs-evil/evil-collection/issues/60 for more details.
+Error (use-package): undo-tree/:config: Symbol’s function definition is void: global-undo-mode
+
 ** evil-org-mode
 
 #+BEGIN_SRC emacs-lisp
@@ -400,8 +406,8 @@ There are a couple other options to evil-leader:
 (evil-leader/set-leader ";")
 (evil-leader/set-key
   "." 'find-tag
-  "t" 'counsel-find-files
-  "f" 'counsel-find-files
+  "t" 'counsel-projectile-find-files
+  "f" 'counsel-projectile-find-files
   "b" 'counsel-ibuffer
   "e" 'flycheck-list-errors
   "ag" 'projectile-ag
