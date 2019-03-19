@@ -65,6 +65,8 @@
     # weechat
     ~/.weechat: home/.weechat
 
+    # maid
+    ~/.maid: home/.maid
 - brewfile:
     - home/.Brewfile
 
