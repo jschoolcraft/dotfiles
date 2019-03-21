@@ -48,6 +48,8 @@
 
 (setq exec-path (append exec-path '("/usr/local/bin")))
 
+(setq exec-path (append exec-path '("~/.asdf/installs")))
+
 ;; UTF-8
 (set-terminal-coding-system  'utf-8)
 (set-keyboard-coding-system  'utf-8)
@@ -70,8 +72,89 @@
       auto-save-list-file-prefix nil
       make-backup-files nil)
 
-(use-package evil
+(use-package evil-leader
   :defer nil
+  :config
+  (global-evil-leader-mode)
+  (evil-leader/set-leader ";"))
+
+;; https://github.com/linktohack/evil-commentary
+(use-package evil-commentary
+  :config
+  (evil-commentary-mode))
+
+;; https://github.com/emacs-evil/evil-surround
+(use-package evil-surround
+  :config
+  (global-evil-surround-mode 1))
+
+;; (use-package evil-visualstar
+;;   :ensure t
+;;   (global-evil-visualstar-mode 1))
+
+;; https://github.com/cofi/evil-indent-textobject
+(use-package evil-indent-textobject)
+
+;; https://github.com/redguardtoo/evil-matchit
+(use-package evil-matchit)
+
+(global-set-key [escape] 'evil-exit-emacs-state)
+
+; Set cursor colors depending on mode
+(when (display-graphic-p)
+  (setq evil-emacs-state-cursor '("red" box)
+        evil-normal-state-cursor '("green" box)
+        evil-visual-state-cursor '("orange" box)
+        evil-insert-state-cursor '("red" bar)
+        evil-replace-state-cursor '("red" bar)
+        evil-operator-state-cursor '("red" hollow)))
+
+(progn
+  (setq evil-default-state 'normal
+        evil-auto-indent t
+        evil-shift-width 2
+        evil-search-wrap t
+        evil-find-skip-newlines t
+        evil-move-cursor-back nil
+        evil-mode-line-format 'before
+        evil-esc-delay 0.001
+        evil-cross-lines t))
+
+(setq evil-overriding-maps nil)
+(setq evil-intercept-maps nil)
+
+(evil-leader/set-key
+  "." 'find-tag
+  "t" 'counsel-projectile-find-files
+  "f" 'counsel-projectile-find-files
+  "b" 'counsel-ibuffer
+  "e" 'flycheck-list-errors
+  "ag" 'projectile-ag
+  "vs" 'split-window-right
+  "hs" 'split-window-below
+  "mx" 'counsel-M-x
+  "p" 'counsel-yank-pop
+  "oc" 'org-capture
+  "ot" 'org-babel-tangle
+  "q" 'evil-quit
+  "g" 'magit
+  "l" 'org-mac-grab-link
+  )
+
+(defun fix-underscore-word ()
+  (modify-syntax-entry ?_ "w"))
+
+;; Make ";" behave like ":" in normal mode
+;; (define-key evil-normal-state-map (kbd ";") 'evil-ex)
+;; (define-key evil-visual-state-map (kbd ";") 'evil-ex)
+;; (define-key evil-motion-state-map (kbd ";") 'evil-ex)
+
+(defun jas/reload-init-file ()
+  (interactive)
+  (load-file "~/.emacs.d/init.el"))
+(evil-leader/set-key "r" 'jas/reload-init-file)
+
+(use-package evil
   :init
   (setq evil-want-integration nil)
   :bind
@@ -121,89 +204,6 @@
 ;; (define-key minibuffer-local-completion-map [escape] 'minibuffer-keyboard-quit)
 ;; (define-key minibuffer-local-must-match-map [escape] 'minibuffer-keyboard-quit)
 ;; (define-key minibuffer-local-isearch-map [escape] 'minibuffer-keyboard-quit)
-
-(use-package evil-leader
-  :after evil
-  :defer nil
-  :config
-  (global-evil-leader-mode))
-
-;; https://github.com/linktohack/evil-commentary
-(use-package evil-commentary
-  :config
-  (evil-commentary-mode))
-
-;; https://github.com/emacs-evil/evil-surround
-(use-package evil-surround
-  :config
-  (global-evil-surround-mode 1))
-
-;; (use-package evil-visualstar
-;;   :ensure t
-;;   (global-evil-visualstar-mode 1))
-
-;; https://github.com/cofi/evil-indent-textobject
-(use-package evil-indent-textobject)
-
-;; https://github.com/redguardtoo/evil-matchit
-(use-package evil-matchit)
-
-(global-set-key [escape] 'evil-exit-emacs-state)
-
-; Set cursor colors depending on mode
-(when (display-graphic-p)
-  (setq evil-emacs-state-cursor '("red" box)
-        evil-normal-state-cursor '("green" box)
-        evil-visual-state-cursor '("orange" box)
-        evil-insert-state-cursor '("red" bar)
-        evil-replace-state-cursor '("red" bar)
-        evil-operator-state-cursor '("red" hollow)))
-
-(progn
-  (setq evil-default-state 'normal
-        evil-auto-indent t
-        evil-shift-width 2
-        evil-search-wrap t
-        evil-find-skip-newlines t
-        evil-move-cursor-back nil
-        evil-mode-line-format 'before
-        evil-esc-delay 0.001
-        evil-cross-lines t))
-
-(setq evil-overriding-maps nil)
-(setq evil-intercept-maps nil)
-
-(evil-leader/set-leader ";")
-(evil-leader/set-key
-  "." 'find-tag
-  "t" 'counsel-projectile-find-files
-  "f" 'counsel-projectile-find-files
-  "b" 'counsel-ibuffer
-  "e" 'flycheck-list-errors
-  "ag" 'projectile-ag
-  "vs" 'split-window-right
-  "hs" 'split-window-below
-  "mx" 'counsel-M-x
-  "p" 'counsel-yank-pop
-  "oc" 'org-capture
-  "ot" 'org-babel-tangle
-  "q" 'evil-quit
-  "g" 'magit
-  "l" 'org-mac-grab-link
-  )
-
-(defun fix-underscore-word ()
-  (modify-syntax-entry ?_ "w"))
-
-;; Make ";" behave like ":" in normal mode
-;; (define-key evil-normal-state-map (kbd ";") 'evil-ex)
-;; (define-key evil-visual-state-map (kbd ";") 'evil-ex)
-;; (define-key evil-motion-state-map (kbd ";") 'evil-ex)
-
-(defun jas/reload-init-file ()
-  (interactive)
-  (load-file "~/.emacs.d/init.el"))
-(evil-leader/set-key "r" 'jas/reload-init-file)
 
 (use-package diminish
   :ensure t
@@ -339,6 +339,8 @@
    :diminish
    :config
     (global-flycheck-mode)
+    (evil-leader/set-key "ej" 'flycheck-next-error)
+    (evil-leader/set-key "ek" 'flycheck-previous-error)
     (use-package flycheck-pos-tip
        :config
        (flycheck-pos-tip-mode))

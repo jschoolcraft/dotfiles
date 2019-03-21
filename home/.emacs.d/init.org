@@ -32,11 +32,11 @@
   - [[#conveniences][Conveniences]]
   - [[#backups][Backups]]
 - [[#evil][Evil]]
+  - [[#evil-leader][Evil Leader]]
   - [[#the-basics][The Basics]]
   - [[#more-evil][More Evil]]
   - [[#evil-org-mode][evil-org-mode]]
   - [[#escaping-all-the-things][escaping all the things]]
-  - [[#evil-leader][Evil Leader]]
 - [[#packages][Packages]]
   - [[#diminish][Diminish]]
   - [[#flyspell][flyspell]]
@@ -196,6 +196,12 @@ I install loads of stuff from [[https://brew.sh/][homebrew]] and only use a mac.
 (setq exec-path (append exec-path '("/usr/local/bin")))
 #+END_SRC
 
+I also am using [[https://github.com/asdf-vm/asdf][asdf-vm]] as a version manager for almost all the languages I write in.
+
+#+BEGIN_SRC emacs-lisp
+(setq exec-path (append exec-path '("~/.asdf/installs")))
+#+END_SRC
+
 ** UTF-8
 
 #+BEGIN_SRC emacs-lisp
@@ -223,7 +229,7 @@ Display unfinished keystrokes more quickly.
 Restart emacs inside emacs.
 
 #+BEGIN_SRC emacs-lisp
-(use-package restart-emacs)
+  (use-package restart-emacs)
 #+END_SRC
 
 Use the system clipboard
@@ -253,11 +259,114 @@ I'm a vim user at heart.  I like modal editing and I have years of movement comm
 
 So we'll be using [[https://github.com/emacs-evil/evil][evil]].
 
+** Evil Leader
+
+[[https://github.com/cofi/evil-leader][evil-leader]] to map leader keybindings to commands.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package evil-leader
+    :defer nil
+    :config
+    (global-evil-leader-mode)
+    (evil-leader/set-leader ";"))
+#+END_SRC
+
+There are a couple other options to evil-leader:
+
+- https://github.com/noctuid/evil-guide/wiki#using-hydra-for-leader-key
+- [[https://github.com/noctuid/general.el][general]]
+
+#+begin_src emacs-lisp
+;; https://github.com/linktohack/evil-commentary
+(use-package evil-commentary
+  :config
+  (evil-commentary-mode))
+
+;; https://github.com/emacs-evil/evil-surround
+(use-package evil-surround
+  :config
+  (global-evil-surround-mode 1))
+
+;; (use-package evil-visualstar
+;;   :ensure t
+;;   (global-evil-visualstar-mode 1))
+
+;; https://github.com/cofi/evil-indent-textobject
+(use-package evil-indent-textobject)
+
+;; https://github.com/redguardtoo/evil-matchit
+(use-package evil-matchit)
+
+(global-set-key [escape] 'evil-exit-emacs-state)
+
+; Set cursor colors depending on mode
+(when (display-graphic-p)
+  (setq evil-emacs-state-cursor '("red" box)
+        evil-normal-state-cursor '("green" box)
+        evil-visual-state-cursor '("orange" box)
+        evil-insert-state-cursor '("red" bar)
+        evil-replace-state-cursor '("red" bar)
+        evil-operator-state-cursor '("red" hollow)))
+
+(progn
+  (setq evil-default-state 'normal
+        evil-auto-indent t
+        evil-shift-width 2
+        evil-search-wrap t
+        evil-find-skip-newlines t
+        evil-move-cursor-back nil
+        evil-mode-line-format 'before
+        evil-esc-delay 0.001
+        evil-cross-lines t))
+
+(setq evil-overriding-maps nil)
+(setq evil-intercept-maps nil)
+
+(evil-leader/set-key
+  "." 'find-tag
+  "t" 'counsel-projectile-find-files
+  "f" 'counsel-projectile-find-files
+  "b" 'counsel-ibuffer
+  "e" 'flycheck-list-errors
+  "ag" 'projectile-ag
+  "vs" 'split-window-right
+  "hs" 'split-window-below
+  "mx" 'counsel-M-x
+  "p" 'counsel-yank-pop
+  "oc" 'org-capture
+  "ot" 'org-babel-tangle
+  "q" 'evil-quit
+  "g" 'magit
+  "l" 'org-mac-grab-link
+  )
+
+(defun fix-underscore-word ()
+  (modify-syntax-entry ?_ "w"))
+
+;; Make ";" behave like ":" in normal mode
+;; (define-key evil-normal-state-map (kbd ";") 'evil-ex)
+;; (define-key evil-visual-state-map (kbd ";") 'evil-ex)
+;; (define-key evil-motion-state-map (kbd ";") 'evil-ex)
+
+#+end_src
+
+Reload =init.el=
+
+#+BEGIN_SRC emacs-lisp
+(defun jas/reload-init-file ()
+  (interactive)
+  (load-file "~/.emacs.d/init.el"))
+(evil-leader/set-key "r" 'jas/reload-init-file)
+#+END_SRC
+
 ** The Basics
+
+Deferring evil-mode based on a note on evil-leader:
+
+Note: You should enable global-evil-leader-mode before you enable evil-mode, otherwise evil-leader won’t be enabled in initial buffers (*scratch*, *Messages*, …).
 
 #+BEGIN_SRC emacs-lisp
   (use-package evil
-    :defer nil
     :init
     (setq evil-want-integration nil)
     :bind
@@ -337,108 +446,6 @@ If that doesn't work, we'll try this.
 ;; (define-key minibuffer-local-completion-map [escape] 'minibuffer-keyboard-quit)
 ;; (define-key minibuffer-local-must-match-map [escape] 'minibuffer-keyboard-quit)
 ;; (define-key minibuffer-local-isearch-map [escape] 'minibuffer-keyboard-quit)
-#+END_SRC
-
-** Evil Leader
-
-
-[[https://github.com/cofi/evil-leader][evil-leader]] to map leader keybindings to commands.
-
-#+BEGIN_SRC emacs-lisp
-(use-package evil-leader
-  :after evil
-  :defer nil
-  :config
-  (global-evil-leader-mode))
-#+END_SRC
-
-There are a couple other options to evil-leader:
-
-- https://github.com/noctuid/evil-guide/wiki#using-hydra-for-leader-key
-- [[https://github.com/noctuid/general.el][general]]
-
-#+begin_src emacs-lisp
-;; https://github.com/linktohack/evil-commentary
-(use-package evil-commentary
-  :config
-  (evil-commentary-mode))
-
-;; https://github.com/emacs-evil/evil-surround
-(use-package evil-surround
-  :config
-  (global-evil-surround-mode 1))
-
-;; (use-package evil-visualstar
-;;   :ensure t
-;;   (global-evil-visualstar-mode 1))
-
-;; https://github.com/cofi/evil-indent-textobject
-(use-package evil-indent-textobject)
-
-;; https://github.com/redguardtoo/evil-matchit
-(use-package evil-matchit)
-
-(global-set-key [escape] 'evil-exit-emacs-state)
-
-; Set cursor colors depending on mode
-(when (display-graphic-p)
-  (setq evil-emacs-state-cursor '("red" box)
-        evil-normal-state-cursor '("green" box)
-        evil-visual-state-cursor '("orange" box)
-        evil-insert-state-cursor '("red" bar)
-        evil-replace-state-cursor '("red" bar)
-        evil-operator-state-cursor '("red" hollow)))
-
-(progn
-  (setq evil-default-state 'normal
-        evil-auto-indent t
-        evil-shift-width 2
-        evil-search-wrap t
-        evil-find-skip-newlines t
-        evil-move-cursor-back nil
-        evil-mode-line-format 'before
-        evil-esc-delay 0.001
-        evil-cross-lines t))
-
-(setq evil-overriding-maps nil)
-(setq evil-intercept-maps nil)
-
-(evil-leader/set-leader ";")
-(evil-leader/set-key
-  "." 'find-tag
-  "t" 'counsel-projectile-find-files
-  "f" 'counsel-projectile-find-files
-  "b" 'counsel-ibuffer
-  "e" 'flycheck-list-errors
-  "ag" 'projectile-ag
-  "vs" 'split-window-right
-  "hs" 'split-window-below
-  "mx" 'counsel-M-x
-  "p" 'counsel-yank-pop
-  "oc" 'org-capture
-  "ot" 'org-babel-tangle
-  "q" 'evil-quit
-  "g" 'magit
-  "l" 'org-mac-grab-link
-  )
-
-(defun fix-underscore-word ()
-  (modify-syntax-entry ?_ "w"))
-
-;; Make ";" behave like ":" in normal mode
-;; (define-key evil-normal-state-map (kbd ";") 'evil-ex)
-;; (define-key evil-visual-state-map (kbd ";") 'evil-ex)
-;; (define-key evil-motion-state-map (kbd ";") 'evil-ex)
-
-#+end_src
-
-Reload =init.el=
-
-#+BEGIN_SRC emacs-lisp
-(defun jas/reload-init-file ()
-  (interactive)
-  (load-file "~/.emacs.d/init.el"))
-(evil-leader/set-key "r" 'jas/reload-init-file)
 #+END_SRC
 
 * Packages
@@ -660,44 +667,46 @@ Working with projects in emacs
 On the fly linting.
 
 #+BEGIN_SRC emacs-lisp
-  (use-package flycheck
-      :custom
-      (flycheck-indication-mode nil)
-      (flycheck-display-errors-delay nil)
-      (flycheck-idle-change-delay 2)
-      (flycheck-highlighting-mode 'lines)
-      ;;   (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc))
-     :diminish
-     :config
-      (global-flycheck-mode)
-      (use-package flycheck-pos-tip
-         :config
-         (flycheck-pos-tip-mode))
-      (use-package helm-flycheck
-         :disabled
-         :after helm))
-    ;; (flycheck-add-mode 'javascript-eslint 'web-mode)
+    (use-package flycheck
+        :custom
+        (flycheck-indication-mode nil)
+        (flycheck-display-errors-delay nil)
+        (flycheck-idle-change-delay 2)
+        (flycheck-highlighting-mode 'lines)
+        ;;   (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc))
+       :diminish
+       :config
+        (global-flycheck-mode)
+        (evil-leader/set-key "ej" 'flycheck-next-error)
+        (evil-leader/set-key "ek" 'flycheck-previous-error)
+        (use-package flycheck-pos-tip
+           :config
+           (flycheck-pos-tip-mode))
+        (use-package helm-flycheck
+           :disabled
+           :after helm))
+      ;; (flycheck-add-mode 'javascript-eslint 'web-mode)
 
-    ;; Make sure eslint does not try to --print-config after each buffer opens.
-    ;; Here’s a related Flycheck: https://github.com/flycheck/flycheck/issues/1129
-    (with-eval-after-load 'flycheck
-      (advice-add 'flycheck-eslint-config-exists-p :override (lambda() t)))
+      ;; Make sure eslint does not try to --print-config after each buffer opens.
+      ;; Here’s a related Flycheck: https://github.com/flycheck/flycheck/issues/1129
+      (with-eval-after-load 'flycheck
+        (advice-add 'flycheck-eslint-config-exists-p :override (lambda() t)))
 
-    (custom-set-faces
-     '(flycheck-error ((((class color)) (:underline "Red"))))
-     '(flycheck-warning ((((class color)) (:underline "Orange")))))
+      (custom-set-faces
+       '(flycheck-error ((((class color)) (:underline "Red"))))
+       '(flycheck-warning ((((class color)) (:underline "Orange")))))
 
-    ;; ;; make sure eslint is from local project
-    ;; (defun my/use-eslint-from-node-modules ()
-    ;;   (let* ((root (locate-dominating-file
-    ;;                 (or (buffer-file-name) default-directory)
-    ;;                 "node_modules"))
-    ;;          (eslint (and root
-    ;;                       (expand-file-name "node_modules/eslint/bin/eslint.js"
-    ;;                                         root))))
-    ;;     (when (and eslint (file-executable-p eslint))
-    ;;       (setq-local flycheck-javascript-eslint-executable eslint))))
-    ;; (add-hook 'flycheck-mode-hook #'my/use-eslint-from-node-modules)
+      ;; ;; make sure eslint is from local project
+      ;; (defun my/use-eslint-from-node-modules ()
+      ;;   (let* ((root (locate-dominating-file
+      ;;                 (or (buffer-file-name) default-directory)
+      ;;                 "node_modules"))
+      ;;          (eslint (and root
+      ;;                       (expand-file-name "node_modules/eslint/bin/eslint.js"
+      ;;                                         root))))
+      ;;     (when (and eslint (file-executable-p eslint))
+      ;;       (setq-local flycheck-javascript-eslint-executable eslint))))
+      ;; (add-hook 'flycheck-mode-hook #'my/use-eslint-from-node-modules)
 #+END_SRC
 
 Might also want to check out this: https://codewinds.com/blog/2015-04-02-emacs-flycheck-eslint-jsx.html
