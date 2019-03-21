@@ -1,7 +1,7 @@
 Maid.rules do
   rule 'Move .torrent files on other machines to dropbox' do
     dir(['~/Downloads/*.torrent']).each do |path|
-      move(path, '~/Dropbox/torrents/*.torrent')
+      move(path, '~/Dropbox/torrents')
     end
   end
 
