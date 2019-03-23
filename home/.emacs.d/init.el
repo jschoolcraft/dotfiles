@@ -149,6 +149,11 @@
 ;; (define-key evil-visual-state-map (kbd ";") 'evil-ex)
 ;; (define-key evil-motion-state-map (kbd ";") 'evil-ex)
 
+(defun jas/open-init-file ()
+  (interactive)
+  (load-file "~/code/dotfiles/home/.emacs.d/init.org"))
+(evil-leader/set-key "cl" 'jas/open-init-file)
+
 (defun jas/reload-init-file ()
   (interactive)
   (load-file "~/.emacs.d/init.el"))
@@ -213,6 +218,26 @@
   :diminish abbrev-mode
   :diminish auto-fill-function
   :diminish subword-mode)
+
+(use-package hydra)
+
+(defhydra hydra-files (:color blue)
+  "Files"
+
+  ("d" (lambda () (interactive)
+         (find-file "~/code/dotfiles/home/.emacs.d/init.org")) "dot-file")
+  ("g" (lambda () (interactive) (find-file "~/Dropbox/org/gtd.org"))
+   "gtd")
+  ("n" (lambda () (interactive) (find-file "~/Dropbox/org/notes.org"))
+   "notes")
+  ("f" helm-find-files "helm-find-files")
+  ("m" helm-multi-files "helm-multi-files")
+  ("b" helm-filtered-bookmarks "helm-filtered-bookmarks")
+  ("t" neotree-toggle "neotree-toggle")
+  ("F" helm-tramp "helm-tramp")
+  ("r" helm-recentf "recentf-open-files"))
+
+(evil-leader/set-key "of" 'hydra-files/body)
 
 (use-package flyspell
   :defer 1

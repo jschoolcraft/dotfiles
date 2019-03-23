@@ -39,6 +39,7 @@
   - [[#escaping-all-the-things][escaping all the things]]
 - [[#packages][Packages]]
   - [[#diminish][Diminish]]
+  - [[#hydra][hydra]]
   - [[#flyspell][flyspell]]
   - [[#git][git]]
   - [[#the-silver-searcher][The Silver Searcher]]
@@ -350,6 +351,15 @@ There are a couple other options to evil-leader:
 
 #+end_src
 
+Open =init.org=
+
+#+BEGIN_SRC emacs-lisp
+  (defun jas/open-init-file ()
+    (interactive)
+    (load-file "~/code/dotfiles/home/.emacs.d/init.org"))
+  (evil-leader/set-key "cl" 'jas/open-init-file)
+#+END_SRC
+
 Reload =init.el=
 
 #+BEGIN_SRC emacs-lisp
@@ -464,6 +474,33 @@ Limit the junk on the modeline.
    :diminish auto-fill-function
    :diminish subword-mode)
 #+END_SRC
+
+** hydra
+
+#+BEGIN_SRC emacs-lisp
+  (use-package hydra)
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+  (defhydra hydra-files (:color blue)
+    "Files"
+
+    ("d" (lambda () (interactive)
+           (find-file "~/code/dotfiles/home/.emacs.d/init.org")) "dot-file")
+    ("g" (lambda () (interactive) (find-file "~/Dropbox/org/gtd.org"))
+     "gtd")
+    ("n" (lambda () (interactive) (find-file "~/Dropbox/org/notes.org"))
+     "notes")
+    ("f" helm-find-files "helm-find-files")
+    ("m" helm-multi-files "helm-multi-files")
+    ("b" helm-filtered-bookmarks "helm-filtered-bookmarks")
+    ("t" neotree-toggle "neotree-toggle")
+    ("F" helm-tramp "helm-tramp")
+    ("r" helm-recentf "recentf-open-files"))
+
+  (evil-leader/set-key "of" 'hydra-files/body)
+#+END_SRC
+
 
 ** flyspell
 
