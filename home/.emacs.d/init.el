@@ -233,7 +233,6 @@
   ("f" helm-find-files "helm-find-files")
   ("m" helm-multi-files "helm-multi-files")
   ("b" helm-filtered-bookmarks "helm-filtered-bookmarks")
-  ("t" neotree-toggle "neotree-toggle")
   ("F" helm-tramp "helm-tramp")
   ("r" helm-recentf "recentf-open-files"))
 
@@ -596,6 +595,7 @@
                             org-expiry
                             org-man
                             org-panel
+                            org-tempo
                             org-toc))
 
 

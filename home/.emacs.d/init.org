@@ -494,7 +494,6 @@ Limit the junk on the modeline.
     ("f" helm-find-files "helm-find-files")
     ("m" helm-multi-files "helm-multi-files")
     ("b" helm-filtered-bookmarks "helm-filtered-bookmarks")
-    ("t" neotree-toggle "neotree-toggle")
     ("F" helm-tramp "helm-tramp")
     ("r" helm-recentf "recentf-open-files"))
 
@@ -1037,169 +1036,170 @@ Lot's of places to find inspiration for orgmode config, but here are a few that 
 - https://github.com/joedicastro/dotfiles/tree/master/emacs/.emacs.d#org-mode-settings
 
 #+begin_src emacs-lisp
-      (use-package org
-        :pin "gnu"
-        :custom
-        (org-src-fontify-natively  t)
-        (org-src-tab-acts-natively t)
+        (use-package org
+          :pin "gnu"
+          :custom
+          (org-src-fontify-natively  t)
+          (org-src-tab-acts-natively t)
 
-                                              ; directories
-        (org-directory "~/Dropbox/org")
-        (org-default-notes-file (concat org-directory "/notes.org"))
-
-
-        ;; refiling
-        ;; all of this stolen from https://blog.aaronbieber.com/2017/03/19/organizing-notes-with-refile.html
-        ;; look at this https://mollermara.com/blog/Fast-refiling-in-org-mode-with-hydras/
-        (org-refile-targets '((org-agenda-files :maxlevel . 4)))
-        (org-refile-use-outline-path 'file)
-        (org-outline-path-complete-in-steps nil)
-        (org-refile-allow-creating-parent-nodes 'confirm)
-
-        (org-log-done t)
-        :config
-        (progn
-
-          ;; highlight code blocks syntax
-  (setq org-ellipsis "↴")
-
-                                              ; set the modules enabled by default
-          (setq org-modules '(
-                              org-bbdb
-                              org-bibtex
-                              org-docview
-                              org-mhe
-                              org-rmail
-                              org-crypt
-                              org-protocol
-                              org-gnus
-                              org-id
-                              org-info
-                              org-habit
-                              org-irc
-                              org-annotate-file
-                              org-eval
-                              org-expiry
-                              org-man
-                              org-panel
-                              org-toc))
+                                                ; directories
+          (org-directory "~/Dropbox/org")
+          (org-default-notes-file (concat org-directory "/notes.org"))
 
 
+          ;; refiling
+          ;; all of this stolen from https://blog.aaronbieber.com/2017/03/19/organizing-notes-with-refile.html
+          ;; look at this https://mollermara.com/blog/Fast-refiling-in-org-mode-with-hydras/
+          (org-refile-targets '((org-agenda-files :maxlevel . 4)))
+          (org-refile-use-outline-path 'file)
+          (org-outline-path-complete-in-steps nil)
+          (org-refile-allow-creating-parent-nodes 'confirm)
+
+          (org-log-done t)
+          :config
+          (progn
+
+            ;; highlight code blocks syntax
+    (setq org-ellipsis "↴")
+
+                                                ; set the modules enabled by default
+            (setq org-modules '(
+                                org-bbdb
+                                org-bibtex
+                                org-docview
+                                org-mhe
+                                org-rmail
+                                org-crypt
+                                org-protocol
+                                org-gnus
+                                org-id
+                                org-info
+                                org-habit
+                                org-irc
+                                org-annotate-file
+                                org-eval
+                                org-expiry
+                                org-man
+                                org-panel
+                                org-tempo
+                                org-toc))
 
 
-          ;; tasks management
-          ;; (setq org-clock-idle-time nil)
 
-          ;; agenda & diary
-          (setq org-agenda-include-diary t)
-          (setq org-agenda-files '("~/Dropbox/org/"
-                                   "~/Dropbox/org/personal.org"
-                                   "~/Dropbox/org/technical.org"
-                                   "~/Dropbox/org/project.org"
-                                   "~/Dropbox/org/clients/"))
-          (setq org-agenda-inhibit-startup t)
 
-          ;; show images inline
-          ;; only works in GUI, but is a nice feature to have
-          (when (window-system)
-            (setq org-startup-with-inline-images t))
-          ;; limit images width
-          (setq org-image-actual-width '(800))
+            ;; tasks management
+            ;; (setq org-clock-idle-time nil)
 
-          ;; Some initial langauges we want org-babel to support
-          (org-babel-do-load-languages 'org-babel-load-languages
-                                       '((js     . t)
-                                         (python . t)
-                                         (ruby   . t)
-                                         (dot    . t)
-                                         (org . t)
-                                         (sqlite . t)
-                                         (perl   . t)))
+            ;; agenda & diary
+            (setq org-agenda-include-diary t)
+            (setq org-agenda-files '("~/Dropbox/org/"
+                                     "~/Dropbox/org/personal.org"
+                                     "~/Dropbox/org/technical.org"
+                                     "~/Dropbox/org/project.org"
+                                     "~/Dropbox/org/clients/"))
+            (setq org-agenda-inhibit-startup t)
 
-          ;; easy elisp source blocks
-          (add-to-list 'org-structure-template-alist '("el" "#+BEGIN_SRC emacs-lisp\n?\n#+END_SRC"))
-          ;; refresh images after execution
-          (add-hook 'org-babel-after-execute-hook 'org-redisplay-inline-images)
-          (add-hook 'after-save-hook 'org-babel-tangle
-                    'run-at-end
-                    'only-in-org-mode)
+            ;; show images inline
+            ;; only works in GUI, but is a nice feature to have
+            (when (window-system)
+              (setq org-startup-with-inline-images t))
+            ;; limit images width
+            (setq org-image-actual-width '(800))
+
+            ;; Some initial langauges we want org-babel to support
+            (org-babel-do-load-languages 'org-babel-load-languages
+                                         '((js     . t)
+                                           (python . t)
+                                           (ruby   . t)
+                                           (dot    . t)
+                                           (org . t)
+                                           (sqlite . t)
+                                           (perl   . t)))
+
+            ;; easy elisp source blocks
+            (add-to-list 'org-structure-template-alist '("el" "#+BEGIN_SRC emacs-lisp\n?\n#+END_SRC"))
+            ;; refresh images after execution
+            (add-hook 'org-babel-after-execute-hook 'org-redisplay-inline-images)
+            (add-hook 'after-save-hook 'org-babel-tangle
+                      'run-at-end
+                      'only-in-org-mode)
+            )
           )
-        )
 
-                                              ;(use-package org-mac-link
-                                              ;  :disabled)
+                                                ;(use-package org-mac-link
+                                                ;  :disabled)
 
-                                              ;(setq org-ellipsis "⤵")
-    (use-package org-bullets
-      :after org
-      :hook (org-mode . (lambda () (org-bullets-mode 1))))
+                                                ;(setq org-ellipsis "⤵")
+      (use-package org-bullets
+        :after org
+        :hook (org-mode . (lambda () (org-bullets-mode 1))))
 
-      '(org-agenda-date ((t (:inherit org-agenda-structure :weight semi-bold :height 1.2))) t)
-      '(org-date ((t (:foreground "Purple" :underline t :height 0.8 :family "Helvetica Neue"))))
-      '(org-done ((t (:foreground "gray57" :weight light))))
-      '(org-level-1 ((t (:weight semi-bold :height 1.1 :family "Helvetica Neue"))))
-      '(org-level-2 ((t (:inherit outline-2 :weight semi-bold :height 1.1))))
-      '(org-level-3 ((t (:inherit outline-3 :weight bold :family "Helvetica Neue"))))
-      '(org-level-5 ((t (:inherit outline-5 :family "Helvetica Neue"))))
-      '(org-link ((t (:inherit link :weight normal))))
-      '(org-meta-line ((t (:inherit font-lock-comment-face :height 0.8))))
-      '(org-property-value ((t (:height 0.9 :family "Helvetica Neue"))) t)
-      '(org-special-keyword ((t (:inherit font-lock-keyword-face :height 0.8 :family "Helvetica Neue"))))
-      '(org-table ((t (:foreground "dim gray" :height 0.9 :family "Menlo"))))
-      '(org-tag ((t (:foreground "dark gray" :weight bold :height 0.8))))
-      '(org-todo ((t (:foreground "#e67e22" :weight bold))))
+        '(org-agenda-date ((t (:inherit org-agenda-structure :weight semi-bold :height 1.2))) t)
+        '(org-date ((t (:foreground "Purple" :underline t :height 0.8 :family "Helvetica Neue"))))
+        '(org-done ((t (:foreground "gray57" :weight light))))
+        '(org-level-1 ((t (:weight semi-bold :height 1.1 :family "Helvetica Neue"))))
+        '(org-level-2 ((t (:inherit outline-2 :weight semi-bold :height 1.1))))
+        '(org-level-3 ((t (:inherit outline-3 :weight bold :family "Helvetica Neue"))))
+        '(org-level-5 ((t (:inherit outline-5 :family "Helvetica Neue"))))
+        '(org-link ((t (:inherit link :weight normal))))
+        '(org-meta-line ((t (:inherit font-lock-comment-face :height 0.8))))
+        '(org-property-value ((t (:height 0.9 :family "Helvetica Neue"))) t)
+        '(org-special-keyword ((t (:inherit font-lock-keyword-face :height 0.8 :family "Helvetica Neue"))))
+        '(org-table ((t (:foreground "dim gray" :height 0.9 :family "Menlo"))))
+        '(org-tag ((t (:foreground "dark gray" :weight bold :height 0.8))))
+        '(org-todo ((t (:foreground "#e67e22" :weight bold))))
 
-      (require 'org-install)
-      (require 'ob-tangle)
+        (require 'org-install)
+        (require 'ob-tangle)
 
-      ;; should be able to use this, according to:
-      ;; https://github.com/heikkil/emacs-literal-config/blob/master/emacs.org#url-copying
-      ;; https://orgmode.org/worg/org-contrib/org-mac-link.html
-      ;; (use-package org-mac-link
-      ;;   :ensure t
-      ;;   :if (eq system-type 'darwin)
-      ;;   :bind ("C-c v" . my/quick-url-note)
-      ;;   :config
-      ;;   (defun my/quick-url-note ()
-      ;;     "Fastest way to capture a web page link"
-      ;;     (interactive)
-      ;;     (org-capture nil "n")
-      ;;     (org-mac-chrome-insert-frontmost-url)
-      ;;     (org-capture-finalize)))
+        ;; should be able to use this, according to:
+        ;; https://github.com/heikkil/emacs-literal-config/blob/master/emacs.org#url-copying
+        ;; https://orgmode.org/worg/org-contrib/org-mac-link.html
+        ;; (use-package org-mac-link
+        ;;   :ensure t
+        ;;   :if (eq system-type 'darwin)
+        ;;   :bind ("C-c v" . my/quick-url-note)
+        ;;   :config
+        ;;   (defun my/quick-url-note ()
+        ;;     "Fastest way to capture a web page link"
+        ;;     (interactive)
+        ;;     (org-capture nil "n")
+        ;;     (org-mac-chrome-insert-frontmost-url)
+        ;;     (org-capture-finalize)))
 
-      ;; todo states
-      ;; https://thraxys.wordpress.com/2016/01/14/pimp-up-your-org-agenda/
-      ;; you can add UTF-8 bits to sequence keywords, something like:
-      ;; (setq org-todo-keywords '((sequence "☛ TODO(t)" "|" "<img draggable="false" class="emoji" alt="✔" src="https://s0.wp.com/wp-content/mu-plugins/wpcom-smileys/twemoji/2/svg/2714.svg"> DONE(d)")
-      ;;                           (sequence "⚑ WAITING(w)" "|")
-      ;;                           (sequence "|" "✘ CANCELED(c)")))
+        ;; todo states
+        ;; https://thraxys.wordpress.com/2016/01/14/pimp-up-your-org-agenda/
+        ;; you can add UTF-8 bits to sequence keywords, something like:
+        ;; (setq org-todo-keywords '((sequence "☛ TODO(t)" "|" "<img draggable="false" class="emoji" alt="✔" src="https://s0.wp.com/wp-content/mu-plugins/wpcom-smileys/twemoji/2/svg/2714.svg"> DONE(d)")
+        ;;                           (sequence "⚑ WAITING(w)" "|")
+        ;;                           (sequence "|" "✘ CANCELED(c)")))
 
-      ;; todo state triggers
-      ;; automatically do things based on todo state
-      ;; http://doc.norang.ca/org-mode.html#ToDoStateTriggers
+        ;; todo state triggers
+        ;; automatically do things based on todo state
+        ;; http://doc.norang.ca/org-mode.html#ToDoStateTriggers
 
-      ;; just evaluate, don't ask me
-      (setq org-confirm-babel-evaluate nil)
+        ;; just evaluate, don't ask me
+        (setq org-confirm-babel-evaluate nil)
 
-      ;; syntax highlighting code blocks
-      (setq org-src-fontify-natively t)
-      (setq org-src-tab-acts-natively t)
-
+        ;; syntax highlighting code blocks
+        (setq org-src-fontify-natively t)
+        (setq org-src-tab-acts-natively t)
 
 
-        ;;; this is here for the alfred workflow
-      ;;   all of this was stolen from:
-      ;;   https://github.com/jjasghar/alfred-org-capture/blob/master/el/alfred-org-capture.el
-      ;; for this to work the server has to be started: M-x start-server
-      (defun make-orgcapture-frame ()
-        "Create a new frame and run org-capture."
-        (interactive)
-        (make-frame '((name . "remember") (width . 80) (height . 16)
-                      (top . 400) (left . 300)
-                      (font . "-apple-Monaco-medium-normal-normal-*-13-*-*-*-m-0-iso10646-1")
-                      ))
-        (select-frame-by-name "remember")
-        (org-capture))
+
+          ;;; this is here for the alfred workflow
+        ;;   all of this was stolen from:
+        ;;   https://github.com/jjasghar/alfred-org-capture/blob/master/el/alfred-org-capture.el
+        ;; for this to work the server has to be started: M-x start-server
+        (defun make-orgcapture-frame ()
+          "Create a new frame and run org-capture."
+          (interactive)
+          (make-frame '((name . "remember") (width . 80) (height . 16)
+                        (top . 400) (left . 300)
+                        (font . "-apple-Monaco-medium-normal-normal-*-13-*-*-*-m-0-iso10646-1")
+                        ))
+          (select-frame-by-name "remember")
+          (org-capture))
 
 #+end_src
 
