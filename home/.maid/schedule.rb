@@ -1,5 +1,10 @@
 require 'whenever'
 
+set :output, {
+  standard: '~/Desktop/cron.standard.log',
+  error: '~/Desktop/cron.error.log'
+}
+
 if `hostname -s`.chomp == 'mpHaven'
   every 30.minutes do
     command 'maid clean --force --rules=~/.maid/rules.torrents.rb'
@@ -10,6 +15,6 @@ every 1.hour do
   command 'maid clean --force'
 end
 
-every 24.hours do
+every 1.day, at: '2:30 am' do
   command 'maid clean --force --rules=~/.maid/daily.rb'
 end
