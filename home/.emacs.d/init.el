@@ -631,7 +631,7 @@
                                        (perl   . t)))
 
         ;; easy elisp source blocks
-        (add-to-list 'org-structure-template-alist '("el" "#+BEGIN_SRC emacs-lisp\n?\n#+END_SRC"))
+        (add-to-list 'org-structure-template-alist '("el" . "#+BEGIN_SRC  emacs-lisp\n?\n#+END_SRC"))
         ;; refresh images after execution
         (add-hook 'org-babel-after-execute-hook 'org-redisplay-inline-images)
         (add-hook 'after-save-hook 'org-babel-tangle
