@@ -30,6 +30,26 @@ Maid.rules do
     end
   end
 
+  rule 'Move completed torrents from rtorrent to my "processing" location' do
+    processed_file = '/Volumes/Download/torrents/PROCESSED_FILES'
+    processed_files = File.readlines(processed_file).map(&:strip)
+    # puts processed_files.count
+    # puts processed_files.class
+    # puts processed_files.first
+    # puts processed_files.first.class
+    # puts processed_files.first.inspect
+    # puts processed_files.first.strip.inspect
+    File.open(processed_file, 'a') do |f|
+      dir(['/Volumes/Download/rtorrent/complete/**/*.{zip,pdf,epub,mobi,mkv,mp4,mp3,m4a,m4b}']).each do |path|
+        next if processed_files.include? path
+
+        puts "copying: #{path}"
+        copy(path, '/Volumes/Download/torrents/')
+        f.puts path
+      end
+    end
+  end
+
   rule 'Move TV Shows' do
     dir(['/Volumes/Download/torrents/**/*.{mp4,mkv}']).each do |path|
       next unless path.match?(/[sS]\d{2}[eE]\d{2}/)
