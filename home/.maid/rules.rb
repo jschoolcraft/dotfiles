@@ -25,9 +25,7 @@ Maid.rules do
   end
 
   rule 'Remove empty directories' do
-    dir(['~/Downloads/**/*',
-         '~/Dropbox/**/*']).each do |path|
-
+    dir(['~/Downloads/**/*']).each do |path|
       if File.directory?(path) && dir("#{path}/*").empty? && !path.match(/\.app/) && !path.match(/torrents/)
         trash(path)
       end
