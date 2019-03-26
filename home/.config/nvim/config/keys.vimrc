@@ -2,6 +2,9 @@ let mapleader=';'
 nnoremap ' `
 nnoremap ` '
 
+" another ESC because my keyboard is acting up
+inoremap jj <Esc>
+
 " move around windows a little faster
 noremap <C-h> <C-w>h
 noremap <C-j> <C-w>j
