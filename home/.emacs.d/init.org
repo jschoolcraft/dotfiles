@@ -278,76 +278,77 @@ There are a couple other options to evil-leader:
 - [[https://github.com/noctuid/general.el][general]]
 
 #+begin_src emacs-lisp
-;; https://github.com/linktohack/evil-commentary
-(use-package evil-commentary
-  :config
-  (evil-commentary-mode))
+  ;; https://github.com/linktohack/evil-commentary
+  (use-package evil-commentary
+    :config
+    (evil-commentary-mode))
 
-;; https://github.com/emacs-evil/evil-surround
-(use-package evil-surround
-  :config
-  (global-evil-surround-mode 1))
+  ;; https://github.com/emacs-evil/evil-surround
+  (use-package evil-surround
+    :config
+    (global-evil-surround-mode 1))
 
-;; (use-package evil-visualstar
-;;   :ensure t
-;;   (global-evil-visualstar-mode 1))
+  ;; (use-package evil-visualstar
+  ;;   :ensure t
+  ;;   (global-evil-visualstar-mode 1))
 
-;; https://github.com/cofi/evil-indent-textobject
-(use-package evil-indent-textobject)
+  ;; https://github.com/cofi/evil-indent-textobject
+  (use-package evil-indent-textobject)
 
-;; https://github.com/redguardtoo/evil-matchit
-(use-package evil-matchit)
+  ;; https://github.com/redguardtoo/evil-matchit
+  (use-package evil-matchit)
 
-(global-set-key [escape] 'evil-exit-emacs-state)
+  (global-set-key [escape] 'evil-exit-emacs-state)
 
-; Set cursor colors depending on mode
-(when (display-graphic-p)
-  (setq evil-emacs-state-cursor '("red" box)
-        evil-normal-state-cursor '("green" box)
-        evil-visual-state-cursor '("orange" box)
-        evil-insert-state-cursor '("red" bar)
-        evil-replace-state-cursor '("red" bar)
-        evil-operator-state-cursor '("red" hollow)))
+  ; Set cursor colors depending on mode
+  (when (display-graphic-p)
+    (setq evil-emacs-state-cursor '("red" box)
+          evil-normal-state-cursor '("green" box)
+          evil-visual-state-cursor '("orange" box)
+          evil-insert-state-cursor '("red" bar)
+          evil-replace-state-cursor '("red" bar)
+          evil-operator-state-cursor '("red" hollow)))
 
-(progn
-  (setq evil-default-state 'normal
-        evil-auto-indent t
-        evil-shift-width 2
-        evil-search-wrap t
-        evil-find-skip-newlines t
-        evil-move-cursor-back nil
-        evil-mode-line-format 'before
-        evil-esc-delay 0.001
-        evil-cross-lines t))
+  (progn
+    (setq evil-default-state 'normal
+          evil-auto-indent t
+          evil-shift-width 2
+          evil-search-wrap t
+          evil-find-skip-newlines t
+          evil-move-cursor-back nil
+          evil-mode-line-format 'before
+          evil-esc-delay 0.001
+          evil-cross-lines t))
 
-(setq evil-overriding-maps nil)
-(setq evil-intercept-maps nil)
+  (setq evil-overriding-maps nil)
+  (setq evil-intercept-maps nil)
 
-(evil-leader/set-key
-  "." 'find-tag
-  "t" 'counsel-projectile-find-files
-  "f" 'counsel-projectile-find-files
-  "b" 'counsel-ibuffer
-  "e" 'flycheck-list-errors
-  "ag" 'projectile-ag
-  "vs" 'split-window-right
-  "hs" 'split-window-below
-  "mx" 'counsel-M-x
-  "p" 'counsel-yank-pop
-  "oc" 'org-capture
-  "ot" 'org-babel-tangle
-  "q" 'evil-quit
-  "g" 'magit
-  "l" 'org-mac-grab-link
-  )
+  (evil-leader/set-key
+    "." 'find-tag
+    "t" 'counsel-projectile-find-file
+    "f" 'counsel-projectile-find-file
+    "b" 'counsel-ibuffer
+    "e" 'flycheck-list-errors
+    "ag" 'projectile-ag
+    "vs" 'split-window-right
+    "hs" 'split-window-below
+    "mx" 'counsel-M-x
+    "p" 'counsel-yank-pop
+    "oc" 'org-capture
+    "ot" 'org-babel-tangle
+    "q" 'evil-quit
+    "g" 'magit
+    "l" 'org-mac-grab-link
+    )
 
-(defun fix-underscore-word ()
-  (modify-syntax-entry ?_ "w"))
 
-;; Make ";" behave like ":" in normal mode
-;; (define-key evil-normal-state-map (kbd ";") 'evil-ex)
-;; (define-key evil-visual-state-map (kbd ";") 'evil-ex)
-;; (define-key evil-motion-state-map (kbd ";") 'evil-ex)
+  (defun fix-underscore-word ()
+    (modify-syntax-entry ?_ "w"))
+
+  ;; Make ";" behave like ":" in normal mode
+  ;; (define-key evil-normal-state-map (kbd ";") 'evil-ex)
+  ;; (define-key evil-visual-state-map (kbd ";") 'evil-ex)
+  ;; (define-key evil-motion-state-map (kbd ";") 'evil-ex)
 
 #+end_src
 
@@ -416,6 +417,8 @@ Warning (evil-collection): Make sure to set `evil-want-keybinding' to nil before
 See https://github.com/emacs-evil/evil-collection/issues/60 for more details.
 Error (use-package): undo-tree/:config: Symbol’s function definition is void: global-undo-mode
 
+Error (use-package): flycheck/:config: Key sequence e j starts with non-prefix key e
+
 ** evil-org-mode
 
 #+BEGIN_SRC emacs-lisp
@@ -482,22 +485,33 @@ Limit the junk on the modeline.
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
-  (defhydra hydra-files (:color blue)
-    "Files"
+        (defhydra hydra-files (:color blue
+                               :hint nil)
+  "
+   ^config^          ^notes^           ^work^              ^general^
+  -------------------^^^^^^^^-----------------------------------------
+  _d_: dotfile       _n_: notes       _p_: pharmid         _f_: counsel-proj
+  _l_: reload        _i_: inbox       _s_: subzero         _m_: helm-multi
+                   _g_: gtd         _r_: roth            _a_: counsel-ag
+  "
 
-    ("d" (lambda () (interactive)
-           (find-file "~/code/dotfiles/home/.emacs.d/init.org")) "dot-file")
-    ("g" (lambda () (interactive) (find-file "~/Dropbox/org/gtd.org"))
-     "gtd")
-    ("n" (lambda () (interactive) (find-file "~/Dropbox/org/notes.org"))
-     "notes")
-    ("f" helm-find-files "helm-find-files")
-    ("m" helm-multi-files "helm-multi-files")
-    ("b" helm-filtered-bookmarks "helm-filtered-bookmarks")
-    ("F" helm-tramp "helm-tramp")
-    ("r" helm-recentf "recentf-open-files"))
+          ("d" (lambda () (interactive)
+                 (find-file "~/code/dotfiles/home/.emacs.d/init.org")) "dot-file")
+          ("l" jas/reload-init-file)
+          ("g" (lambda () (interactive) (find-file "~/Dropbox/org/gtd.org")) "gtd")
+          ("n" (lambda () (interactive) (find-file "~/Dropbox/org/notes.org")) "notes")
+          ("i" (lambda () (interactive) (find-file "~/Dropbox/org/inbox.org")) "inbox")
+          ("p" (lambda () (interactive) (find-file "~/Dropbox/org/pharmid.org")) "pharmid")
+          ("s" (lambda () (interactive) (find-file "~/Dropbox/org/clients/Subzero.org")) "szw")
+          ("r" (lambda () (interactive) (find-file "~/Dropbox/org/clients/Roth.org")) "roth")
+          ("f" counsel-projectile-find-file)
+          ("a" counsel-ag)
+          ("m" helm-multi-files)
+          ("b" helm-filtered-bookmarks)
+          ("t" neotree-toggle)
+          ("F" helm-tramp))
 
-  (evil-leader/set-key "of" 'hydra-files/body)
+        (evil-leader/set-key "of" 'hydra-files/body)
 #+END_SRC
 
 
@@ -713,8 +727,8 @@ On the fly linting.
        :diminish
        :config
         (global-flycheck-mode)
-        (evil-leader/set-key "ej" 'flycheck-next-error)
-        (evil-leader/set-key "ek" 'flycheck-previous-error)
+        (evil-leader/set-key ";ej" 'flycheck-next-error)
+        (evil-leader/set-key ";ek" 'flycheck-previous-error)
         (use-package flycheck-pos-tip
            :config
            (flycheck-pos-tip-mode))
@@ -908,6 +922,7 @@ Want to bind commands to:
 
 #+BEGIN_SRC emacs-lisp
 (use-package ruby-tools
+  :disabled
   :diminish ""
   :hook
   ('ruby-mode 'ruby-tools-mode)
@@ -927,6 +942,30 @@ Want to bind commands to:
   :config
   (global-rbenv-mode t))
 
+#+END_SRC
+
+[[https://github.com/endofunky/bundler.el][bundler]] to manage bundler from emacs
+
+#+BEGIN_SRC emacs-lisp
+(use-package bundler)
+#+END_SRC
+
+[[https://github.com/dgutov/robe][robe]]
+
+#+BEGIN_SRC emacs-lisp
+(use-package robe)
+#+END_SRC
+
+[[https://github.com/ajvargo/ruby-refactor][ruby-refactor]]
+
+#+BEGIN_SRC emacs-lisp
+(use-package ruby-refactor)
+#+END_SRC
+
+[[https://github.com/nonsequitur/inf-ruby][inf-ruby]]
+
+#+BEGIN_SRC emacs-lisp
+(use-package ruby-refactor)
 #+END_SRC
 
 ** javascript

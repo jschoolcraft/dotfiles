@@ -125,8 +125,8 @@
 
 (evil-leader/set-key
   "." 'find-tag
-  "t" 'counsel-projectile-find-files
-  "f" 'counsel-projectile-find-files
+  "t" 'counsel-projectile-find-file
+  "f" 'counsel-projectile-find-file
   "b" 'counsel-ibuffer
   "e" 'flycheck-list-errors
   "ag" 'projectile-ag
@@ -140,6 +140,7 @@
   "g" 'magit
   "l" 'org-mac-grab-link
   )
+
 
 (defun fix-underscore-word ()
   (modify-syntax-entry ?_ "w"))
@@ -221,22 +222,33 @@
 
 (use-package hydra)
 
-(defhydra hydra-files (:color blue)
-  "Files"
+(defhydra hydra-files (:color blue
+                             :hint nil)
+"
+ ^config^          ^notes^           ^work^              ^general^
+-------------------^^^^^^^^-----------------------------------------
+_d_: dotfile       _n_: notes       _p_: pharmid         _f_: counsel-proj
+_l_: reload        _i_: inbox       _s_: subzero         _m_: helm-multi
+                 _g_: gtd         _r_: roth            _a_: counsel-ag
+"
 
-  ("d" (lambda () (interactive)
-         (find-file "~/code/dotfiles/home/.emacs.d/init.org")) "dot-file")
-  ("g" (lambda () (interactive) (find-file "~/Dropbox/org/gtd.org"))
-   "gtd")
-  ("n" (lambda () (interactive) (find-file "~/Dropbox/org/notes.org"))
-   "notes")
-  ("f" helm-find-files "helm-find-files")
-  ("m" helm-multi-files "helm-multi-files")
-  ("b" helm-filtered-bookmarks "helm-filtered-bookmarks")
-  ("F" helm-tramp "helm-tramp")
-  ("r" helm-recentf "recentf-open-files"))
+        ("d" (lambda () (interactive)
+               (find-file "~/code/dotfiles/home/.emacs.d/init.org")) "dot-file")
+        ("l" jas/reload-init-file)
+        ("g" (lambda () (interactive) (find-file "~/Dropbox/org/gtd.org")) "gtd")
+        ("n" (lambda () (interactive) (find-file "~/Dropbox/org/notes.org")) "notes")
+        ("i" (lambda () (interactive) (find-file "~/Dropbox/org/inbox.org")) "inbox")
+        ("p" (lambda () (interactive) (find-file "~/Dropbox/org/pharmid.org")) "pharmid")
+        ("s" (lambda () (interactive) (find-file "~/Dropbox/org/clients/Subzero.org")) "szw")
+        ("r" (lambda () (interactive) (find-file "~/Dropbox/org/clients/Roth.org")) "roth")
+        ("f" counsel-projectile-find-file)
+        ("a" counsel-ag)
+        ("m" helm-multi-files)
+        ("b" helm-filtered-bookmarks)
+        ("t" neotree-toggle)
+        ("F" helm-tramp))
 
-(evil-leader/set-key "of" 'hydra-files/body)
+      (evil-leader/set-key "of" 'hydra-files/body)
 
 (use-package flyspell
   :defer 1
@@ -363,8 +375,8 @@
    :diminish
    :config
     (global-flycheck-mode)
-    (evil-leader/set-key "ej" 'flycheck-next-error)
-    (evil-leader/set-key "ek" 'flycheck-previous-error)
+    (evil-leader/set-key ";ej" 'flycheck-next-error)
+    (evil-leader/set-key ";ek" 'flycheck-previous-error)
     (use-package flycheck-pos-tip
        :config
        (flycheck-pos-tip-mode))
@@ -480,6 +492,7 @@
   (add-hook 'ruby-mode 'superword-mode))
 
 (use-package ruby-tools
+  :disabled
   :diminish ""
   :hook
   ('ruby-mode 'ruby-tools-mode)
@@ -493,6 +506,14 @@
   (setq rbenv-show-active-ruby-in-modeline nil)
   :config
   (global-rbenv-mode t))
+
+(use-package bundler)
+
+(use-package robe)
+
+(use-package ruby-refactor)
+
+(use-package ruby-refactor)
 
 (use-package json-mode)
 
