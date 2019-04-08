@@ -59,6 +59,9 @@
     # ruby
     ~/.gemrc: home/.gemrc
 
+    #rails
+    ~/.railsrc: home/.railsrc
+
     # tvnamer
     ~/.tvnamer-hazel.json: home/.tvnamer-hazel.json
 
