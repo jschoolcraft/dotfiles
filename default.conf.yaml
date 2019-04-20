@@ -58,6 +58,7 @@
 
     # ruby
     ~/.gemrc: home/.gemrc
+    ~/.irbrc: home/.irbrc
 
     # rails
     ~/.railsrc: home/.railsrc
