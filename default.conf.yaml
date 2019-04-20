@@ -72,8 +72,9 @@
 
     # maid
     ~/.maid: home/.maid
-- brewfile:
-    - home/.Brewfile
+
+    # brewfile
+    ~/Brewfile: home/.Brewfile
 
 - shell:
     - [git submodule update --init --recursive, Installing submodules]
