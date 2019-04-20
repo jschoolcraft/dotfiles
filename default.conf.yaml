@@ -15,6 +15,7 @@
     ~/.iterm-colors: home/.iterm-colors
     ~/.antibody: config/antibody.txt
     ~/.config/fish: home/.config/fish
+    ~/.purepower: home/.purepower
 
     # Git
     ~/.gitconfig: home/.gitconfig

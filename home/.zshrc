@@ -87,28 +87,54 @@ export PATH=$PATH:$ANDROID_HOME/platform-tools
 # Completion {{{
 # ==========
 # Use modern completion system.
-autoload -Uz compinit; compinit -i
+autoload -Uz compinit
 
-zstyle ':completion:*' auto-description 'specify: %d'
-zstyle ':completion:*' completer _expand _complete _correct _approximate
-zstyle ':completion:*' format 'Completing %d'
-zstyle ':completion:*' group-name ''
-zstyle ':completion:*' menu select=2
-# eval "$(dircolors -b)"
-zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
-zstyle ':completion:*' list-colors ''
-zstyle ':completion:*' list-prompt %SAt %p: Hit TAB for more, or the character to insert%s
-zstyle ':completion:*' matcher-list '' 'm:{a-z}={A-Z}' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=* l:|=*'
-zstyle ':completion:*' menu select=long
-zstyle ':completion:*' select-prompt %SScrolling active: current selection at %p%s
-zstyle ':completion:*' use-compctl false
-zstyle ':completion:*' verbose true
-zstyle ':completion:*' accept-exact '*(N)'
-zstyle ':completion:*' use-cache on
-zstyle ':completion:*' cache-path $ZSH_CACHE_DIR
+# caching stolen from https://blog.callstack.io/supercharge-your-terminal-with-zsh-8b369d689770
+typeset -i updated_at=$(date +'%j' -r ~/.zcompdump 2>/dev/null || stat -f '%Sm' -t '%j' ~/.zcompdump 2>/dev/null)
+if [ $(date +'%j') != $updated_at ]; then
+  compinit -i
+else
+  compinit -C -i
+fi
+
+zmodload -i zsh/complist
+
+setopt AUTO_LIST     # automatically list choices on ambiguous completion
+setopt AUTO_MENU     # automatically use menu completion
+setopt ALWAYS_TO_END # move cursor to end if word had one match
+
+zstyle ':completion:*' menu select # select completions with arrow keys
+zstyle ':completion:*' group-name '' # group results by category
+zstyle ':completion:::::' completer _expand _complete _ignored _approximate # enable approximate matches for completion
+
+# zstyle ':completion:*' auto-description 'specify: %d'
+# zstyle ':completion:*' completer _expand _complete _correct _approximate
+# zstyle ':completion:*' format 'Completing %d'
+# zstyle ':completion:*' group-name ''
+# zstyle ':completion:*' menu select=2
+# # eval "$(dircolors -b)"
+# zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
+# zstyle ':completion:*' list-colors ''
+# zstyle ':completion:*' list-prompt %SAt %p: Hit TAB for more, or the character to insert%s
+# zstyle ':completion:*' matcher-list '' 'm:{a-z}={A-Z}' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=* l:|=*'
+# zstyle ':completion:*' menu select=long
+# zstyle ':completion:*' select-prompt %SScrolling active: current selection at %p%s
+# zstyle ':completion:*' use-compctl false
+# zstyle ':completion:*' verbose true
+# zstyle ':completion:*' accept-exact '*(N)'
+# zstyle ':completion:*' use-cache on
+# zstyle ':completion:*' cache-path $ZSH_CACHE_DIR
 
 zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
 zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
+
+# }}}
+
+
+# Conveniences {{{
+# =======
+
+setopt CORRECT_ALL   # autocorrect commands
 
 # }}}
 
@@ -122,7 +148,7 @@ SAVEHIST=10000000
 setopt BANG_HIST                 # Treat the '!' character specially during expansion.
 setopt EXTENDED_HISTORY          # Write the history file in the ":start:elapsed;command" format.
 setopt INC_APPEND_HISTORY        # Write to the history file immediately, not when the shell exits.
-setopt NO_SHARE_HISTORY          # Share history between all sessions.
+setopt SHARE_HISTORY             # Share history between all sessions.
 setopt HIST_EXPIRE_DUPS_FIRST    # Expire duplicate entries first when trimming history.
 setopt HIST_IGNORE_DUPS          # Don't record an entry that was just recorded again.
 setopt HIST_IGNORE_ALL_DUPS      # Delete old recorded entry if new entry is a duplicate.
@@ -141,18 +167,9 @@ if [ -f ~/.shell/.aliases ]; then
 fi
 # }}}
 
-# antibody {{{
-# =======
-if _has antibody; then
-    # If plugins have not been downloaded, then download and static load in future.
-    if [[ ! -e "$HOME/.zsh_plugins.sh" ]]; then
-        # Fetch plugins.
-        antibody bundle < "$HOME/.antibody" > "$HOME/.zsh_plugins.sh"
-    fi
+antibody bundle < "$HOME/.antibody" > "$HOME/.zsh_plugins.sh"
+source "$HOME/.zsh_plugins.sh"
 
-    # Load plugins.
-    source "$HOME/.zsh_plugins.sh"
-fi
 # }}}
 
 # fasd {{{
@@ -199,34 +216,9 @@ if _has fzf && _has rg; then
 fi
 # }}}
 
-# Prompt {{{
-# ======
-# autoload -Uz promptinit; promptinit
-#
-# VIM_PROMPT="❯"
-# PROMPT='%(12V.%F{242}${psvar[12]}%f .)'
-# PROMPT+='%(?.%F{magenta}.%F{red})${VIM_PROMPT}%f '
-#
-# PURE_GIT_DOWN_ARROW='↓'
-# PURE_GIT_UP_ARROW='↑'
-#
-# prompt_pure_update_vim_prompt() {
-#     zle || {
-#         print "error: pure_update_vim_prompt must be called when zle is active"
-#         return 1
-#     }
-#     VIM_PROMPT=${${KEYMAP/vicmd/❮}/(main|viins)/❯}
-#     zle .reset-prompt
-# }
-#
-# function zle-line-init zle-keymap-select {
-#     prompt_pure_update_vim_prompt
-# }
-# zle -N zle-line-init
-# zle -N zle-keymap-select
-# }}}
-
-# vim:foldmethod=marker:foldlevel=0
+# theme, maybe?
+source ~/.purepower
 
 . $HOME/.asdf/asdf.sh
 . $HOME/.asdf/completions/asdf.bash
+
