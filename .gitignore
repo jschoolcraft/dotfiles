@@ -24,4 +24,4 @@ home/.emacs.d/.org-id-locations
 home/.weechat/urlserver_list.txt
 home/.weechat/sec.conf
 home/.config/fish/fishd*
-home/.maid/maid.log
+home/.maid/maid.log*
