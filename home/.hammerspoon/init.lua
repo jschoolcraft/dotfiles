@@ -39,8 +39,8 @@ Install:andUse("MiroWindowsManager",
 Install:andUse("WindowScreenLeftAndRight",
 {
   hotkeys = {
-    screen_left = { meh, "h" },
-    screen_right= { meh, "l" },
+    screen_left = { hyper, "y" },
+    screen_right= { hyper, "o" },
  }
 }
 )
