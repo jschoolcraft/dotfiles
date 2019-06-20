@@ -87,6 +87,10 @@
   shortnocolor = log --pretty=format:\"%h %cr %cn %s\"
 
   wc = whatchanged -p --abbrev-commit --pretty=medium
+
+  # pull
+  up = pull --rebase --prune
+
   # remote
   r = remote -v
 
