@@ -227,7 +227,7 @@
 "
  ^config^          ^notes^           ^work^              ^general^
 -------------------^^^^^^^^-----------------------------------------
-_d_: dotfile       _n_: notes       _p_: pharmid         _f_: counsel-proj
+_d_: dotfile       _n_: notes       _o_: octopi          _f_: counsel-proj
 _l_: reload        _i_: inbox       _s_: subzero         _m_: helm-multi
                  _g_: gtd         _r_: roth            _a_: counsel-ag
 "
@@ -238,7 +238,7 @@ _l_: reload        _i_: inbox       _s_: subzero         _m_: helm-multi
         ("g" (lambda () (interactive) (find-file "~/Dropbox/org/gtd.org")) "gtd")
         ("n" (lambda () (interactive) (find-file "~/Dropbox/org/notes.org")) "notes")
         ("i" (lambda () (interactive) (find-file "~/Dropbox/org/inbox.org")) "inbox")
-        ("p" (lambda () (interactive) (find-file "~/Dropbox/org/pharmid.org")) "pharmid")
+        ("o" (lambda () (interactive) (find-file "~/Dropbox/org/octopi.org")) "octopi")
         ("s" (lambda () (interactive) (find-file "~/Dropbox/org/clients/Subzero.org")) "szw")
         ("r" (lambda () (interactive) (find-file "~/Dropbox/org/clients/Roth.org")) "roth")
         ("f" counsel-projectile-find-file)
@@ -509,7 +509,7 @@ _l_: reload        _i_: inbox       _s_: subzero         _m_: helm-multi
 
 (use-package bundler)
 
-(use-package robe)
+;(use-package robe)
 
 (use-package ruby-refactor)
 
