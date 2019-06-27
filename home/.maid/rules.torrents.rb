@@ -95,6 +95,8 @@ Maid.rules do
     end
     book_dirs.uniq.each do |path|
       move(path, "/Volumes/MultiMediaToo/audiobooks")
+    rescue
+      puts "Problem with #{path}"
     end
   end
 
