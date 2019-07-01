@@ -165,6 +165,10 @@ setopt HIST_VERIFY               # Don't execute immediately upon history expans
 if [ -f ~/.shell/.aliases ]; then
     . ~/.shell/.aliases
 fi
+
+if [ -f ~/.shell/.octopi.aliases ]; then
+    . ~/.shell/.octopi.aliases
+fi
 # }}}
 
 antibody bundle < "$HOME/.antibody" > "$HOME/.zsh_plugins.sh"
