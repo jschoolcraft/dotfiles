@@ -4,6 +4,17 @@
 
 - clean: ['~']
 
+- shell:
+    - command: |
+        git clone https://github.com/asdf-vm/asdf.git ~/.asdf
+        cd ~/.asdf
+        git checkout "$(git describe --abbrev=0 --tags)"
+
+      stdout: true
+      stderr: true
+      description: install asdf
+
+
 - link:
     # Terminal
     ~/.shell:
@@ -25,14 +36,18 @@
     ~/.osx: home/.osx
     ~/.hammerspoon: home/.hammerspoon
     ~/.karbiner.d: home/.karbiner.d
-    ~/.config/karabiner: home/.config/karabiner
+    ~/.config/karabiner:
+      path: home/.config/karabiner
+      create: true
     ~/.ackrc: home/.ackrc
     ~/.agignore: home/.agignore
 
     # neovim/vim
+    ~/.config/nvim/init.vim:
+            path: home/.config/nvim/init.vim
+            create: true
     ~/.config/nvim/autoload: home/.config/nvim/autoload
     ~/.config/nvim/config: home/.config/nvim/config
-    ~/.config/nvim/init.vim: home/.config/nvim/init.vim
 
     ~/.gvimrc: home/.gvimrc
 
@@ -40,14 +55,20 @@
 
     ~/.vimpressrc: home/.vimpressrc # (wordpress config)
 
-    ~/.vim/.netrwhist: home/.vim/.netrwhist
-    ~/.vim/autoload/plug.vim: home/.vim/autoload/plug.vim
+    ~/.vim/.netrwhist:
+      path: home/.vim/.netrwhist
+      create: true
+    ~/.vim/autoload/plug.vim:
+      path: home/.vim/autoload/plug.vim
+      create: true
 
     # emacs
     ~/.emacs.d: home/.emacs.d
 
     # atom
-    ~/.atom/config.cson: home/.atom/config.cson
+    ~/.atom/config.cson:
+            path: home/.atom/config.cson
+            create: true
     ~/.atom/package.list: home/.atom/package.list
 
     # uncrustify (code beautifier)
