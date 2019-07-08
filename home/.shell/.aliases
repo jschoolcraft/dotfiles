@@ -40,6 +40,9 @@ alias rnios='react-native run-ios'
 alias rniphone='react-native run-ios --simulator "iPhone 6s"'
 alias rnipad='react-native run-ios --simulator "iPad Air 2"'
 
+# ruby
+alias be='bundle exec'
+
 # random
 alias crypto='curl rate.sx' # Get crypto prices
 alias pubkey="more ~/.ssh/id_rsa.pub | pbcopy | echo '=> public key copied to pasteboard'"
