@@ -67,6 +67,7 @@ Plug 'tpope/vim-repeat' " Let's you repeat plugin commands, like surround
 Plug 'tommcdo/vim-lion'  " Alignment (https://github.com/tommcdo/vim-lion)
 Plug 'tpope/vim-eunuch'  " unix helpers (https://github.com/tpope/vim-eunuch)
 Plug 'editorconfig/editorconfig-vim' " consistency with peers in projects
+Plug 'myusuf3/numbers.vim' " intelligently toggling line numbers
 
 call plug#end()
 

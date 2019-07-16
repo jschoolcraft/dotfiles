@@ -792,10 +792,6 @@ _l_: reload        _i_: inbox       _s_: subzero         _m_: helm-multi
                "* %?\nEntered on %U\n  %i\n"))
 
 (add-to-list 'org-capture-templates
-             '("p" "Phone" entry (file+datetree "~/Dropbox/org/inbox.org")
-               "* %?\nEntered on %U\n  %i\n"))
-
-(add-to-list 'org-capture-templates
              '("i" "Inbox" entry (file+datetree "~/Dropbox/org/inbox.org")
                "* %?\nEntered on %U\n  %i\n  %a"))
 
@@ -814,6 +810,13 @@ _l_: reload        _i_: inbox       _s_: subzero         _m_: helm-multi
 (add-to-list 'org-capture-templates
              '("f" "Meal Plan" entry (file+datetree "~/Dropbox/org/menu.org")
                "* %?\nEntered on %U\n  %i\n"))
+
+(add-to-list 'org-capture-templates
+             '("p" "Octopi"))
+
+(add-to-list 'org-capture-templates
+             '("pr" "Retrospective Notes" entry (file+olp+datetree "~/Dropbox/org/octopi.org" "Retrospective")
+             "* %?" :prepend t))
 
 (use-package org-web-tools
   :after org

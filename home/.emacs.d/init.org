@@ -94,6 +94,7 @@
 - https://github.com/deviantfero/.emacs.d/blob/master/init.el (for javascript setup for react native)
 - https://github.com/magiking/dotfiles/blob/master/emacs/.emacs.d/init.el (mostly because of the capture template files)
 - http://www.bartuka.com/pages-output/personal-emacs-configuration/
+- https://github.com/brandon-arnold/.emacs.d/blob/f9856bea305b5c5940066385d97622a675d9e6ba/lisp/init-org.el (capture templates)
 
 * Personal Information
 
@@ -1331,13 +1332,6 @@ First we set up the prefix of a multi-key capture sequence.
                  "* %?\nEntered on %U\n  %i\n"))
 #+END_SRC
 
-Capture a generic phone call/meeting
-#+BEGIN_SRC emacs-lisp
-  (add-to-list 'org-capture-templates
-               '("p" "Phone" entry (file+datetree "~/Dropbox/org/inbox.org")
-                 "* %?\nEntered on %U\n  %i\n"))
-#+END_SRC
-
 Inbox, deal with it later
 
 #+BEGIN_SRC emacs-lisp
@@ -1377,6 +1371,20 @@ Meal plan for the week
   (add-to-list 'org-capture-templates
                '("f" "Meal Plan" entry (file+datetree "~/Dropbox/org/menu.org")
                  "* %?\nEntered on %U\n  %i\n"))
+#+END_SRC
+
+Octopi stuff
+
+#+BEGIN_SRC emacs-lisp
+  (add-to-list 'org-capture-templates
+               '("p" "Octopi"))
+#+END_SRC
+
+Retrospective Notes
+#+BEGIN_SRC emacs-lisp
+    (add-to-list 'org-capture-templates
+                 '("pr" "Retrospective Notes" entry (file+olp+datetree "~/Dropbox/org/octopi.org" "Retrospective")
+                 "* %?"))
 #+END_SRC
 
 A package to download web pages into an org mode document.  https://github.com/alphapapa/org-web-tools
