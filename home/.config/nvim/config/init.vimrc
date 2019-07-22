@@ -8,6 +8,7 @@ call plug#begin('~/.config/nvim/plugged')
 Plug 'tpope/vim-surround'
 Plug 'godlygeek/tabular'
 Plug 'alvan/vim-closetag'
+Plug 'editorconfig/editorconfig-vim' " consistency with peers in projects
 
 " git
 Plug 'tpope/vim-fugitive'
@@ -28,6 +29,9 @@ Plug 'w0rp/ale'
 
 " elixir
 Plug 'slashmili/alchemist.vim'
+
+" view stuff
+Plug 'myusuf3/numbers.vim' " intelligently toggling line numbers
 
 " auto-complete and snippets
 Plug 'Shougo/deoplete.nvim', { 'do': '::UpdateRemotePlugins' }
@@ -63,11 +67,6 @@ Plug 'plasticboy/vim-markdown'
 Plug 'Alok/notational-fzf-vim'
 
 " temporary (things I'm testing out)
-Plug 'tpope/vim-repeat' " Let's you repeat plugin commands, like surround
-Plug 'tommcdo/vim-lion'  " Alignment (https://github.com/tommcdo/vim-lion)
-Plug 'tpope/vim-eunuch'  " unix helpers (https://github.com/tpope/vim-eunuch)
-Plug 'editorconfig/editorconfig-vim' " consistency with peers in projects
-Plug 'myusuf3/numbers.vim' " intelligently toggling line numbers
 
 call plug#end()
 
