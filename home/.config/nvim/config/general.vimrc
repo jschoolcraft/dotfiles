@@ -130,11 +130,6 @@ if &t_Co > 2 || has("gui_running")
 endif
 
 
-" Insert a => on <c-l>
-imap <c-l> <space>=><space>
-" cba ESC vs <c-c>
-imap <c-c> <esc>
-
 " Clear search buffer on return
 :nnoremap <CR> :nohlsearch<cr>
 
@@ -144,9 +139,6 @@ set laststatus=2
 set viminfo=!,'100,\"100,:20,<50,s10,h,n~/.nviminfo
 set statusline=[%l,%v\ %P%M]\ %f\ %r%h%w\ (%{&ff})\ %{fugitive#statusline()}
 
-
-" bind K to grep word under cursor
-" nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
 
 " format json from selection
 vnoremap <leader>j :!python -m json.tool<CR>
