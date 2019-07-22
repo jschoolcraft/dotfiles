@@ -60,6 +60,7 @@ Plug 'itchyny/landscape.vim'
 Plug 'itchyny/lightline.vim' "airline replacements'
 Plug 'dracula/vim', { 'as': 'dracula' }
 Plug 'joshdick/onedark.vim'
+Plug 'jacoborus/tender.vim'
 
 " wiki/notes/misc
 Plug 'weierophinney/vimwiki'
