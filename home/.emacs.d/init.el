@@ -816,7 +816,11 @@ _l_: reload        _i_: inbox       _s_: subzero         _m_: helm-multi
 
 (add-to-list 'org-capture-templates
              '("pr" "Retrospective Notes" entry (file+olp+datetree "~/Dropbox/org/octopi.org" "Retrospective")
-             "* %?" :prepend t))
+             "* %?"))
+
+(add-to-list 'org-capture-templates
+             '("pd" "Daily Notes" entry (file+olp+datetree "~/Dropbox/org/octopi.org" "Daily Notes")
+             "* %?"))
 
 (use-package org-web-tools
   :after org

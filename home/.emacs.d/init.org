@@ -1387,6 +1387,13 @@ Retrospective Notes
                  "* %?"))
 #+END_SRC
 
+Daily notes
+#+BEGIN_SRC emacs-lisp
+    (add-to-list 'org-capture-templates
+                 '("pd" "Daily Notes" entry (file+olp+datetree "~/Dropbox/org/octopi.org" "Daily Notes")
+                 "* %?"))
+#+END_SRC
+
 A package to download web pages into an org mode document.  https://github.com/alphapapa/org-web-tools
 
 Pretty cool, clip a link from a browser and you can =org-web-tools-insert-web-page-as-entry= to insert the link as a subheading and the readable web page too.
