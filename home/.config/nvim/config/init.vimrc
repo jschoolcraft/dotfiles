@@ -68,6 +68,7 @@ Plug 'plasticboy/vim-markdown'
 Plug 'Alok/notational-fzf-vim'
 
 " temporary (things I'm testing out)
+Plug 'mbbill/undotree'
 
 call plug#end()
 
