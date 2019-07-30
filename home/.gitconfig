@@ -16,6 +16,9 @@
   excludesfile = ~/.gitignore
   editor = nvim
 	quotepath = false
+[rerere]
+  enabled = true
+  autoupdate = true
 [merge]
   summary = true
   verbosity = 1
