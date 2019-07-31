@@ -33,6 +33,8 @@ fi
 # Don't clear the screen when leaving man.
 export MANPAGER='less -X'
 
+# Make ruby a little easier to work with
+# export RUBYLIB=lib:test:spec
 # }}}
 
 # SSH Agent {{{

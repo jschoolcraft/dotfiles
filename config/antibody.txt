@@ -21,3 +21,4 @@ zsh-users/zsh-syntax-highlighting # Fish shell like syntax highlighting for zsh
 # sindresorhus/pure # Pretty, minimal and fast zsh prompt
 # sobolevn/sobole-zsh-theme # Theme, should be the last:
 romkatv/powerlevel10k
+wfxr/forgit
