@@ -45,9 +45,15 @@ Maid.rules do
     end
   end
 
+  rule "Remove Dupes in Torrents" do
+    dupes_in("/Volumes/Download/torrents/").each do |dupes|
+      trash dupes.sort_by { |p| File.mtime(p) }[0..-2]
+    end
+  end
+
   rule "Move TV Shows" do
-    dir(["/Volumes/Download/torrents/**/*.{mp4,mkv,avi}"]).each do |path|
-      next unless path.match?(/[sS]\d{2}[eE]\d{2}/)
+    where_content_type(dir(["/Volumes/Download/torrents/**/*"]), 'video').each do |path|
+      next unless path.match?(/s\d{2}e\d{2}/i)
 
       if path.split(%r{/}).last.match?(/S\.H\.I\.E\.L\.D./i)
         filename = path.split(%r{/}).last
@@ -61,7 +67,7 @@ Maid.rules do
   end
 
   rule "Move movies" do
-    dir(["/Volumes/Download/torrents/**/*.{mp4,mkv}"]).each do |path|
+    where_content_type(dir(["/Volumes/Download/torrents/**/*"]), 'video').each do |path|
       movie_size = 4 * 1024 * 1024 * 1024 # gigabytes
       move(path, "/Volumes/MultiMediaToo/videos/movies") if size_of(path) > movie_size
     end
@@ -95,16 +101,22 @@ Maid.rules do
     end
     book_dirs.uniq.each do |path|
       move(path, "/Volumes/MultiMediaToo/audiobooks")
-    rescue
-      puts "Problem with #{path}"
+    rescue => e
+      if e.message =~ /File exists/
+        puts "File exists, deleting source: #{path}"
+        trash(path)
+      end
+      puts e
     end
   end
 
   rule "Remove junk files" do
     dir(
       [
-        "/Volumes/Download/torrents/**/*.{opf,txt,nfo,diz,sfv}",
-        "/Volumes/Download/torrents/**/cover.jpg",
+        "/Volumes/Download/[torrents/**/*.{opf,txt,nfo,diz,sfv}",
+        "/Volumes/Download/torrents/**/{Cc}over.jpg",
+        "/Volumes/Download/deluge/complete/**/*.{opf,txt,nfo,diz,sfv}",
+        "/Volumes/Download/deluge/complete/**/{Cc}over.jpg",
       ]
     ).each do |path|
       File.delete(path)
@@ -112,9 +124,10 @@ Maid.rules do
   end
 
   rule "Remove empty directories" do
-    dir(["/Volumes/Download/deluge/complete/*",
+    dir(["/Volumes/Download/deluge/complete/**/*",
          "/Volumes/Download/torrents/**/*",]).each do |path|
-      trash(path) if File.directory?(path) && dir("#{path}/*").empty?
+      remove(path) if File.directory?(path) && dir("#{path}/*").empty?
+      remove(path) if File.directory?(path) && disk_usage(path) < 512
     end
   end
 end
