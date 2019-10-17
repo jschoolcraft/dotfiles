@@ -113,10 +113,12 @@ Maid.rules do
   rule "Remove junk files" do
     dir(
       [
-        "/Volumes/Download/[torrents/**/*.{opf,txt,nfo,diz,sfv}",
+        "/Volumes/Download/torrents/**/*.{opf,txt,nfo,diz,sfv}",
         "/Volumes/Download/torrents/**/{Cc}over.jpg",
+        "/Volumes/Download/torrents/**/*{Ss}ample.*",
         "/Volumes/Download/deluge/complete/**/*.{opf,txt,nfo,diz,sfv}",
         "/Volumes/Download/deluge/complete/**/{Cc}over.jpg",
+        "/Volumes/Download/deluge/complete/**/*{Ss}ample*",
       ]
     ).each do |path|
       File.delete(path)
