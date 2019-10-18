@@ -50,7 +50,16 @@ nmap <silent> <C-j> <Plug>(ale_next_wrap)
 nnoremap <F5> :UndotreeToggle<cr>
 
 " lightline
-set noshowmode
+set noshowmode " we have mode in lightline, so this would be duplicate
+let g:lightline = {
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
+      \ },
+      \ 'component_function': {
+      \   'gitbranch': 'fugitive#head'
+      \ },
+      \ }
 
 "   - jump between linting errors
 nmap <silent> <C-k> <Plug>(ale_previous_wrap)
