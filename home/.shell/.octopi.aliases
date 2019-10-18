@@ -5,6 +5,7 @@ alias octopi='cd ~/code/clients/octopi/octopi'
 alias octopi-scout='heroku addons:open scout -a octopi-tos'
 alias octopi-airbrake='heroku addons:open airbrake -a octopi-tos'
 alias octopi-librato='heroku addons:open librato -a octopi-tos'
+alias octopi-appoptics='heroku addons:open appoptics -a octopi-tos'
 
 # performance
 alias octopi-pghero='open https://octopi.co/pghero/'
