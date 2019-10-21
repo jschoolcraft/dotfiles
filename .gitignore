@@ -2,6 +2,7 @@ home/.zsh-update
 home/.zsh_history
 home/.config/nvim/autoload/plug.vim
 home/.config/nvim/autoload/plug.vim.old
+home/.config/karabiner/automatic_backups
 home/.vim/autoload/plug.vim
 home/.vim/autoload/plug.vim.old
 home/.vim/backup/*
