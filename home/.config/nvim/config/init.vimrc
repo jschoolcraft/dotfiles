@@ -13,6 +13,9 @@ Plug 'editorconfig/editorconfig-vim' " consistency with peers in projects
 " git
 Plug 'tpope/vim-fugitive'
 
+" csv
+Plug 'mechatroner/rainbow_csv'
+
 " finding things
 Plug 'mileszs/ack.vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
