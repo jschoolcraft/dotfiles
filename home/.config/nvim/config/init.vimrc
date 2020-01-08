@@ -39,6 +39,8 @@ Plug 'myusuf3/numbers.vim' " intelligently toggling line numbers
 " auto-complete and snippets
 Plug 'Shougo/deoplete.nvim', { 'do': '::UpdateRemotePlugins' }
 Plug 'ervandew/supertab'
+Plug 'Shougo/neosnippet.vim'
+Plug 'Shougo/neosnippet-snippets'
 
 " react / react-native / javascript
 Plug 'kchmck/vim-coffee-script'

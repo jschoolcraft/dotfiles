@@ -101,8 +101,8 @@ set scrolloff=8         "Start scrolling when we're 8 lines away from margins
 set sidescrolloff=15
 set sidescroll=1
 set background=dark
-"colorscheme ir_black
 colorscheme onedark
+
 " utf-8 default encoding
 set enc=utf-8
 
@@ -122,7 +122,7 @@ set scrolloff=5
 set t_Co=256
 if &t_Co >= 256 || has("gui_running")
    syntax on
-   colorscheme landscape
+   colorscheme onedark
 endif
 
 if &t_Co > 2 || has("gui_running")
