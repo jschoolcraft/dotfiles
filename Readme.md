@@ -9,6 +9,10 @@ git clone this repo:
 Install [homebrew](https://brew.sh):
 
     /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+    
+Let homebrew install things that this depends on (antigen, vim, neovim, etc):
+
+    brew bundle --file=~/code/dotfiles/home/.Brewfile
 
 then install (idempotent, so update too) the dotfiles
 
