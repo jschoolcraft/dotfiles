@@ -77,6 +77,12 @@ tap 'homebrew/versions'
 tap 'neovim/neovim'
 brew 'neovim', args: ['--with-cscope', '--with-python', '--with-lua', '--override-system-vim']
 
+# Postgesql Multiple Versions
+# https://github.com/petere/homebrew-postgresql
+tap 'petere/postgresql'
+brew 'postgresql-common'
+brew 'posgresql-9.6'
+
 # App Store Stuff
 
 mas 'Monosnap', id: 540348655
