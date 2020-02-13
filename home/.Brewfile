@@ -83,6 +83,11 @@ tap 'petere/postgresql'
 brew 'postgresql-common'
 brew 'posgresql-9.6'
 
+# Heroku
+# https://devcenter.heroku.com/articles/heroku-cli
+tap 'heroku/brew'
+brew 'heroku'
+
 # App Store Stuff
 
 mas 'Monosnap', id: 540348655
