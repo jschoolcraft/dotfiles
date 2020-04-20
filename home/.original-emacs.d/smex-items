@@ -1,0 +1,30 @@
+
+;; ----- smex-history -----
+(
+ jas/reload-init-file
+ org-babel-tangle
+ markdown-preview
+ markdown-mode
+ deft
+ markdown
+ set-file-modes
+)
+
+;; ----- smex-data -----
+(
+ (org-indent-item . 2)
+ (narrow-to-region . 2)
+ (org-narrow-to-subtree . 3)
+ (widen . 4)
+ (narrow-to-defun . 2)
+ (deft-filter . 1)
+ (deft-refresh . 1)
+ (deft-refresh-filter . 1)
+ (deft . 2)
+ (set-file-modes . 1)
+ (markdown . 1)
+ (markdown-mode . 2)
+ (markdown-preview . 6)
+ (jas/reload-init-file . 3)
+ (org-babel-tangle . 1)
+)
