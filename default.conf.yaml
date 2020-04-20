@@ -63,7 +63,8 @@
       create: true
 
     # emacs
-    ~/.emacs.d: home/.emacs.d
+    ~/.original-emacs.d: home/.original-emacs.d
+    ~/.emacs-profiles.el: home/.emacs-profiles.el
 
     # atom
     ~/.atom/config.cson:
@@ -100,7 +101,7 @@
 - shell:
     - [git submodule update --init --recursive, Installing submodules]
     - [pip3 install --upgrade pynvim, neovim python package]
-    - [pip2 install --upgrade pynvim, neovim python package]
+    # - [pip2 install --upgrade pynvim, neovim python package]
     - command: nvim +PlugInstall! +PlugUpdate! +PlugClean! +qa
       stdout: true
       stderr: true
