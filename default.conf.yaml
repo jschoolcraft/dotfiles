@@ -21,7 +21,6 @@
       path: home/.shell
       create: true
     ~/.zshrc: home/.zshrc
-    ~/.oh-my-zsh: home/.oh-my-zsh
     ~/.tmux.conf: home/.tmux.conf
     ~/.iterm-colors: home/.iterm-colors
     ~/.antibody: config/antibody.txt
