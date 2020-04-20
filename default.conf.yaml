@@ -64,6 +64,7 @@
     # emacs
     ~/.original-emacs.d: home/.original-emacs.d
     ~/.emacs-profiles.el: home/.emacs-profiles.el
+    ~/.doom.d: home/.doom.d
 
     # atom
     ~/.atom/config.cson:
