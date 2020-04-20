@@ -1,5 +1,5 @@
 # conveniences
-alias octopi='cd ~/code/clients/octopi/octopi'
+alias octopi='cd ~/code/work/octopi/octopi'
 
 # heroku stuff
 alias octopi-scout='heroku addons:open scout -a octopi-tos'
