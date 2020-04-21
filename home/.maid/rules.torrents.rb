@@ -18,7 +18,7 @@ Maid.rules do
     directories = []
     dir(["/Volumes/Download/torrents/**/*.rar"]).each do |path|
       directories << File.dirname(path)
-      next if File.exist?(File.join(File.dirname(path), `unrar lb path`))
+      next if File.exist?(File.join(File.dirname(path), `unrar lb #{path}`))
 
       directories << File.dirname(path)
       Dir.chdir(File.dirname(path)) do
