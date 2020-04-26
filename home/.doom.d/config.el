@@ -30,6 +30,13 @@
 ; (setq doom-theme 'doom-one)
 (setq doom-theme 'doom-dark+)
 
+;; Make the dealay for which-key a little more bearable
+;; You could alternatively set which-key-idle-delay to 0.5 and which-key-idle-secondary-delay to 0.2
+;; going too low could cause problems with which-key doing work it doesn't need to do
+(setq
+ which-key-idle-delay 0.5
+ which-key-idle-secondary-delay 0.2)
+
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
 (setq
