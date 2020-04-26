@@ -91,6 +91,9 @@
                       :weight 'bold)
   )
 
+;; org roam
+(setq org-roam-directory "~/Dropbox/org/")
+
 (use-package! org-fancy-priorities
               :hook (org-mode . org-fancy-priorities-mode)
               :config
