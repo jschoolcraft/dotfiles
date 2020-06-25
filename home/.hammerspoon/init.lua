@@ -17,14 +17,13 @@ Install:andUse("ReloadConfiguration",
 }
 )
 
--- if this doesn't work, next to try:
--- http://www.hammerspoon.org/Spoons/WinWin.html
+myGrid = { w = 6, h = 4 }
 Install:andUse("MiroWindowsManager",
 {
   config = {
     fullScreenSizes = {1, 4/3, 2},
     sizes = {2, 3, 3/2},
-    GRID = {w = 24, h = 24}
+    GRID = myGrid
   },
   hotkeys = {
     up = {hyper, "k"},
@@ -33,6 +32,14 @@ Install:andUse("MiroWindowsManager",
     left = {hyper, "h"},
     fullscreen = {hyper, "f"},
   }
+}
+)
+
+Install:andUse("WindowGrid",
+{
+  config = { gridGeometries = { { myGrid.w .."x" .. myGrid.h } } },
+  hotkeys = {show_grid = {hyper, "g"}},
+  start = true
 }
 )
 
