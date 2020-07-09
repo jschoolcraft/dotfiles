@@ -6,7 +6,7 @@ call plug#begin('~/.config/nvim/plugged')
 
 " editing
 Plug 'tpope/vim-surround'
-Plug 'godlygeek/tabular'
+Plug 'junegunn/vim-easy-align'
 Plug 'alvan/vim-closetag'
 Plug 'editorconfig/editorconfig-vim' " consistency with peers in projects
 
@@ -17,15 +17,11 @@ Plug 'tpope/vim-fugitive'
 Plug 'mechatroner/rainbow_csv'
 
 " finding things
-Plug 'mileszs/ack.vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 
 " rails
 Plug 'tpope/vim-rails'
-Plug 'tpope/vim-haml'
-Plug 'slim-template/vim-slim'
-Plug 'vim-scripts/rails.vim'
 
 " linting
 Plug 'w0rp/ale'
@@ -37,38 +33,27 @@ Plug 'slashmili/alchemist.vim'
 Plug 'myusuf3/numbers.vim' " intelligently toggling line numbers
 
 " auto-complete and snippets
-Plug 'Shougo/deoplete.nvim', { 'do': '::UpdateRemotePlugins' }
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'ervandew/supertab'
-Plug 'Shougo/neosnippet.vim'
-Plug 'Shougo/neosnippet-snippets'
 
 " react / react-native / javascript
-Plug 'kchmck/vim-coffee-script'
-Plug 'pangloss/vim-javascript'
-Plug 'mxw/vim-jsx'
-Plug 'sheerun/vim-json'
-Plug 'jelera/vim-javascript-syntax'
 Plug 'ternjs/tern_for_vim', { 'for': ['javascript', 'javascript.jsx'] }
-Plug 'carlitux/deoplete-ternjs', {'do': 'yarn install', 'for': ['javascript', 'javascript.jsx'] }
 Plug 'othree/jspc.vim', { 'for': ['javascript', 'javascript.jsx'] }
-Plug 'prettier/vim-prettier', {
-	\ 'do': 'yarn install',
-	\ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql'] }
-Plug 'posva/vim-vue'
+
+" syntax
+Plug 'sheerun/vim-polyglot'
 
 " colorschemes
-Plug 'nightsense/vimspectr'
 Plug 'arcticicestudio/nord-vim'
-Plug 'altercation/vim-colors-solarized'
 Plug 'jsahlen/vim-ir_black'
-Plug 'itchyny/landscape.vim'
+Plug 'rakr/vim-one'
+Plug 'sainnhe/sonokai'
+
+" status bar
 Plug 'itchyny/lightline.vim' "airline replacements'
-Plug 'dracula/vim', { 'as': 'dracula' }
-Plug 'joshdick/onedark.vim'
-Plug 'jacoborus/tender.vim'
 
 " wiki/notes/misc
-Plug 'weierophinney/vimwiki'
+Plug 'vimwiki/vimwiki'
 Plug 'plasticboy/vim-markdown'
 Plug 'Alok/notational-fzf-vim'
 
@@ -76,4 +61,3 @@ Plug 'Alok/notational-fzf-vim'
 Plug 'mbbill/undotree'
 
 call plug#end()
-

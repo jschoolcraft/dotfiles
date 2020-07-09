@@ -2,9 +2,6 @@ let mapleader=';'
 nnoremap ' `
 nnoremap ` '
 
-" another ESC because my keyboard is acting up
-inoremap jj <Esc>
-
 " move around windows a little faster
 noremap <C-h> <C-w>h
 noremap <C-j> <C-w>j
@@ -16,6 +13,8 @@ nmap <silent> <leader>ev :e $MYVIMRC<CR>
 nmap <silent> <leader>sv :so $MYVIMRC<CR>
 nmap <silent> <leader>f :Files<CR>
 nmap <silent> <leader>be :Buffers<CR>
+nmap <silent> <leader>l :Lines<CR>
+nmap <silent> <leader>bl :BLines<CR>
 
 " Don't yank to default register when changing something
 nnoremap c "xc

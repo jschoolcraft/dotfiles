@@ -14,7 +14,7 @@ filetype indent on
 
 " ================ General Config ====================
 
-" Not using these settings currently because trying out: myusuf3/numbers.vim
+"Not using these settings currently because trying out: myusuf3/numbers.vim
 "set number                      "Line numbers are good
 "set relativenumber              "Relative line numbers are better
 set backspace=indent,eol,start  "Allow backspace in insert mode
@@ -32,9 +32,6 @@ set lazyredraw                  "Don't need every step of the macro drawn
 " exist in the background without being in a window.
 " http://items.sjbach.com/319/configuring-vim-right
 set hidden
-
-"turn on syntax highlighting
-syntax on
 
 " ================ Search Settings  =================
 
@@ -100,8 +97,19 @@ set wildignore+=*/node_modules/*,*/bower_components/*
 set scrolloff=8         "Start scrolling when we're 8 lines away from margins
 set sidescrolloff=15
 set sidescroll=1
+
+" colors
+set t_Co=256
+syntax enable
 set background=dark
-colorscheme onedark
+
+" shusia, maia, andromeda, atlantis
+" https://github.com/sainnhe/sonokai
+let g:sonokai_style = 'maia'
+let g:sonokai_enable_italic = 1
+let g:sonokai_disable_italic_comment = 1
+
+colorscheme sonokai
 
 " utf-8 default encoding
 set enc=utf-8
@@ -119,16 +127,21 @@ set vb t_vb=
 " keep some more lines for scope
 set scrolloff=5
 
-set t_Co=256
-if &t_Co >= 256 || has("gui_running")
-   syntax on
-   colorscheme onedark
+"Credit joshdick
+"Use 24-bit (true-color) mode in Vim/Neovim when outside tmux.
+"If you're using tmux version 2.2 or later, you can remove the outermost $TMUX check and use tmux's 24-bit color support
+"(see < http://sunaku.github.io/tmux-24bit-color.html#usage > for more information.)
+if (has("nvim"))
+  "For Neovim 0.1.3 and 0.1.4 < https://github.com/neovim/neovim/pull/2198 >
+  let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 endif
 
-if &t_Co > 2 || has("gui_running")
-   syntax on
-endif
-
+"For Neovim > 0.1.5 and Vim > patch 7.4.1799 < https://github.com/vim/vim/commit/61be73bb0f965a895bfb064ea3e55476ac175162 >
+"Based on Vim patch 7.4.1770 (`guicolors` option) < https://github.com/vim/vim/commit/8a633e3427b47286869aa4b96f2bfc1fe65b25cd >
+" < https://github.com/neovim/neovim/wiki/Following-HEAD#20160511 >
+" if (has("termguicolors"))
+  set termguicolors
+" endif
 
 " Clear search buffer on return
 :nnoremap <CR> :nohlsearch<cr>
@@ -138,10 +151,6 @@ set cmdheight=2
 set laststatus=2
 set viminfo=!,'100,\"100,:20,<50,s10,h,n~/.nviminfo
 set statusline=[%l,%v\ %P%M]\ %f\ %r%h%w\ (%{&ff})\ %{fugitive#statusline()}
-
-
-" format json from selection
-vnoremap <leader>j :!python -m json.tool<CR>
 
 " shut up vim
 set shortmess=atI
