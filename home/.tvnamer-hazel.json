@@ -4,7 +4,7 @@
   "overwrite_destination_on_move": true,
   "move_files_enabled": true,
   "move_files_confirmation": false,
-  "move_files_destination": "/Volumes/MultimediaToo/videos/TV Shows/%(seriesname)s/Season %(seasonnumber)02d",
+  "move_files_destination": "/Volumes/MultimediaToo/videos/TV Shows/%(seriesname)s/Season %(seasonnumber)d",
   "always_move": true,
   "always_rename": true,
   "valid_extensions": ["avi", "mkv", "mp4"],
