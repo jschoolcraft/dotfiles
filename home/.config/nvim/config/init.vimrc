@@ -19,6 +19,7 @@ Plug 'mechatroner/rainbow_csv'
 " finding things
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
+Plug 'jremmen/vim-ripgrep'
 
 " rails
 Plug 'tpope/vim-rails'
