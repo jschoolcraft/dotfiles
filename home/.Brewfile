@@ -27,6 +27,7 @@ cask 'font-inconsolata-dz'
 cask 'font-input'
 cask 'font-source-code-pro'
 cask 'font-terminus'
+cask 'font-overpass'
 
 brew 'ack'
 brew 'ansible'
