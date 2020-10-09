@@ -47,3 +47,4 @@
 ;(package! builtin-package :recipe (:branch "develop"))
 (package! org-fancy-priorities)
 (package! org-super-agenda)
+(package! restclient)
