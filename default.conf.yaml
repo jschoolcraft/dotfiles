@@ -30,6 +30,7 @@
     # Git
     ~/.gitconfig: home/.gitconfig
     ~/.gitignore: home/.gitignore
+    ~/.gitattributes: home/.gitattributes
 
     # Tools
     ~/.osx: home/.osx
