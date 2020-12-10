@@ -23,6 +23,7 @@
     ~/.zshrc: home/.zshrc
     ~/.tmux.conf: home/.tmux.conf
     ~/.iterm-colors: home/.iterm-colors
+    ~/.alacritty.yml: home/.alacritty.yml
     ~/.antibody: config/antibody.txt
     ~/.config/fish: home/.config/fish
     ~/.purepower: home/.purepower
