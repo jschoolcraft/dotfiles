@@ -51,6 +51,7 @@
  )
 
 (after! org
+  (add-to-list 'org-modules 'org-checklist 'org-habit)
   (set-face-attribute 'org-link nil
                       :weight 'normal
                       :background nil)
@@ -138,6 +139,7 @@
 (use-package! org-super-agenda
   :after org-agenda
   :init
+  (setq org-super-agenda-header-map nil)
   (setq org-super-agenda-groups '((:name "Today"
                                          :time-grid t
                                          :scheduled today)
