@@ -25,6 +25,7 @@ Maid.rules do
 
     trash(dir('~/Downloads/* (1).*'))
     trash(dir('~/Downloads/* (2).*'))
+    trash(dir('~/Downloads/* (*).*'))
     trash(dir('~/Downloads/*.1'))
   end
 
@@ -42,11 +43,11 @@ Maid.rules do
     end
   end
 
-  rule 'empty the trash daily' do
-    dir(['~/.Trash/**/*']).each do |path|
-      remove(path) if 7.days.since?(accessed_at(path))
-    end
-  end
+  # rule 'empty the trash daily' do
+  #   dir(['~/.Trash/**/*']).each do |path|
+  #     remove(path) if 7.days.since?(accessed_at(path))
+  #   end
+  # end
 
   rule 'Update crontab' do
     `whenever --update-crontab -f ~/.maid/schedule.rb`
