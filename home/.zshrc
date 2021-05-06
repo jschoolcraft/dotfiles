@@ -222,6 +222,9 @@ if _has fzf && _has rg; then
 fi
 # }}}
 
+# stop homebrew from automatically upgrading everything
+HOMEBREW_NO_AUTO_UPDATE=1
+
 # theme, maybe?
 source ~/.purepower
 
