@@ -1,6 +1,6 @@
 [github]
   user = jschoolcraft
-  email = jeff@thequeue.net
+  email = jeffrey.schoolcraft@gmail.com
 [branch]
   autosetupmerge = true
 [push]
@@ -15,8 +15,8 @@
 [core]
   excludesfile = ~/.gitignore
   editor = nvim
-	quotepath = false
-	attributesfile = /Users/jschoolcraft/.gitattributes
+  quotepath = false
+  attributesfile = /Users/jschoolcraft/.gitattributes
 [rerere]
   enabled = true
   autoupdate = true
@@ -29,8 +29,9 @@
 [format]
   pretty=format:%C(yellow)%h%Creset -%C(red)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset
 [user]
-	name = Jeff Schoolcraft
-	email = jeff@thequeue.net
+  name = Jeff Schoolcraft
+  email = jeffrey.schoolcraft@gmail.com
+  signingkey = 63ECA64FCF4E10F9
 [filter "media"]
   clean = git-media-clean %f
   smudge = git-media-smudge %f
@@ -45,8 +46,8 @@
     File.open(%(%A), %(w)) {|f| f.write(b)}\n\
     exit 1 if b.include?(%(<)*%L)'"
 [mergetool]
-	keepTemporaries = false
-	prompt = false
+  keepTemporaries = false
+  prompt = false
 [alias]
   # aliases
   aliases = config --get-regexp alias
@@ -89,6 +90,7 @@
   short = log --pretty=format:\"%h %cr %cn %Cgreen%s%Creset\"
   changelog = log --pretty=format:\" * %s\"
   shortnocolor = log --pretty=format:\"%h %cr %cn %s\"
+  wip = for-each-ref --sort='authordate:iso8601' --format=' %(color:green)%(authordate:relative)%09%(color:white)%(refname:short)' refs/heads
 
   wc = whatchanged -p --abbrev-commit --pretty=medium
 
@@ -124,9 +126,9 @@
   svnl = svn log --oneline --show-commit
 [difftool "sourcetree"]
 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-	path =
+	path = 
 [mergetool "sourcetree"]
-	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
 	trustExitCode = true
 [diff]
 	mnemonicprefix = true
