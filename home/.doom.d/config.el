@@ -42,63 +42,135 @@
 (setq
  org-directory "~/Dropbox/org/"
  org-default-notes-file (concat org-directory "/notes.org")
+ work-org (concat org-directory "octopi.org")
  org-agenda-files (list org-directory)
  org-agenda-skip-scheduled-if-done t
  org-ellipsis " ▾ "
- org-bullets-bullet-list '("·")
  org-tags-column -80
  org-log-done 'time
+ org-todo-keywords '((sequence "TODO(t)"  "|" "DONE(d)")
+                     (sequence "WAITING(w@/!)" "|" "CANCELLED(c@/!)"))
  )
 
 (after! org
   (add-to-list 'org-modules 'org-checklist 'org-habit)
-  (set-face-attribute 'org-link nil
-                      :weight 'normal
-                      :background nil)
-  (set-face-attribute 'org-code nil
-                      :foreground "#a9a1e1"
-                      :background nil)
-  (set-face-attribute 'org-date nil
-                      :foreground "#5B6268"
-                      :background nil)
-  (set-face-attribute 'org-level-1 nil
-                      :foreground "steelblue2"
-                      :background nil
-                      :height 1.2
-                      :weight 'normal)
-  (set-face-attribute 'org-level-2 nil
-                      :foreground "slategray2"
-                      :background nil
-                      :height 1.0
-                      :weight 'normal)
-  (set-face-attribute 'org-level-3 nil
-                      :foreground "SkyBlue2"
-                      :background nil
-                      :height 1.0
-                      :weight 'normal)
-  (set-face-attribute 'org-level-4 nil
-                      :foreground "DodgerBlue2"
-                      :background nil
-                      :height 1.0
-                      :weight 'normal)
-  (set-face-attribute 'org-level-5 nil
-                      :weight 'normal)
-  (set-face-attribute 'org-level-6 nil
-                      :weight 'normal)
-  (set-face-attribute 'org-document-title nil
-                      :foreground "SlateGray1"
-                      :background nil
-                      :height 1.75
-                      :weight 'bold)
+  (setq
+   ;; Don't indent org-mode files. This will make the buffer look more
+   ;; prose-like than code-like.
+   org-startup-indented nil
+   org-indent-mode nil
+
+   ;; Keep 1 blank line after collapsed list elements. Let them breathe.
+   org-cycle-separator-lines 1
+
+   ;; Images:
+   org-startup-with-inline-images t     ; Load images by default
+   mm-inline-large-images t             ; Resize very large images
+   )
+
+  ;; Capture templates
+  ;; reference: https://orgmode.org/manual/Template-elements.html#Template-elements
+
+  ;; nil the original list and start over
+  (setq org-capture-templates '())
+
+  ;; Personal Stuff
+
+  (add-to-list 'org-capture-templates
+               '("t" "Personal todo" entry
+                  (file+headline +org-capture-todo-file "Inbox")
+                  "* [ ] %?\n%i\n%a" :prepend t))
+  (add-to-list 'org-capture-templates
+               '("n" "Personal notes" entry
+                 (file+headline +org-capture-notes-file "Inbox")
+                 "* %u %?\n%i\n%a" :prepend t))
+  (add-to-list 'org-capture-templates
+               '("j" "Journal" entry
+                 (file+olp+datetree +org-capture-journal-file)
+                 "* %U %?\n%i\n%a" :prepend t))
+
+  ;; General Code Stuff
+  (add-to-list 'org-capture-templates
+               '("p" "Templates for projects"))
+
+  (add-to-list 'org-capture-templates
+               '("pt" "Project-local todo" entry
+                 (file +org-capture-project-todo-file)
+                 "* TODO %?\n%i\n%a"))
+
+  (add-to-list 'org-capture-templates
+               '("pi" "Project-local idea" entry
+                 (file+headline +org-capture-project-todo-file "Ideas")
+                 "** %? %u\n%i\n%a"))
+
+  ;; Octopi stuff
+  (add-to-list 'org-capture-templates
+               '("o" "Octopi"))
+
+  ;; Retrospective Notes
+  (add-to-list 'org-capture-templates
+               '("or" "Retrospective Notes" entry (file+olp+datetree work-org "Retrospective")
+                 "* %?"
+                 :kill-buffer t))
+
+  ;; 1:1 notes
+  (add-to-list 'org-capture-templates
+               '("o1" "1:1 Notes"))
+
+  (add-to-list 'org-capture-templates
+               '("o1g" "1:1 Notes Guille" entry (file+olp+datetree work-org "1:1" "Guille")
+                 "* %?"
+                 :kill-buffer t))
+
+  (add-to-list 'org-capture-templates
+               '("o1l" "1:1 Notes Luc" entry (file+olp+datetree work-org "1:1" "Luc")
+                 "* %?"
+                 :kill-buffer t))
+
+  ;; Daily notes
+  (add-to-list 'org-capture-templates
+               '("od" "Daily Notes" entry (file+olp+datetree work-org "Daily Notes")
+                 "* %U %?"
+                 :kill-buffer t))
+
+  ;; Glossary
+  (add-to-list 'org-capture-templates
+               '("og" "Glossary" entry (file+headline work-org "Glossary")
+                 "* %^{Term}\n\t%?"
+                 :kill-buffer t))
+
+  ;; Bragging
+  (add-to-list 'org-capture-templates
+               '("ob" "Bragging" entry (file+headline work-org "Bragging")
+                 "* %U %?"
+                 :kill-buffer t))
+
   )
+
+(use-package! org-super-agenda
+  :after org-agenda
+  (org-super-agenda-mode)
+  :init
+  (setq org-super-agenda-header-map nil)
+  (setq org-super-agenda-groups '((:name "Today"
+                                   :time-grid t
+                                   :scheduled today)
+                                  (:name "Due Today"
+                                   :deadline today)
+                                  (:name "Overdue"
+                                   :deadline past)
+                                  (:name "Due soon"
+                                   :deadline future))))
 
 ;; org roam
 ;; (setq org-roam-directory "~/Dropbox/org/")
 
-(use-package! org-fancy-priorities
-              :hook (org-mode . org-fancy-priorities-mode)
-              :config
-              (setq org-fancy-priorities-list '("⚡" "⬆" "⬇" "☕")))
+ (use-package! org-fancy-priorities
+; :ensure t
+  :hook
+  (org-mode . org-fancy-priorities-mode)
+  :config
+   (setq org-fancy-priorities-list '("⚡" "⬆" "⬇" "☕")))
 
 (setq
  deft-extensions '("txt" "tex" "org" "md")
@@ -115,10 +187,10 @@
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
-(setq display-line-numbers-type t)
+(setq display-line-numbers-type 'relative)
 
 ;; Try to make emacs open full screen
-(add-to-list 'initial-frame-alist '(fullscreen . maximized))
+;;(add-to-list 'initial-frame-alist '(fullscreen . maximized))
 
 ;; Here are some additional functions/macros that could help you configure Doom:
 ;;
@@ -136,26 +208,25 @@
 ;;
 ;; You can also try 'gd' (or 'C-c g d') to jump to their definition and see how
 ;; they are implemented.
-(use-package! org-super-agenda
-  :after org-agenda
-  :init
-  (setq org-super-agenda-header-map nil)
-  (setq org-super-agenda-groups '((:name "Today"
-                                         :time-grid t
-                                         :scheduled today)
-                                  (:name "Due Today"
-                                         :deadline today)
-                                  (:name "Overdue"
-                                         :deadline past)
-                                  (:name "Due soon"
-                                         :deadline future)))
-  :config
-  (org-super-agenda-mode))
 
-;; make window movement similar to vim
+;; disable autosave
+(setq auto-save-default nil
+      auto-save-visited-mode nil)
+
+;; undo
+(setq undo-limit 80000000
+      evil-want-fine-undo t)
+
+;; whitespace
+;;   I realize this isn't the "doom" way but seriously,
+;;   fuck all whitespace
+(setq show-trailing-whitespace t)
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
+
 (map!
  (:after evil
-   :en "C-h"   #'evil-window-left
-   :en "C-j"   #'evil-window-down
-   :en "C-k"   #'evil-window-up
-   :en "C-l"   #'evil-window-right))
+  ;; make window movement similar to vim
+  :en "C-h"   #'evil-window-left
+  :en "C-j"   #'evil-window-down
+  :en "C-k"   #'evil-window-up
+  :en "C-l"   #'evil-window-right))
