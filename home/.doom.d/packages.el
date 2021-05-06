@@ -48,4 +48,6 @@
 (package! org-fancy-priorities)
 (package! org-super-agenda)
 (package! restclient)
+;; TODO Look at https://github.com/gitu/.doom.d/blob/d5595c2b535fd560ca1e8e755b4b8e6715d3c76a/config.org#org-rifle
+;; and see if we want to pull in any of this
 (package! helm-org-rifle)
