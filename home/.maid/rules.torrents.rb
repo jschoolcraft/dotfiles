@@ -76,8 +76,9 @@ Maid.rules do
   rule "Move ebooks" do
     dir(
       [
-        "/Volumes/Download/deluge/complete/**/*.{pdf,epub,mobi}",
-        "/Volumes/Download/torrents/**/*.{pdf,epub,mobi}",
+        "/Volumes/Download/deluge/complete/**/*.{pdf,epub,mobi,azw3}",
+        "/Volumes/Download/torrents/**/*.{pdf,epub,mobi,azw3}",
+        "/Volumes/Download/nzbget/completed/**/*.{pdf,epub,mobi,azw3}",
       ]
     ).each do |path|
       move(path, "/Volumes/Download/ebooks")
@@ -90,6 +91,7 @@ Maid.rules do
       [
         "/Volumes/Download/deluge/complete/**/*.{mp3,m4a,m4b}",
         "/Volumes/Download/torrents/**/*.{mp3,m4a,m4b}",
+        "/Volumes/Download/nzbget/completed/**/*.{mp3,m4a,m4b}",
       ]
     ).each do |path|
       containing_directory = File.dirname(path).split(%r{/}).last
@@ -119,6 +121,7 @@ Maid.rules do
         "/Volumes/Download/deluge/complete/**/*.{opf,txt,nfo,diz,sfv}",
         "/Volumes/Download/deluge/complete/**/{Cc}over.jpg",
         "/Volumes/Download/deluge/complete/**/*{Ss}ample*",
+        "/Volumes/Download/nzbget/completed/**/*.{opf,txt,nfo,diz,sfv}",
       ]
     ).each do |path|
       File.delete(path)
@@ -126,8 +129,13 @@ Maid.rules do
   end
 
   rule "Remove empty directories" do
-    dir(["/Volumes/Download/deluge/complete/**/*",
-         "/Volumes/Download/torrents/**/*",]).each do |path|
+    dir(
+      [
+        "/Volumes/Download/deluge/complete/**/*",
+        "/Volumes/Download/torrents/**/*",
+        "/Volumes/Download/nzbget/completed/**/*",
+      ]
+    ).each do |path|
       remove(path) if File.directory?(path) && dir("#{path}/*").empty?
       remove(path) if File.directory?(path) && disk_usage(path) < 512
     end
