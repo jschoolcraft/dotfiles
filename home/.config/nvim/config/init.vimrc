@@ -28,7 +28,7 @@ Plug 'tpope/vim-rails'
 Plug 'w0rp/ale'
 
 " elixir
-Plug 'slashmili/alchemist.vim'
+" Plug 'slashmili/alchemist.vim'
 
 " view stuff
 Plug 'myusuf3/numbers.vim' " intelligently toggling line numbers
