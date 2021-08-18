@@ -108,7 +108,6 @@ endif
 
 set t_Co=256
 syntax enable
-set background=dark
 
 " shusia, maia, andromeda, atlantis
 " https://github.com/sainnhe/sonokai
@@ -116,7 +115,9 @@ let g:sonokai_style = 'maia'
 let g:sonokai_enable_italic = 1
 let g:sonokai_disable_italic_comment = 1
 
-colorscheme sonokai
+" colorscheme sonokai
+colorscheme one
+set background=dark
 
 " utf-8 default encoding
 set enc=utf-8
