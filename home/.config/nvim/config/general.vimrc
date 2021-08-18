@@ -211,3 +211,7 @@ set clipboard=unnamedplus
 " Python
 let g:python_host_prog = '/usr/local/bin/python2'
 let g:python3_host_prog = '/usr/local/bin/python3'
+
+" highlight Normal guibg=none
+
+au TextYankPost * silent! lua vim.highlight.on_yank { timeout = 500 }
