@@ -32,10 +32,13 @@ nnoremap c "xc
 xnoremap c "xc
 
 " When jump to next match also center screen
-nnoremap n nzz
-nnoremap N Nzz
-vnoremap n nzz
-vnoremap N Nzz
+nnoremap n nzzzv
+nnoremap N Nzzzv
+vnoremap n nzzzv
+vnoremap N Nzzzv
+
+" Join lines, keep cursor where it was
+nnoremap J mzJ`z
 
 " Same when moving up and down
 nnoremap <C-u> <C-u>zz
