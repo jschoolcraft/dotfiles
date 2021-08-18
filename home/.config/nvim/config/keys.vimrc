@@ -27,6 +27,9 @@ nmap <silent> <leader>bl :BLines<CR>
 " :History:  "command history
 " :Maps      "key mappings
 
+" Telescope
+nnoremap <leader>ps :lua require('telescope.builtin').grep_string({ search = vim.fn.input("Grep For > ")})<CR>
+
 " Don't yank to default register when changing something
 nnoremap c "xc
 xnoremap c "xc

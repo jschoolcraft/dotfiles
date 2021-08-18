@@ -8,3 +8,6 @@ source $HOME/.config/nvim/config/plugins.vimrc
 source $HOME/.config/nvim/config/keys.vimrc
 " status line configuration
 " source $HOME/.config/nvim/config/line.vimrc
+source $HOME/.config/nvim/config/lua/lsp-config.lua
+source $HOME/.config/nvim/config/lua/nvim-compe.lua
+source $HOME/.config/nvim/config/lua/lspsaga.lua

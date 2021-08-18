@@ -21,11 +21,23 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'jremmen/vim-ripgrep'
 
+" LSP
+Plug 'neovim/nvim-lspconfig'
+Plug 'glepnir/lspsaga.nvim'
+Plug 'hrsh7th/nvim-compe'
+Plug 'hrsh7th/vim-vsnip'
+
+" telescope
+Plug 'nvim-lua/popup.nvim'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
+Plug 'nvim-telescope/telescope-fzy-native.nvim'
+
 " rails
 Plug 'tpope/vim-rails'
 
 " linting
-Plug 'w0rp/ale'
+" Plug 'w0rp/ale'
 
 " elixir
 " Plug 'slashmili/alchemist.vim'
@@ -34,8 +46,8 @@ Plug 'w0rp/ale'
 " Plug 'myusuf3/numbers.vim' " intelligently toggling line numbers
 
 " auto-complete and snippets
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'ervandew/supertab'
+" Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+" Plug 'ervandew/supertab'
 
 " react / react-native / javascript
 Plug 'ternjs/tern_for_vim', { 'for': ['javascript', 'javascript.jsx'] }
