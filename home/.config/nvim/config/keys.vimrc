@@ -56,3 +56,6 @@ vnoremap <C-b> <C-b>zz
 " Macros
 nnoremap Q @@
 nnoremap Y y$
+
+" Vim-surround
+nmap <leader>" ysiw"
