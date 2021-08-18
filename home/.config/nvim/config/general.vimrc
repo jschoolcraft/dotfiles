@@ -14,9 +14,8 @@ filetype indent on
 
 " ================ General Config ====================
 
-"Not using these settings currently because trying out: myusuf3/numbers.vim
-"set number                      "Line numbers are good
-"set relativenumber              "Relative line numbers are better
+set number                      "Line numbers are good
+set relativenumber              "Relative line numbers are better
 set backspace=indent,eol,start  "Allow backspace in insert mode
 set history=1000                "Store lots of :cmdline history
 set showcmd                     "Show incomplete cmds down the bottom

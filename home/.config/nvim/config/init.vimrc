@@ -31,7 +31,7 @@ Plug 'w0rp/ale'
 " Plug 'slashmili/alchemist.vim'
 
 " view stuff
-Plug 'myusuf3/numbers.vim' " intelligently toggling line numbers
+" Plug 'myusuf3/numbers.vim' " intelligently toggling line numbers
 
 " auto-complete and snippets
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
