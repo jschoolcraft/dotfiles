@@ -36,19 +36,6 @@ Plug 'nvim-telescope/telescope-fzy-native.nvim'
 " rails
 Plug 'tpope/vim-rails'
 
-" linting
-" Plug 'w0rp/ale'
-
-" elixir
-" Plug 'slashmili/alchemist.vim'
-
-" view stuff
-" Plug 'myusuf3/numbers.vim' " intelligently toggling line numbers
-
-" auto-complete and snippets
-" Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-" Plug 'ervandew/supertab'
-
 " react / react-native / javascript
 Plug 'ternjs/tern_for_vim', { 'for': ['javascript', 'javascript.jsx'] }
 Plug 'othree/jspc.vim', { 'for': ['javascript', 'javascript.jsx'] }
