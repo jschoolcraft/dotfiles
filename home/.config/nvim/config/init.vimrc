@@ -57,6 +57,9 @@ Plug 'vimwiki/vimwiki'
 Plug 'plasticboy/vim-markdown'
 Plug 'Alok/notational-fzf-vim'
 
+
+Plug 'folke/which-key.nvim'
+
 " temporary (things I'm testing out)
 Plug 'mbbill/undotree'
 

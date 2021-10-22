@@ -11,3 +11,4 @@ source $HOME/.config/nvim/config/keys.vimrc
 source $HOME/.config/nvim/config/lua/lsp-config.lua
 source $HOME/.config/nvim/config/lua/nvim-compe.lua
 source $HOME/.config/nvim/config/lua/lspsaga.lua
+source $HOME/.config/nvim/config/lua/which-key.lua
