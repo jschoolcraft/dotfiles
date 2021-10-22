@@ -24,6 +24,11 @@
     ~/.tmux.conf: home/.tmux.conf
     ~/.iterm-colors: home/.iterm-colors
     ~/.alacritty.yml: home/.alacritty.yml
+    ~/.config/kitty/kitty.conf: home/.config/kitty/kitty.conf
+    ~/.config/kitty/OneDark.conf: home/.config/kitty/kitty-themes/themes/OneDark.conf
+    ~/.config/kitty/Glacier.conf: home/.config/kitty/kitty-themes/themes/Glacier.conf
+    ~/.config/kitty/Hurtado.conf: home/.config/kitty/kitty-themes/themes/Hurtado.conf
+    ~/.config/kitty/IR_Black.conf: home/.config/kitty/kitty-themes/themes/IR_Black.conf
     ~/.antibody: config/antibody.txt
     ~/.config/fish: home/.config/fish
     ~/.config/starship.toml: home/.config/starship.toml
