@@ -226,7 +226,7 @@ fi
 HOMEBREW_NO_AUTO_UPDATE=1
 
 # theme, maybe?
-source ~/.purepower
+# source ~/.purepower
 
 . $HOME/.asdf/asdf.sh
-
+eval "$(starship init zsh)"

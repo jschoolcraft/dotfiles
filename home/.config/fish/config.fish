@@ -1,1 +1,1 @@
-../../.homesick/repos/dotfiles/home/.config/fish/config.fish
+starship init fish | source
