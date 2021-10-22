@@ -32,6 +32,15 @@ disabled = true
 [battery]
 disabled = true
 
+[cmd_duration]
+min_time = 10_000  # Show command duration over 10,000 milliseconds (=10 sec)
+format = " took [$duration]($style)"
+
+[directory]
+fish_style_pwd_dir_length = 1
+truncate_to_repo = false
+truncation_length = 2
+
 # Replace the "❯" symbol in the prompt with "➜"
 # [character]                            # The name of the module we are configuring is "character"
 # success_symbol = "[➜](bold green) "     # The "success_symbol" segment is being set to "➜" with the color "bold green"
