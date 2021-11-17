@@ -215,3 +215,7 @@ let g:python3_host_prog = '/usr/local/bin/python3'
 " highlight Normal guibg=none
 
 au TextYankPost * silent! lua vim.highlight.on_yank { timeout = 500 }
+
+augroup jschoolcraft
+  au BufEnter github.com_*.txt set filetype=markdown
+augroup END
