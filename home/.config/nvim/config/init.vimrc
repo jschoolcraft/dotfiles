@@ -65,12 +65,6 @@ Plug 'plasticboy/vim-markdown'
 Plug 'Alok/notational-fzf-vim'
 
 " temporary (things I'm testing out)
-
-" https://github.com/glacambre/firenvim
-" need to install the Brave extension too
-" https://chrome.google.com/webstore/detail/firenvim/egpjdkipkomnmjhjmdamaniclmdlobbo
-Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
-
 Plug 'folke/which-key.nvim'
 Plug 'mbbill/undotree'
 
