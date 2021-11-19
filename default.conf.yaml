@@ -49,24 +49,22 @@
     ~/.agignore: home/.agignore
 
     # neovim/vim
-    ~/.config/nvim/init.vim:
-            path: home/.config/nvim/init.vim
-            create: true
-    ~/.config/nvim/autoload: home/.config/nvim/autoload
-    ~/.config/nvim/config: home/.config/nvim/config
+    ~/.config/nvim/init.lua: home/.config/nvim/init.lua
+    ~/.config/nvim/lua: home/.config/nvim/lua
 
-    ~/.gvimrc: home/.gvimrc
+    # neovim bootstrap we'll use this to install packer on first load
+    ~/.config/nvim/bootstrap.lua: home/.config/nvim/bootstrap.lua
 
-    ~/.vimrc: home/.vimrc
+    # ~/.gvimrc: home/.gvimrc
 
-    ~/.vimpressrc: home/.vimpressrc # (wordpress config)
+    # ~/.vimrc: home/.vimrc
 
-    ~/.vim/.netrwhist:
-      path: home/.vim/.netrwhist
-      create: true
-    ~/.vim/autoload/plug.vim:
-      path: home/.vim/autoload/plug.vim
-      create: true
+    # ~/.vim/.netrwhist:
+    #   path: home/.vim/.netrwhist
+    #   create: true
+    # ~/.vim/autoload/plug.vim:
+    #   path: home/.vim/autoload/plug.vim
+    #   create: true
 
     # emacs
     ~/.original-emacs.d: home/.original-emacs.d
@@ -108,12 +106,12 @@
 
 - shell:
     - [git submodule update --init --recursive, Installing submodules]
-    - [pip3 install --upgrade pynvim, neovim python package]
+    #- [pip3 install --upgrade pynvim, neovim python package]
     # - [pip2 install --upgrade pynvim, neovim python package]
-    - command: nvim +PlugInstall! +PlugUpdate! +PlugClean! +qa
+    - command: nvim --headless -u bootstrap.lua -c 'autocmd User PackerComplete quitall' -c 'PackerSync'
       stdout: true
       stderr: true
-      description: install nvim plugins
+      description: bootstrap nvim config with packer and plugins
     - command: ~/code/dotfiles/home/.shell/install.sh
       stdout: true
       stderr: true
