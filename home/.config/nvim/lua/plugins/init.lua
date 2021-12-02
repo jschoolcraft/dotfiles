@@ -20,6 +20,9 @@ return require('packer').startup(function()
 
   use({ 'jremmen/vim-ripgrep' })
 
+  -- quality of life things
+  use 'tpope/vim-surround'
+
   -- treesitter and friends
   use({
     'nvim-treesitter/nvim-treesitter',
