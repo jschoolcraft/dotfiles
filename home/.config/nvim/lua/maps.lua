@@ -46,6 +46,3 @@ map('v', '<C-b>', '<C-b>zz')
 
 -- Q is annoying, remap it to run last macro
 map('n', 'Q', '@@')
-
--- Make Y act like D
-map('n', 'Y', 'y$')
