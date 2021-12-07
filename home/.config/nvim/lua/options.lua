@@ -1,6 +1,3 @@
--- Leader
-vim.g.mapleader = ";"
-
 -- tabs
 vim.o.autoindent = true
 vim.o.smartindent = true
@@ -78,9 +75,6 @@ vim.api.nvim_exec(
   augroup jschoolcraft
     " For all text files set 'textwidth' to 78 characters.
     autocmd FileType text setlocal textwidth=108
-
-    " Trim whitespace onsave
-    autocmd BufWritePre * %s/\s\+$//e
 
     " When editing a file, always jump to the last known cursor position.
     " Don't do it when the position is invalid or when inside an event handler

@@ -1,6 +1,9 @@
 -- Setup nvim-cmp.
 vim.g.completeopt="menu,menuone,noselect,noinsert"
 
+local cmp = require("cmp")
+local lspkind = require("lspkind")
+
 local has_words_before = function()
   local line, col = unpack(vim.api.nvim_win_get_cursor(0))
   return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
@@ -9,9 +12,6 @@ end
 local feedkey = function(key, mode)
   vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(key, true, true, true), mode, true)
 end
-
-local cmp = require'cmp'
-local lspkind = require'lspkind'
 
 cmp.setup({
   formatting = {
@@ -22,18 +22,20 @@ cmp.setup({
   },
   snippet = {
     expand = function(args)
-      vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
-      -- require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
-      -- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
-      -- require'snippy'.expand_snippet(args.body) -- For `snippy` users.
+      vim.fn["vsnip#anonymous"](args.body)
     end,
   },
   mapping = {
+    ["<C-p>"] = cmp.mapping.select_prev_item(),
+    ["<C-n>"] = cmp.mapping.select_next_item(),
     ['<C-d>'] = cmp.mapping.scroll_docs(-4),
     ['<C-f>'] = cmp.mapping.scroll_docs(4),
     ['<C-Space>'] = cmp.mapping.complete(),
     ['<C-e>'] = cmp.mapping.close(),
-    ['<CR>'] = cmp.mapping.confirm({ select = true }),
+    ['<CR>'] = cmp.mapping.confirm {
+      behavior = cmp.ConfirmBehavior.Replace,
+      select = true,
+    },
 
     ["<Tab>"] = cmp.mapping(function(fallback)
       if cmp.visible() then
@@ -55,27 +57,13 @@ cmp.setup({
       end
     end, { "i", "s" }),
   },
-  sources = cmp.config.sources({
+  sources = {
     { name = 'nvim_lsp' },
-    { name = 'vsnip' }, -- For vsnip users.
-    -- { name = 'luasnip' }, -- For luasnip users.
-    -- { name = 'ultisnips' }, -- For ultisnips users.
-    -- { name = 'snippy' }, -- For snippy users.
-    { name = 'path' },
-  }, {
     { name = 'buffer', keyword_length = 5 },
-  })
+    { name = 'vsnip' },
+    { name = 'calc' },
+    { name = 'emoji' },
+    { name = 'spell' },
+    { name = 'path' },
+  }
 })
-
--- The nvim-cmp almost supports LSP's capabilities so You should advertise it to LSP servers..
--- local capabilities = vim.lsp.protocol.make_client_capabilities()
--- capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
-
--- Setup lspconfg.
-local ok, cmp_nvim_lsp = pcall(require, 'cmp_nvim_lsp')
-if not ok then return end
-local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
---require'lspconfig'.solargraph.setup {
---    capabilities = capabilities,
---    settings = { solargraph = { diagnostics = true; formatting = true; logLevel = 'debug'; } }
---}
