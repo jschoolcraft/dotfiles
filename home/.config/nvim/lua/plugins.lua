@@ -2,7 +2,6 @@ local execute = vim.api.nvim_command
 local fn = vim.fn
 
 local install_path = fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
-print("install_path: " .. install_path)
 
 -- simplify calling config/foo
 -- with get_config("foo")
@@ -11,7 +10,6 @@ function get_config(name)
 end
 
 -- bootstrap packer if not installed
--- "bootstrap" seems ambitious
 if fn.empty(fn.glob(install_path)) > 0 then
   fn.system({
     "git",
@@ -23,6 +21,15 @@ if fn.empty(fn.glob(install_path)) > 0 then
   })
   execute "packadd packer.nvim"
 end
+
+-- regenerate compiled loader file anytime changes are
+-- made to this file
+vim.cmd [[
+  augroup packer_user_config
+    autocmd!
+    autocmd BufWritePost plugins.lua source <afile> | PackerCompile
+  augroup end
+]]
 
 local packer = require("packer")
 packer.init {
@@ -43,7 +50,12 @@ use({ 'nvim-lua/popup.nvim', module = 'popup' })
 -- find all the things
 use({
   'nvim-telescope/telescope.nvim',
-  requires = { { 'nvim-lua/popup.nvim' }, { 'nvim-lua/plenary.nvim' } },
+  requires = {
+    { 'nvim-lua/popup.nvim' },
+    { 'nvim-lua/plenary.nvim' },
+    { "kyazdani42/nvim-web-devicons" },
+    { "nvim-telescope/telescope-fzy-native.nvim" },
+  },
   config = get_config("telescope")
 })
 
@@ -53,12 +65,28 @@ use({ 'jremmen/vim-ripgrep' })
 
 -- quality of life things
 use 'tpope/vim-surround'
+use 'mechatroner/rainbow_csv'
+
+use {
+  "mhartington/formatter.nvim",
+  config = get_config("formatter"),
+}
 
 use {
   "phaazon/hop.nvim",
   event = "BufReadPre",
   config = get_config("hop"),
 }
+
+use { "ggandor/lightspeed.nvim" }
+
+use { "mbbill/undotree" }
+
+-- terminal
+use ({
+  "akinsho/toggleterm.nvim",
+  config = get_config("toggleterm"),
+})
 
 -- treesitter and friends
 use {
@@ -75,6 +103,19 @@ use {
     'nvim-lua/plenary.nvim'
   },
   config = get_config("gitsigns"),
+  event = "BufEnter",
+}
+
+use {
+  'tpope/vim-fugitive',
+  cmd = { 'Git', 'Gstatus', 'Gblame', 'Gpush', 'Gpull' },
+  disable = true
+}
+
+use {
+  'TimUntersberger/neogit',
+  cmd = 'Neogit',
+  config = get_config("neogit"),
 }
 
 -- lsp and things
@@ -82,11 +123,6 @@ use({
   'neovim/nvim-lspconfig',
   config = get_config("lspconfig"),
 })
-
--- use({
---   'glepnir/lspsaga.nvim',
---   config = get_config("lspsaga"),
--- })
 
 use {
     "folke/trouble.nvim",
@@ -109,16 +145,6 @@ use {
   config = get_config("colorizer"),
 }
 
---[[
-use({
-  'kabouzeid/nvim-lspinstall',
-  requires = { 'neovim/nvim-lspconfig' },
-  config = function()
-    require('lspinstall').setup()
-  end,
-})
-]]--
-
 -- completion
 use {
   "hrsh7th/nvim-cmp",
@@ -139,6 +165,10 @@ use {
   'onsails/lspkind-nvim',
   config = get_config("lspkind"),
 }
+
+-- rails
+use { "tpope/vim-rails" }
+use { "tpope/vim-bundler" }
 
 -- snippets
 use {"hrsh7th/vim-vsnip", config = get_config("vsnip")}
@@ -166,6 +196,9 @@ use {
 
 -- play nice with others
 use 'editorconfig/editorconfig-vim'
+
+-- performance
+use "nathom/filetype.nvim"
 
 -- colors
 use 'ful1e5/onedark.nvim'

@@ -61,5 +61,21 @@ function M.grep_dots()
   require("telescope.builtin").live_grep(opts)
 end
 
+function M.switch_buffer()
+  local opts = { }
+
+  opts.prompt_title = " Switch Buffer"
+  opts.ignore_current_buffer = true
+  opts.sort_mru = true
+  require("telescope.builtin").buffers(opts)
+end
+
+function M.buffer_lines()
+  local opts = { }
+  opts.prompt_title = " Search Buffer"
+  opts.skip_empty_lines = true
+
+  require("telescope.builtin").current_buffer_fuzzy_find(opts)
+end
 
 return M

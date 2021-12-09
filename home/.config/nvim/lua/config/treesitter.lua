@@ -12,7 +12,7 @@ require('nvim-treesitter.configs').setup({
     'javascript',
     'json',
     'lua',
-    -- 'markdown',
+    'regex',
     'ruby',
     'scss',
     'typescript',
@@ -20,9 +20,11 @@ require('nvim-treesitter.configs').setup({
   },
   highlight = {
     enable = true,
+    disable = { },
   },
   indent = {
-    enable = true
+    enable = false,
+    disable = { },
   },
   autopairs = {{
     enable = true

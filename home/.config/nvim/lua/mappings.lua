@@ -9,13 +9,14 @@ map('n', '<CR>', ':nohlsearch<CR>', opts)
 
 -- telescope
 map('n', '<leader>f', ':Telescope find_files<CR>', opts)
-map('n', '<leader>be', ':Telescope buffers<CR>', opts)
+map('n', '<leader>be', [[<CMD>lua require("config.telescope").switch_buffer()<CR>]], opts)
 map('n', '<leader>tg', ':Telescope live_grep<CR>', opts)
 
 map('n', '<leader>tnf', [[<CMD>lua require("config.telescope").find_notes()<CR>]], opts)
 map('n', '<leader>tng', [[<CMD>lua require("config.telescope").grep_notes()<CR>]], opts)
 map('n', '<leader>tdf', [[<CMD>lua require("config.telescope").find_dots()<CR>]], opts)
 map('n', '<leader>tdg', [[<CMD>lua require("config.telescope").grep_dots()<CR>]], opts)
+map('n', '<leader>tbl', [[<CMD>lua require("config.telescope").buffer_lines()<CR>]], opts)
 
 -- windows
 map('n', '<C-j>', '<C-w>j', opts)
@@ -49,3 +50,25 @@ map('v', '<C-b>', '<C-b>zz', opts)
 
 -- Q is annoying, remap it to run last macro
 map('n', 'Q', '@@', opts)
+
+-- magit in vim?
+map('n', '<leader>gg', [[<CMD>term <CR> i emacsclient -nw -e "(magit-status)" <CR>]], opts)
+
+-- move from the terminal
+function _G.set_terminal_keymaps()
+  local opts = { noremap = true }
+  vim.api.nvim_buf_set_keymap(0, 't', '<esc>', [[<C-\><C-n>]], opts)
+  vim.api.nvim_buf_set_keymap(0, 't', 'jk', [[<C-\><C-n>]], opts)
+  vim.api.nvim_buf_set_keymap(0, 't', '<C-h>', [[<C-\><C-n><C-W>h]], opts)
+  vim.api.nvim_buf_set_keymap(0, 't', '<C-j>', [[<C-\><C-n><C-W>j]], opts)
+  vim.api.nvim_buf_set_keymap(0, 't', '<C-k>', [[<C-\><C-n><C-W>k]], opts)
+  vim.api.nvim_buf_set_keymap(0, 't', '<C-l>', [[<C-\><C-n><C-W>l]], opts)
+end
+
+vim.api.nvim_exec(
+  [[
+  augroup jschoolcraft
+    autocmd! TermOpen term://* lua set_terminal_keymaps()
+  augroup end
+  ]], false
+)

@@ -1,6 +1,3 @@
--- Setup nvim-cmp.
-vim.g.completeopt="menu,menuone,noselect,noinsert"
-
 local cmp = require("cmp")
 local lspkind = require("lspkind")
 

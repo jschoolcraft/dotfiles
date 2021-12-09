@@ -35,6 +35,16 @@ vim.o.backup = false
 vim.o.swapfile = false
 vim.o.writebackup = false
 
+-- persistent undo
+vim.o.undodir="~/.config/nvim/undodir"
+vim.o.undofile = true
+vim.o.undolevels = 100
+vim.o.undoreload = 1000
+
+-- backup
+vim.o.backupdir = "~/.config/nvim/backup"
+vim.o.directory = "~/.config/nvim/backup"
+
 -- enable break indent.
 vim.o.breakindent = true
 
@@ -60,15 +70,16 @@ vim.g.onedark_terminal_italics = 2
 vim.o.background = "dark"
 vim.cmd [[colorscheme onedark]]
 
--- highlight on yank
-vim.api.nvim_exec(
-  [[
+-- better completion experience
+vim.g.completeopt="menu,menuone,noselect,noinsert"
+
+-- Highlight on yank
+vim.cmd [[
   augroup YankHighlight
     autocmd!
     autocmd TextYankPost * silent! lua vim.highlight.on_yank()
   augroup end
-  ]], false
-)
+]]
 
 vim.api.nvim_exec(
   [[
