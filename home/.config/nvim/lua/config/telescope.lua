@@ -6,6 +6,14 @@ local telescope = require("telescope")
 telescope.setup({
   defaults = {
     prompt_prefix = '🔭 ',
+    mappings = {
+      i = {
+        ["<Esc>"] = require("telescope.actions").close
+      },
+      n = {
+        ["<Esc>"] = require("telescope.actions").close
+      },
+    },
   },
 })
 
