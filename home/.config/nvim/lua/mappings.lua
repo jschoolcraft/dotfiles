@@ -7,6 +7,15 @@ vim.g.mapleader = ";"
 -- Clear search buffer on return
 map('n', '<CR>', ':nohlsearch<CR>', opts)
 
+-- https://vonheikemen.github.io/devlog/tools/vim-and-the-quickfix-list/
+-- quickfix list
+map('n', '<leader>co', ':copen<CR>', opts)
+map('n', '<leader>cc', ':cclose<CR>', opts)
+
+-- quickfix list navigating items
+map('n', '[q', ':cprev<CR>', opts)
+map('n', ']q', ':cnext<CR>', opts)
+
 -- telescope
 map('n', '<leader>f', ':Telescope find_files<CR>', opts)
 map('n', '<leader>be', [[<CMD>lua require("config.telescope").switch_buffer()<CR>]], opts)
