@@ -60,9 +60,20 @@ function M.find_dots()
   local opts = { }
   opts.prompt_title = " Find Dots"
   opts.path_display = { "smart" }
+  opts.find_command = {
+    'rg',
+    '--color=never',
+    '--no-heading',
+    '--with-filename',
+    '--line-number',
+    '--column',
+    '--smart-case',
+    '--ignore=dotbot'
+  }
   opts.search_dirs = {
     "~/code/dotfiles"
   }
+  opts.hidden = true
 
   require("telescope.builtin").find_files(opts)
 end
