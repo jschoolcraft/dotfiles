@@ -6,6 +6,10 @@
 _has() {
     which $1>/dev/null 2>&1
 }
+
+reddit() {
+  curl -s -A 'Reddit CLI' "https://www.reddit.com/r/$1/new.json?limit=20" | jq -r '.data.children| .[] | "\(.data.title)\t\(.data.url)"' | fzf --delimiter='\t' --with-nth=1 | cut -f2 | xargs kitty +kitten icat
+}
 # }}}
 
 # Bindings {{{
