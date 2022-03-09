@@ -1,3 +1,8 @@
+-- things that i cba to categorize
+vim.o.backspace = "indent,eol,start"
+
+vim.o.autoread = true
+
 -- tabs
 vim.o.autoindent = true
 vim.o.smartindent = true
@@ -9,6 +14,10 @@ vim.o.tabstop = tab_size
 vim.o.shiftwidth = tab_size
 vim.o.softtabstop = tab_size
 vim.o.tabstop = tab_size
+
+-- displaying text
+vim.o.wrap = false
+vim.o.linebreak = true
 
 -- line numbers
 vim.wo.number = true
@@ -62,6 +71,12 @@ vim.opt.listchars = "tab:→ ,trail:•,extends:»,precedes:«"
 
 -- copy and paste with OS clipboard
 vim.opt.clipboard = "unnamedplus"
+
+-- folding
+vim.o.foldenable = false
+vim.o.foldmethod = "syntax"
+vim.o.foldlevelstart = 2
+vim.o.conceallevel = 0
 
 -- colorscheme
 vim.o.termguicolors = true
