@@ -11,8 +11,8 @@ _has() {
 # Bindings {{{
 # ========
 # Use vim keybindings.
-# set -o vi
-# bindkey -v
+set -o vi
+bindkey -v
 
 # Environment {{{
 # ===========
