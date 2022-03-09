@@ -71,6 +71,7 @@ use {
   "mhartington/formatter.nvim",
   config = get_config("formatter"),
 }
+use 'sbdchd/neoformat'
 
 use {
   "phaazon/hop.nvim",
