@@ -49,8 +49,8 @@ function M.grep_notes()
   opts.search_dirs = {
     "~/vimwiki",
     "~/Dropbox/org",
+    "~/Dropbox/jschoolcraft/obsidian",
     "~/Dropbox/jschoolcraft/notes",
-    -- "~/Dropbox/jschoolcraft/obsidian",
   }
 
   require("telescope.builtin").live_grep(opts)
