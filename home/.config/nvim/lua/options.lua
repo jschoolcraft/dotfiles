@@ -83,7 +83,11 @@ vim.o.termguicolors = true
 vim.g.t_Co = 256
 vim.g.onedark_terminal_italics = 2
 vim.o.background = "dark"
-vim.cmd [[colorscheme onedark]]
+
+require("onedark").setup {
+  style = "darker"
+}
+require("onedark").load()
 
 -- better completion experience
 vim.g.completeopt="menu,menuone,noselect,noinsert"

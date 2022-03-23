@@ -203,8 +203,7 @@ use 'editorconfig/editorconfig-vim'
 use "nathom/filetype.nvim"
 
 -- colors
-use 'ful1e5/onedark.nvim'
-use 'arcticicestudio/nord-vim'
-use 'jsahlen/vim-ir_black'
-use 'rakr/vim-one'
-use 'sainnhe/sonokai'
+use({"navarasu/onedark.nvim"})
+use({"arcticicestudio/nord-vim"})
+use({"rakr/vim-one"})
+use({"sainnhe/sonokai"})
