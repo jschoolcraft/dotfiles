@@ -106,12 +106,10 @@
 
 - shell:
     - [git submodule update --init --recursive, Installing submodules]
-    #- [pip3 install --upgrade pynvim, neovim python package]
-    # - [pip2 install --upgrade pynvim, neovim python package]
-    - command: nvim --headless -u ~/.config/nvim/bootstrap.lua -c 'autocmd User PackerComplete quitall' -c 'PackerSync'
-      stdout: true
-      stderr: true
-      description: bootstrap nvim config with packer and plugins
+      # - command: nvim --headless -u ~/.config/nvim/bootstrap.lua -c 'autocmd User PackerComplete quitall' -c 'PackerSync'
+      #   stdout: true
+      #   stderr: true
+      #   description: bootstrap nvim config with packer and plugins
     - command: ~/code/dotfiles/home/.shell/install.sh
       stdout: true
       stderr: true
