@@ -196,6 +196,11 @@ use {
   config = get_config("vimwiki")
 }
 
+use {
+  "nvim-orgmode/orgmode",
+  config = get_config("orgmode")
+}
+
 -- play nice with others
 use 'editorconfig/editorconfig-vim'
 
