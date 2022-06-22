@@ -49,6 +49,15 @@ use({ 'nvim-lua/popup.nvim', module = 'popup' })
 
 -- find all the things
 use({
+  "junegunn/fzf",
+  requires = {
+    { "junegunn/fzf.vim" }
+  },
+})
+
+use({ "jremmen/vim-ripgrep" })
+
+use({
   'nvim-telescope/telescope.nvim',
   requires = {
     { 'nvim-lua/popup.nvim' },

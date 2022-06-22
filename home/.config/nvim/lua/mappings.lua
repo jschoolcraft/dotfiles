@@ -16,9 +16,11 @@ map('n', '<leader>cc', ':cclose<CR>', opts)
 map('n', '[q', ':cprev<CR>', opts)
 map('n', ']q', ':cnext<CR>', opts)
 
+map('n', '<leader>f', ':Files<CR>', opts)
+map('n', '<leader>be', ':Buffers<CR>', opts)
 -- telescope
-map('n', '<leader>f', ':Telescope find_files<CR>', opts)
-map('n', '<leader>be', [[<CMD>lua require("config.telescope").switch_buffer()<CR>]], opts)
+-- map('n', '<leader>f', ':Telescope find_files<CR>', opts)
+-- map('n', '<leader>be', [[<CMD>lua require("config.telescope").switch_buffer()<CR>]], opts)
 map('n', '<leader>tg', ':Telescope live_grep<CR>', opts)
 
 map('n', '<leader>tnf', [[<CMD>lua require("config.telescope").find_notes()<CR>]], opts)
