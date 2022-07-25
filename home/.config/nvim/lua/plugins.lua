@@ -70,7 +70,14 @@ use({
 
 use({ 'nvim-telescope/telescope-fzy-native.nvim' })
 
-use({ 'jremmen/vim-ripgrep' })
+use({
+  "cuducos/yaml.nvim",
+  ft = { "yaml" },
+  requires = {
+    { "nvim-treesitter/nvim-treesitter" },
+    { "nvim-telescope/telescope.nvim" },
+  },
+})
 
 -- quality of life things
 use 'tpope/vim-surround'
