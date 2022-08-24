@@ -59,29 +59,6 @@
 
     # ~/.vimrc: home/.vimrc
 
-    # ~/.vim/.netrwhist:
-    #   path: home/.vim/.netrwhist
-    #   create: true
-    # ~/.vim/autoload/plug.vim:
-    #   path: home/.vim/autoload/plug.vim
-    #   create: true
-
-    # emacs
-    ~/.original-emacs.d: home/.original-emacs.d
-    ~/.emacs-profiles.el: home/.emacs-profiles.el
-    ~/.emacs-profile: home/.emacs-profile
-    ~/.doom.d: home/.doom.d
-    ~/.emacs.d: home/.emacs.d
-
-    # atom
-    ~/.atom/config.cson:
-            path: home/.atom/config.cson
-            create: true
-    ~/.atom/package.list: home/.atom/package.list
-
-    # uncrustify (code beautifier)
-    ~/.uncrustify.cfg: home/.uncrustify.cfg
-
     # asdf
     ~/.asdfrc: home/.asdfrc
     ~/.default-gems: home/.default-gems
