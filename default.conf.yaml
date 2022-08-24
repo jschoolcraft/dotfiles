@@ -71,6 +71,7 @@
     ~/.emacs-profiles.el: home/.emacs-profiles.el
     ~/.emacs-profile: home/.emacs-profile
     ~/.doom.d: home/.doom.d
+    ~/.emacs.d: home/.emacs.d
 
     # atom
     ~/.atom/config.cson:
@@ -103,6 +104,9 @@
 
     # brewfile
     ~/Brewfile: home/.Brewfile
+
+    # lynx - command line web browsing
+    ~/.config/lynx: home/.config/lynx
 
 - shell:
     - [git submodule update --init --recursive, Installing submodules]
