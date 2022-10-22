@@ -89,13 +89,11 @@ use {
 }
 use 'sbdchd/neoformat'
 
-use {
-  "phaazon/hop.nvim",
-  event = "BufReadPre",
-  config = get_config("hop"),
-}
-
-use { "ggandor/lightspeed.nvim" }
+-- use {
+--   "ggandor/leap.nvim",
+--   config = get_config("leap"),
+-- }
+use ({"ggandor/leap.nvim"})
 
 use { "mbbill/undotree" }
 
