@@ -52,6 +52,8 @@ alias pubkey="more ~/.ssh/id_rsa.pub | pbcopy | echo '=> public key copied to pa
 alias fixopenwith='/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -kill -r -domain local -domain system -domain user'
 eval "$(direnv hook zsh)"
 
+alias clear='printf "\e[H\e[2J"'
+
 EDITOR=vim
 # neovim aliases
 if type nvim > /dev/null 2>&1; then
