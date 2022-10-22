@@ -99,12 +99,6 @@ use { "ggandor/lightspeed.nvim" }
 
 use { "mbbill/undotree" }
 
--- terminal
-use ({
-  "akinsho/toggleterm.nvim",
-  config = get_config("toggleterm"),
-})
-
 -- treesitter and friends
 use {
   'nvim-treesitter/nvim-treesitter',
@@ -121,12 +115,6 @@ use {
   },
   config = get_config("gitsigns"),
   event = "BufEnter",
-}
-
-use {
-  'tpope/vim-fugitive',
-  cmd = { 'Git', 'Gstatus', 'Gblame', 'Gpush', 'Gpull' },
-  disable = true
 }
 
 use {
@@ -185,7 +173,6 @@ use {
 
 -- rails
 use { "tpope/vim-rails" }
-use { "tpope/vim-bundler" }
 
 -- snippets
 use {"hrsh7th/vim-vsnip", config = get_config("vsnip")}
