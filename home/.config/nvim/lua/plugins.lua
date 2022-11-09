@@ -197,6 +197,15 @@ use {
   config = get_config("vimwiki")
 }
 
+use { "vim-pandoc/vim-pandoc" }
+
+use {
+  "vim-pandoc/vim-pandoc-syntax",
+  requires = {
+    { "vim-pandoc/vim-pandoc" }
+  }
+}
+
 use {
   "nvim-orgmode/orgmode",
   config = get_config("orgmode")
