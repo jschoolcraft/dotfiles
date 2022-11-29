@@ -1,4 +1,5 @@
-vim.g.wiki_list = {
+local g = vim.g
+g.wiki_list = {
   {
     path = "~/Dropbox/vimwiki",
     syntax = "markdown",
@@ -15,9 +16,9 @@ vim.g.wiki_list = {
     ext = '.md'
   },
 }
-vim.g.vimwiki_ext2syntax = {
+g.vimwiki_ext2syntax = {
   [".md"] = "markdown",
   [".markdown"] = "markdown",
   [".mdown"] = "markdown",
 }
-vim.g.vimwiki_global_ext = 0
+g.vimwiki_global_ext = 0
