@@ -211,6 +211,15 @@ use {
   config = get_config("orgmode")
 }
 
+use {
+  "alok/notational-fzf-vim",
+  requires = {
+    { "junegunn/fzf.vim" },
+    { "junegunn/fzf" }
+  },
+  config = get_config("nv")
+}
+
 -- play nice with others
 use 'editorconfig/editorconfig-vim'
 
