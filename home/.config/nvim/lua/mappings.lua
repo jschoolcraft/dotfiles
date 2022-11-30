@@ -29,12 +29,6 @@ map('n', '<leader>tdf', [[<CMD>lua require("config.telescope").find_dots()<CR>]]
 map('n', '<leader>tdg', [[<CMD>lua require("config.telescope").grep_dots()<CR>]], opts)
 map('n', '<leader>tbl', [[<CMD>lua require("config.telescope").buffer_lines()<CR>]], opts)
 
--- Hop https://github.com/phaazon/hop.nvim
-map('n', '<leader>jw', ':HopWord<CR>', opts)
-map('n', '<leader>jl', ':HopLine<CR>', opts)
-map('n', '<leader>j/', ':HopPattern<CR>', opts)
-
-
 -- windows
 map('n', '<C-j>', '<C-w>j', opts)
 map('n', '<C-k>', '<C-w>k', opts)

@@ -89,10 +89,6 @@ use {
 }
 use 'sbdchd/neoformat'
 
--- use {
---   "ggandor/leap.nvim",
---   config = get_config("leap"),
--- }
 use ({"ggandor/leap.nvim"})
 
 use { "mbbill/undotree" }
