@@ -224,6 +224,7 @@ use "nathom/filetype.nvim"
 
 -- colors
 use({"navarasu/onedark.nvim"})
+use({"olimorris/onedarkpro.nvim"})
 use({"arcticicestudio/nord-vim"})
 use({"rakr/vim-one"})
 use({"sainnhe/sonokai"})
