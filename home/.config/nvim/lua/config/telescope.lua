@@ -36,7 +36,7 @@ function M.find_notes()
     "~/vimwiki",
     "~/Dropbox/org",
     "~/Dropbox/jschoolcraft/notes",
-    --   -- "~/Dropbox/jschoolcraft/obsidian",
+    "~/Dropbox/jschoolcraft/obsidian",
   }
 
   require("telescope.builtin").find_files(opts)
