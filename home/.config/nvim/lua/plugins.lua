@@ -188,11 +188,6 @@ use {
 }
 
 -- writing, notes and things
-use {
-  "vimwiki/vimwiki",
-  config = get_config("vimwiki")
-}
-
 use { "vim-pandoc/vim-pandoc" }
 
 use {
