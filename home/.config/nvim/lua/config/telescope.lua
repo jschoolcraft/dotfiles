@@ -28,16 +28,19 @@ telescope.setup({
 
 local M = { }
 
-function M.find_notes()
-  local opts = { }
-  opts.prompt_title = " Find Notes"
-  opts.path_display = { "smart" }
-  opts.search_dirs = {
+
+local notes_dirs = {
     "~/vimwiki",
     "~/Dropbox/org",
     "~/Dropbox/jschoolcraft/notes",
     "~/Dropbox/jschoolcraft/obsidian",
-  }
+}
+
+function M.find_notes()
+  local opts = { }
+  opts.prompt_title = " Find Notes"
+  opts.path_display = { "smart" }
+  opts.search_dirs = notes_dirs
 
   require("telescope.builtin").find_files(opts)
 end
@@ -46,12 +49,7 @@ function M.grep_notes()
   local opts = { }
   opts.prompt_title = " Search Notes"
   opts.path_display = { "smart" }
-  opts.search_dirs = {
-    "~/vimwiki",
-    "~/Dropbox/org",
-    "~/Dropbox/jschoolcraft/obsidian",
-    "~/Dropbox/jschoolcraft/notes",
-  }
+  opts.search_dirs = notes_dirs
 
   require("telescope.builtin").live_grep(opts)
 end
