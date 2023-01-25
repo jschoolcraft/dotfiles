@@ -117,11 +117,37 @@ use {
   config = get_config("neogit"),
 }
 
--- lsp and things
-use({
-  'neovim/nvim-lspconfig',
-  config = get_config("lspconfig"),
-})
+-- lsp
+
+use {
+  "VonHeikemen/lsp-zero.nvim",
+  requires = {
+    -- LSP Support
+    { "neovim/nvim-lspconfig" },
+    { "williamboman/mason.nvim" },
+    { "williamboman/mason-lspconfig.nvim" },
+    { "ray-x/lsp_signature.nvim" },
+
+    -- configure formatters & linters
+    { "jose-elias-alvarez/null-ls.nvim" },
+    { "jayp0521/mason-null-ls.nvim" },
+    -- {'MunifTanjim/prettier.nvim'},
+
+    -- Autocompletion
+    { "hrsh7th/nvim-cmp" },
+    { "hrsh7th/cmp-buffer" },
+    { "hrsh7th/cmp-path" },
+    { "saadparwaiz1/cmp_luasnip" },
+    { "hrsh7th/cmp-nvim-lsp" },
+    { "hrsh7th/cmp-nvim-lua" },
+    { "onsails/lspkind.nvim" },
+
+    -- Snippets
+    { "L3MON4D3/LuaSnip" },
+    { "rafamadriz/friendly-snippets" },
+  },
+  config = get_config("lsp-zero"),
+}
 
 use {
     "folke/trouble.nvim",
@@ -138,34 +164,8 @@ use {
     config = get_config("todo")
 }
 
--- completion
-use {
-  "hrsh7th/nvim-cmp",
-  requires = {
-    {"hrsh7th/cmp-nvim-lsp"},
-    {"hrsh7th/cmp-buffer"},
-    {"hrsh7th/cmp-path"},
-    {"hrsh7th/cmp-cmdline"},
-    {"hrsh7th/cmp-vsnip"},
-    {"f3fora/cmp-spell"},
-    {"hrsh7th/cmp-calc"},
-    {"hrsh7th/cmp-emoji"},
-  },
-  config = get_config("nvim-cmp"),
-}
-
-use {
-  'onsails/lspkind-nvim',
-  config = get_config("lspkind"),
-}
-
 -- rails
 use { "tpope/vim-rails" }
-
--- snippets
-use {"hrsh7th/vim-vsnip", config = get_config("vsnip")}
-use {"hrsh7th/vim-vsnip-integ", requires = {{"hrsh7th/vim-vsnip"}}}
-use {"rafamadriz/friendly-snippets", requires = {{"hrsh7th/vim-vsnip"}}}
 
 -- status line
 use({
