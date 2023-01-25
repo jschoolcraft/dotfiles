@@ -138,12 +138,6 @@ use {
     config = get_config("todo")
 }
 
-use {
-  "norcalli/nvim-colorizer.lua",
-  event = "BufReadPre",
-  config = get_config("colorizer"),
-}
-
 -- completion
 use {
   "hrsh7th/nvim-cmp",
