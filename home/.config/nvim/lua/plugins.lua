@@ -190,6 +190,7 @@ use {
 }
 
 -- writing, notes and things
+use { "preservim/vim-markdown" }
 use { "vim-pandoc/vim-pandoc" }
 
 use {

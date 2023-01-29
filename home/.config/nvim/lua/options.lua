@@ -76,7 +76,7 @@ vim.opt.clipboard = "unnamedplus"
 vim.o.foldenable = false
 vim.o.foldmethod = "syntax"
 vim.o.foldlevelstart = 2
-vim.o.conceallevel = 0
+vim.o.conceallevel = 2
 
 -- colorscheme
 vim.o.termguicolors = true
