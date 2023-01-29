@@ -144,7 +144,15 @@ use {
 
     -- Snippets
     { "L3MON4D3/LuaSnip" },
-    { "rafamadriz/friendly-snippets" },
+    -- { "rafamadriz/friendly-snippets" },
+    -- use snipmate/ultisnip style snippets instead
+    -- this has a lot more stars, and a little less problematic in ruby
+    -- https://github.com/VonHeikemen/lsp-zero.nvim/issues/61
+    { "honza/vim-snippets" },
+
+    -- use command output as LSP for places that don't have one yet
+    { "jose-elias-alvarez/null-ls.nvim" },
+    { "jayp0521/mason-null-ls.nvim"},
   },
   config = get_config("lsp-zero"),
 }
