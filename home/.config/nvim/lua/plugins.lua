@@ -180,6 +180,14 @@ use {
 -- rails
 use { "tpope/vim-rails" }
 
+-- testing
+use ({
+  'vim-test/vim-test',
+  config = function()
+    vim.api.nvim_set_var('test#strategy', 'neovim')
+  end
+})
+
 -- status line
 use({
   'nvim-lualine/lualine.nvim',
