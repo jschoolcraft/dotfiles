@@ -45,14 +45,14 @@ vim.o.swapfile = false
 vim.o.writebackup = false
 
 -- persistent undo
-vim.o.undodir="~/.config/nvim/undodir"
+vim.o.undodir = os.getenv("HOME") .. "/.config/nvim/undodir"
 vim.o.undofile = true
 vim.o.undolevels = 100
 vim.o.undoreload = 1000
 
 -- backup
-vim.o.backupdir = "~/.config/nvim/backup"
-vim.o.directory = "~/.config/nvim/backup"
+vim.o.backupdir = os.getenv("HOME") .. "/.config/nvim/undodir"
+vim.o.directory = os.getenv("HOME") .. "/.config/nvim/undodir"
 
 -- enable break indent.
 vim.o.breakindent = true
