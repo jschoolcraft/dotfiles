@@ -1,9 +1,6 @@
 local map = vim.api.nvim_set_keymap
 opts = {noremap = true, silent = true}
 
--- map the leader key
-vim.g.mapleader = ";"
-
 -- Clear search buffer on return
 map('n', '<CR>', ':nohlsearch<CR>', opts)
 
