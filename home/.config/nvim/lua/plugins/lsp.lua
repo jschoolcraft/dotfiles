@@ -41,23 +41,13 @@ return {
       "tsserver",
       "eslint",
       "rust_analyzer",
-      "sumneko_lua",
+      "lua_ls",
       "gopls",
       "jsonls",
       "solargraph",
       "terraformls",
       "yamlls",
       "solc",
-    })
-
-    lsp.configure("sumneko_lua", {
-      settings = {
-        Lua = {
-          diagnostics = {
-            globals = { "vim" }
-          }
-        }
-      }
     })
 
     lsp.on_attach(function(_, bufnr)
