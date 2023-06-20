@@ -51,6 +51,7 @@ path=("$HOME/bin" $path)
 path=("$HOME/.fzf/bin" $path)
 path=("/usr/local/sbin" $path)
 path=("/usr/local/bin" $path)
+path=("/usr/local/opt/postgresql@15/bin" $path)
 
 # Using the (N-/) glob qualifier we can remove paths that do not exist.
 path=($^path(N-/))
