@@ -80,3 +80,27 @@ vim.api.nvim_exec(
   augroup end
   ]], false
 )
+
+local cmp = require('cmp')
+local cmp_mappings = cmp.mapping.preset.insert({
+  ["<C-b>"] = cmp.mapping.scroll_docs(-4),
+  ["<C-f>"] = cmp.mapping.scroll_docs(4),
+  ["<C-y>"] = cmp.mapping.complete(),
+  ["<C-e>"] = cmp.mapping.abort(),
+  ["<CR>"] = cmp.mapping.confirm({ select = false }),
+});
+
+-- disable completion with tab
+-- this helps with copilot setup
+cmp_mappings['<Tab>'] = vim.NIL
+cmp_mappings['<S-Tab>'] = vim.NIL
+
+cmp.setup({
+  sources = {
+    { name = 'nvim_lsp' },
+    { name = 'path' },
+    { name = 'luasnip' },
+    { name = 'buffer',  keyword_length = 5 },
+  },
+  mapping = cmp_mappings,
+})
