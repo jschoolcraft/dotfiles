@@ -53,6 +53,8 @@ alias fixopenwith='/System/Library/Frameworks/CoreServices.framework/Frameworks/
 eval "$(direnv hook zsh)"
 
 alias clear='printf "\e[H\e[2J"'
+alias '?'=duck
+alias '??'=gpt
 
 EDITOR=vim
 # neovim aliases
