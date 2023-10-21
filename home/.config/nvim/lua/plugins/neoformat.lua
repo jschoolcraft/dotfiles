@@ -1,4 +1,4 @@
 return {
   'sbdchd/neoformat',
-  lazy = false,
+  cmd = { 'Neoformat' },
 }
