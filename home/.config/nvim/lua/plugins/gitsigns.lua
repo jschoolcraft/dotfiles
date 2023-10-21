@@ -17,5 +17,5 @@ return {
       },
     })
   end,
-  event = "BufEnter",
+  cmd = { 'Gitsigns' },
 }
