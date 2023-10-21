@@ -34,7 +34,6 @@ return  {
         html = { formatters.prettier },
         typescriptreact = { formatters.prettier },
         typescript = { formatters.prettier },
-        markdown = { formatters.prettier },
       },
     })
   end

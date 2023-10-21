@@ -8,5 +8,6 @@ return {
       },
       ignore_missing = false,
     }
-  end
+  end,
+  lazy = false,
 }
