@@ -1,38 +1,62 @@
+local jschoolcraft_group = vim.api.nvim_create_augroup('jschoolcraft', { clear = true })
+
 -- Highlight on yank
-vim.cmd [[
-  augroup YankHighlight
-    autocmd!
-    autocmd TextYankPost * silent! lua vim.highlight.on_yank()
-  augroup end
-]]
+vim.api.nvim_create_autocmd('TextYankPost',  {
+  callback = function()
+    vim.highlight.on_yank({ timeout = 200 })
+  end,
+  group = jschoolcraft_group,
+  pattern = '*',
+})
 
---
-vim.api.nvim_exec(
-  [[
-  augroup jschoolcraft
-    " For all text files set 'textwidth' to 78 characters.
-    autocmd FileType text setlocal textwidth=108
+vim.api.nvim_create_autocmd('BufEnter', {
+  callback = function()
+    vim.opt_local.spell = true
+    vim.opt_local.number = false
+    vim.opt_local.relativenumber = false
+    vim.opt_local.wrap = true
+    vim.opt_local.textwidth = 108
+  end,
+  group = jschoolcraft_group,
+  pattern = '*.md',
+})
 
-    " For gitcommit files set spell and textwidth
-    autocmd FileType text setlocal spell textwidth=72
+-- set textwidth all text files
+vim.api.nvim_create_autocmd('FileType', {
+  callback = function()
+    vim.opt_local.textwidth = 108
+  end,
+  group = jschoolcraft_group,
+  pattern = 'text',
+})
 
-    " When editing a file, always jump to the last known cursor position.
-    " Don't do it when the position is invalid or when inside an event handler
-    " (happens when dropping a file on gvim).
-    " Also don't do it when the mark is in the first line, that is the default
-    " position when opening a file.
-    autocmd BufReadPost *
-          \ if line("'\"") > 1 && line("'\"") <= line("$") |
-          \   exe "normal! g`\"" |
-          \ endif
-  augroup end
-  ]], false
-)
+-- set spell for all text files
+vim.api.nvim_create_autocmd('FileType', {
+  callback = function()
+    vim.opt_local.spell = true
+  end,
+  group = jschoolcraft_group,
+  pattern = 'text',
+})
 
--- Remove all trailing whitespace on save
-vim.api.nvim_exec([[
-  augroup TrimWhiteSpace
-    au!
-    autocmd BufWritePre * :%s/\s\+$//e
-  augroup END
-  ]], false)
+-- remove trailing whitespace on save
+vim.api.nvim_create_autocmd('BufWritePre', {
+  callback = function()
+    vim.cmd([[%s/\s\+$//e]])
+  end,
+  group = jschoolcraft_group,
+  pattern = '*',
+})
+
+-- always jump to the last known cursor position
+vim.api.nvim_create_autocmd('BufReadPost', {
+  callback = function()
+    vim.cmd([[
+      if line("'\"") > 1 && line("'\"") <= line("$")
+        exe "normal! g`\""
+      endif
+    ]])
+  end,
+  group = jschoolcraft_group,
+  pattern = '*',
+})
