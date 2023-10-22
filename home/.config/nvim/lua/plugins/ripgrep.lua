@@ -1,3 +1,4 @@
 return {
-  { 'jremmen/vim-ripgrep' },
+  'jremmen/vim-ripgrep',
+  cmd = "Rg",
 }
