@@ -1,1 +1,0 @@
-("~/code/dotfiles/" "~/code/work/octopi/octopi/")
