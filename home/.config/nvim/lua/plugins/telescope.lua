@@ -1,21 +1,14 @@
 return {
   'nvim-telescope/telescope.nvim',
-  branch = '0.1.x',
   dependencies = {
     { 'nvim-lua/plenary.nvim' },
     { 'kyazdani42/nvim-web-devicons' },
-    { 'nvim-telescope/telescope-fzy-native.nvim' },
-    -- Fuzzy Finder Algorithm which requires local dependencies to be built.
-    -- Only load if `make` is available. Make sure you have the system
-    -- requirements installed.
     {
       'nvim-telescope/telescope-fzf-native.nvim',
-      -- NOTE: If you are having trouble with this installation,
-      --       refer to the README for telescope-fzf-native for more instructions.
       build = 'make',
-      cond = function()
-        return vim.fn.executable 'make' == 1
-      end,
+      config = function()
+        require('telescope').load_extension('fzf')
+      end
     },
   },
   config = function()
@@ -29,7 +22,8 @@ return {
           '--with-filename',
           '--line-number',
           '--column',
-          '--smart-case'
+          '--smart-case',
+          '--trim',
         },
         mappings = {
           i = {
@@ -41,33 +35,17 @@ return {
             ['<Esc>'] = require('telescope.actions').close
           },
         },
+        file_ignore_patterns = { 'node_modules' },
+        extensions = {
+          fzf = {
+            fuzzy = true,
+            override_generic_sorter = true,
+            override_file_sorter = true,
+            case_mode = "smart_case"
+          },
+        },
       },
     }
-
-    -- Enable telescope fzf native, if installed
-    pcall(require('telescope').load_extension, 'fzf')
-
-    -- See `:help telescope.builtin`
-    vim.keymap.set('n', '<leader>?', require('telescope.builtin').oldfiles, { desc = '[?] Find recently opened files' })
-    vim.keymap.set('n', '<leader><space>', require('telescope.builtin').buffers, { desc = '[ ] Find existing buffers' })
-    vim.keymap.set('n', '<leader>/', function()
-      -- You can pass additional configuration to telescope to change theme, layout, etc.
-      require('telescope.builtin').current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
-        winblend = 10,
-        previewer = false,
-      })
-    end, { desc = '[/] Fuzzily search in current buffer' })
-
-    -- crutch for fzf mappings
-    -- vim.keymap.set('n', '<leader>f', require('telescope.builtin').find_files, { desc = '[F]iles' })
-    -- vim.keymap.set('n', '<leader>be', require('telescope.builtin').buffers, { desc = '[B]uffer [E]xplore' })
-
-    vim.keymap.set('n', '<leader>gf', require('telescope.builtin').git_files, { desc = 'Search [G]it [F]iles' })
-    vim.keymap.set('n', '<leader>sf', require('telescope.builtin').find_files, { desc = '[S]earch [F]iles' })
-    vim.keymap.set('n', '<leader>sh', require('telescope.builtin').help_tags, { desc = '[S]earch [H]elp' })
-    vim.keymap.set('n', '<leader>sw', require('telescope.builtin').grep_string, { desc = '[S]earch current [W]ord' })
-    vim.keymap.set('n', '<leader>sg', require('telescope.builtin').live_grep, { desc = '[S]earch by [G]rep' })
-    vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { desc = '[S]earch [D]iagnostics' })
 
     local M = { }
     local notes_dirs = {
@@ -82,6 +60,9 @@ return {
       opts.prompt_title = ' Find Notes'
       opts.path_display = { 'smart' }
       opts.search_dirs = notes_dirs
+      opts.extensions = {
+        fzf = { fuzzy = true, override_generic_sorter = true, override_file_sorter = true, case_mode = "smart_case" },
+      }
 
       require('telescope.builtin').find_files(opts)
     end
@@ -150,5 +131,6 @@ return {
     vim.keymap.set('n', '<leader>tdf', M.find_dots, { desc = '[D]otfiles [F]ind' })
     vim.keymap.set('n', '<leader>tdg', M.grep_dots, { desc = '[D]otfiles [G]rep' })
     return M
+
   end
 }

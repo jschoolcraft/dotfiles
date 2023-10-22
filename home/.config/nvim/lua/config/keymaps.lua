@@ -4,16 +4,14 @@ local opts = { noremap = true, silent = true }
 -- Clear search buffer on return
 keymap.set('n', '<CR>', ':nohlsearch<CR>', opts)
 
--- https://vonheikemen.github.io/devlog/tools/vim-and-the-quickfix-list/
--- quickfix list
-keymap.set('n', '<leader>co', ':copen<CR>', opts)
-keymap.set('n', '<leader>cc', ':cclose<CR>', opts)
-
 -- fzf
 keymap.set('n', '<leader>f', ':Files<CR>', opts)
 keymap.set('n', '<leader>be', ':Buffers<CR>', opts)
 
--- quickfix list navigating items
+-- quickfix list
+-- https://vonheikemen.github.io/devlog/tools/vim-and-the-quickfix-list/
+keymap.set('n', '<leader>co', ':copen<CR>', opts)
+keymap.set('n', '<leader>cc', ':cclose<CR>', opts)
 keymap.set('n', '[q', ':cprev<CR>', opts)
 keymap.set('n', ']q', ':cnext<CR>', opts)
 
@@ -53,24 +51,15 @@ keymap.set('n', 'Q', '@@', opts)
 -- Lazy
 keymap.set('n', 'zz', ':Lazy<CR>', opts)
 
--- magit in vim?
--- keymap.set('n', '<leader>gg', [[<CMD>term <CR> i emacsclient -nw -e "(magit-status)" <CR>]], opts)
+-- Telescope
+keymap.set('n', '<leader>tgf', require('telescope.builtin').git_files, { desc = 'Search [G]it [F]iles' })
+keymap.set('n', '<leader>tsf', require('telescope.builtin').find_files, { desc = '[S]earch [F]iles' })
+keymap.set('n', '<leader>tsh', require('telescope.builtin').help_tags, { desc = '[S]earch [H]elp' })
+keymap.set('n', '<leader>tsw', require('telescope.builtin').grep_string, { desc = '[S]earch current [W]ord' })
+keymap.set('n', '<leader>tsg', require('telescope.builtin').live_grep, { desc = '[S]earch by [G]rep' })
+keymap.set('n', '<leader>tsd', require('telescope.builtin').diagnostics, { desc = '[S]earch [D]iagnostics' })
+keymap.set('n', '<leader>tsq', require('telescope.builtin').quickfix, { desc = '[S]earch [Q]uickfix' })
+keymap.set('n', '<leader>tsc', require('telescope.builtin').commands, { desc = '[S]earch [C]ommands' })
 
--- move from the terminal
--- function _G.set_terminal_keymaps()
---   local opts = { noremap = true }
---   vim.api.nvim_buf_set_keymap(0, 't', '<esc>', [[<C-\><C-n>]], opts)
---   vim.api.nvim_buf_set_keymap(0, 't', 'jk', [[<C-\><C-n>]], opts)
---   vim.api.nvim_buf_set_keymap(0, 't', '<C-h>', [[<C-\><C-n><C-W>h]], opts)
---   vim.api.nvim_buf_set_keymap(0, 't', '<C-j>', [[<C-\><C-n><C-W>j]], opts)
---   vim.api.nvim_buf_set_keymap(0, 't', '<C-k>', [[<C-\><C-n><C-W>k]], opts)
---   vim.api.nvim_buf_set_keymap(0, 't', '<C-l>', [[<C-\><C-n><C-W>l]], opts)
--- end
-
--- vim.api.nvim_exec(
---   [[
---   augroup jschoolcraft
---     autocmd! TermOpen term://* lua set_terminal_keymaps()
---   augroup end
---   ]], false
--- )
+-- undo tree
+keymap.set('n', '<leader>tu', ':UndotreeToggle<CR>', opts)
