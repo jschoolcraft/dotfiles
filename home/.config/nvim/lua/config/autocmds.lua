@@ -16,6 +16,7 @@ vim.api.nvim_create_autocmd('BufEnter', {
     vim.opt_local.relativenumber = false
     vim.opt_local.wrap = true
     vim.opt_local.textwidth = 108
+    vim.opt_local.syntax = 'markdown.pandoc'
   end,
   group = jschoolcraft_group,
   pattern = '*.md',
