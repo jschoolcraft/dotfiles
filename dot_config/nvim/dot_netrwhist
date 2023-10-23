@@ -1,0 +1,12 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhistcnt =5
+let g:netrw_dirhist_5='/private/etc/resolver'
+let g:netrw_dirhist_4='/Users/jschoolcraft/.asdf/installs/ruby/2.6.6/lib/ruby/gems/2.6.0/gems/activerecord-5.0.7.2'
+let g:netrw_dirhist_3='/Users/jschoolcraft/.asdf/installs/ruby/2.6.6/lib/ruby/gems/2.6.0/gems/pg-1.2.3'
+let g:netrw_dirhist_2='/Users/jschoolcraft/code/dotfiles/.git'
+let g:netrw_dirhist_1='/Users/jschoolcraft/.asdf/installs/ruby/2.6.6/lib/ruby/gems/2.6.0/gems/apipie-rails-0.5.18'
+let g:netrw_dirhist_0='/Users/jschoolcraft/.asdf/installs/ruby/2.6.6/lib/ruby/gems/2.6.0/gems/rollout-2.4.3'
+let g:netrw_dirhist_9='/Users/jschoolcraft/.asdf/installs/ruby/2.5.8/lib/ruby/gems/2.5.0/gems/rollout-2.4.3'
+let g:netrw_dirhist_8='/Users/jschoolcraft/.asdf/installs/ruby/2.6.6/lib/ruby/gems/2.6.0/bundler/gems/dossier-6efb490b9831'
+let g:netrw_dirhist_7='/Users/jschoolcraft/code/work/octopi/octopi/app/models/hold_type'
+let g:netrw_dirhist_6='/Users/jschoolcraft/.asdf/installs/ruby/2.5.8/lib/ruby/gems/2.5.0/bundler/gems/dossier-a4ad4de05a56'
