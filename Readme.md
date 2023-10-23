@@ -1,38 +1,15 @@
+# My dotfiles
+
+These are my dotfiles, there are many like them, but you get it.
+
 ## Getting Started
 
-Manage dotfiles with [dotbot](https://github.com/anishathalye/dotbot) and apps with [homebrew](https://brew.sh/).
+Prerequisites:
 
-git clone this repo:
+* [homebrew](https://brew.sh)
 
-	git clone git@github.com:jschoolcraft/dotfiles.git ~/code/dotfiles
+Installation:
 
-Install [homebrew](https://brew.sh):
+With [chezmoi](https://www.chezmoi.io/) you can install chezmoi and these dotfiles in a single command:
 
-    /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-
-Let homebrew install things that this depends on (antigen, vim, neovim, etc):
-
-    brew bundle --file=~/code/dotfiles/home/.Brewfile
-
-then install (idempotent, so update too) the dotfiles
-
-	~/code/dotfiles/install
-
-Finally want to make sure to use zsh
-
-	chpass -s /bin/zsh `whoami`
-
-### neovim (and vim)
-
-    pip3 install neovim
-    nvim +PlugInstall +Qall
-
-### Iterm Colors
-
-Live in `~/.iterm-colors`, inside iTerm2 preferences "import colors"
-
-### OS X Things
-
-    .~/.osx
-
-Might have to make it `chmod +x`
+    sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply jschoolcraft
