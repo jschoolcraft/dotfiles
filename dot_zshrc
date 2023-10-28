@@ -1,7 +1,7 @@
 #	stolen from: https://github.com/davidtwco/dotfiles
 # ==================================================
 
-# Functions {{{
+# Functions
 # =========
 _has() {
     which $1>/dev/null 2>&1
@@ -10,15 +10,14 @@ _has() {
 reddit() {
   curl -s -A 'Reddit CLI' "https://www.reddit.com/r/$1/new.json?limit=20" | jq -r '.data.children| .[] | "\(.data.title)\t\(.data.url)"' | fzf --delimiter='\t' --with-nth=1 | cut -f2 | xargs kitty +kitten icat 2>/dev/null
 }
-# }}}
 
-# Bindings {{{
+# Bindings
 # ========
 # Use vim keybindings.
 set -o vi
 bindkey -v
 
-# Environment {{{
+# Environment
 # ===========
 # Set a cache dir.
 export ZSH_CACHE_DIR=$HOME/.zsh/cache
@@ -40,7 +39,7 @@ export MANPAGER='less -X'
 export LYNX_CFG="$HOME/.config/lynx/lynx.cfg"
 export LYNX_LSS="$HOME/.config/lynx/lynx.lss"
 
-# Path {{{
+# Path
 # ====
 # In zsh, the $PATH variable is tied to the $path variable.
 # This makes the $path variable act like a set.
@@ -55,7 +54,6 @@ path=("/usr/local/opt/postgresql@15/bin" $path)
 
 # Using the (N-/) glob qualifier we can remove paths that do not exist.
 path=($^path(N-/))
-# }}}
 
 # Android SDK stuff for React Native
 export ANDROID_HOME=$HOME/Library/Android/sdk
@@ -63,8 +61,7 @@ export PATH=$PATH:$ANDROID_HOME/tools
 export PATH=$PATH:$ANDROID_HOME/tools/bin
 export PATH=$PATH:$ANDROID_HOME/platform-tools
 
-
-# Completion {{{
+# Completion
 # ==========
 # Use modern completion system.
 autoload -Uz compinit
@@ -107,18 +104,13 @@ zstyle ':completion:*' cache-path $ZSH_CACHE_DIR
 zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
 zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 
-# }}}
-
-
-# Conveniences {{{
+# Conveniences
 # =======
 
 setopt AUTO_CD       # cd by typing directory name if the name isn't a command
 setopt CORRECT_ALL   # autocorrect commands
 
-# }}}
-
-# History {{{
+# History
 # =======
 # Keep 10000000 lines of history within the shell and save it to ~/.zsh_history:
 HISTFILE="$HOME/.zsh_history"
@@ -137,38 +129,18 @@ setopt HIST_IGNORE_SPACE         # Don't record an entry starting with a space.
 setopt HIST_SAVE_NO_DUPS         # Don't write duplicate entries in the history file.
 setopt HIST_REDUCE_BLANKS        # Remove superfluous blanks before recording entry.
 setopt HIST_VERIFY               # Don't execute immediately upon history expansion.
-# }}}
 
-# Aliases {{{
+# Aliases
 # =======
 # Load our aliases.
 if [ -f ~/.shell/.aliases ]; then
     . ~/.shell/.aliases
 fi
 
-if [ -f ~/.shell/.octopi.aliases ]; then
-    . ~/.shell/.octopi.aliases
-fi
-# }}}
-
 antibody bundle < "$HOME/.antibody" > "$HOME/.zsh_plugins.sh"
 source "$HOME/.zsh_plugins.sh"
 
-# }}}
-
-# fasd {{{
-# =====
-# if _has fasd; then
-#     fasd_cache="$ZSH_CACHE_DIR/fasd-init-cache"
-#     if [ "$(command -v fasd)" -nt "$fasd_cache" -o ! -s "$fasd_cache" ]; then
-#         fasd --init posix-alias zsh-hook zsh-ccomp zsh-ccomp-install >| "$fasd_cache"
-#     fi
-#     source "$fasd_cache"
-#     unset fasd_cache
-# fi
-# }}}
-
-# fzf {{{
+# fzf
 # ===
 # fzf via Homebrew
 if [ -e /usr/local/opt/fzf/shell/completion.zsh ]; then
@@ -198,13 +170,9 @@ if _has fzf && _has rg; then
     export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
     export FZF_DEFAULT_OPTS=''
 fi
-# }}}
 
 # stop homebrew from automatically upgrading everything
 HOMEBREW_NO_AUTO_UPDATE=1
-
-# theme, maybe?
-# source ~/.purepower
 
 . $HOME/.asdf/asdf.sh
 eval "$(starship init zsh)"
