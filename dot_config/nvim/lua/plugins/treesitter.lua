@@ -6,7 +6,7 @@ return {
   config = function()
     require('nvim-treesitter.configs').setup {
       -- Add languages to be installed here that you want installed for treesitter
-      ensure_installed = { 'bash', 'c', 'cmake', 'cpp', 'css', 'diff', 'dockerfile', 'fish', 'gitignore', 'go', 'graphql', 'html', 'http', 'javascript', 'jsdoc', 'json', 'jsonc', 'latex', 'lua', 'norg', 'org', 'python', 'query', 'regex', 'ruby', 'scss', 'sql', 'toml', 'typescript', 'vim', 'vimdoc', 'vue', 'yaml', },
+      ensure_installed = { 'bash', 'c', 'cmake', 'cpp', 'crystal', 'css', 'diff', 'dockerfile', 'fish', 'gitignore', 'go', 'graphql', 'html', 'http', 'javascript', 'jsdoc', 'json', 'jsonc', 'latex', 'lua', 'norg', 'org', 'python', 'query', 'regex', 'ruby', 'scss', 'sql', 'toml', 'typescript', 'vim', 'vimdoc', 'vue', 'yaml', },
 
       -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
       auto_install = false,
