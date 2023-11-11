@@ -6,7 +6,6 @@ return {
     priority = 999,
     config = function()
       require("onedarkpro").setup({
-        theme = "darker",
         styles = {
           comments = "italic",
           functions = "italic",
@@ -15,7 +14,7 @@ return {
           variables = "italic",
         },
       })
-      vim.cmd.colorscheme "onedark"
+      vim.cmd.colorscheme "onedark_dark"
     end,
   },
   { "arcticicestudio/nord-vim", },
