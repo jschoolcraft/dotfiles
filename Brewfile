@@ -32,6 +32,7 @@ cask 'font-overpass'
 
 brew 'ack'
 brew 'ansible'
+brew 'antidote'
 brew 'aspell'
 brew 'ctags'
 brew 'direnv'
@@ -73,8 +74,6 @@ brew 'wget'
 brew 'yarn' #, args: ['--without-node']
 brew 'youtube-dl'
 brew 'zsh'
-
-brew 'getantibody/tap/antibody'
 
 tap 'homebrew/versions'
 

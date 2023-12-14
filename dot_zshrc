@@ -137,7 +137,9 @@ if [ -f ~/.shell/.aliases ]; then
     . ~/.shell/.aliases
 fi
 
-antibody bundle < "$HOME/.antibody" > "$HOME/.zsh_plugins.sh"
+source $(brew --prefix)/opt/antidote/share/antidote/antidote.zsh
+antidote load
+# antidote bundle < ~/.zsh_plugins.txt
 source "$HOME/.zsh_plugins.sh"
 
 # fzf

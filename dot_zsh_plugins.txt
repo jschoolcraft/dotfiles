@@ -1,6 +1,6 @@
 # https://github.com/junegunn/fzf
 # command line fuzzy finder
-junegunn/fzf
+# junegunn/fzf
 
 # https://github.com/djui/alias-tips
 # nag me to use aliases I have set up
