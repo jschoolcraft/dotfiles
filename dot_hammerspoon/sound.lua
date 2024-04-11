@@ -1,4 +1,6 @@
 -- Avoid automatically setting a bluetooth audio input device
+-- from:
+-- https://ssrubin.com/posts/fixing-macos-bluetooth-headphone-audio-quality-issues-with-hammerspoon.html
 
 lastSetDeviceTime = os.time()
 lastInputDevice = nil
