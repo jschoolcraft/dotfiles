@@ -17,12 +17,14 @@ Install:andUse("ReloadConfiguration",
 }
 )
 
-myGrid = { w = 6, h = 4 }
+myGrid = { w = 8, h = 3 }
 Install:andUse("MiroWindowsManager",
 {
   config = {
+    -- full screen sizes 1/1, 3/4, 1/2
     fullScreenSizes = {1, 4/3, 2},
-    sizes = {2, 3, 3/2},
+    -- sizes 1/2, 1/4, 3/4
+    sizes = {2, 4, 4/3},
     GRID = myGrid
   },
   hotkeys = {
@@ -57,3 +59,19 @@ hs.hotkey.bind(hyper, "8", function()
   hs.alert.show(hs.inspect(win:size()))
   win:setSize(1920,1080)
 end)
+
+local leftScreen = hs.screen('KA272U %(1%)')
+local mainScreen = hs.screen('KA272U %(3%)')
+local rightScreen = hs.screen('KA272U %(2%)')
+
+local base_layout = {
+  {"Slack", nil, rightScreen, nil, nil, nil},
+  {"Discord", nil, rightScreen, nil, nil, nil},
+  {"Messages", nil, rightScreen, nil, nil, nil},
+  {"Kitty", nil, mainScreen, hs.layout.right50, nil, nil}
+}
+
+hs.hotkey.bind(hyper, "1", function()
+  hs.layout.apply(base_layout)
+end)
+
