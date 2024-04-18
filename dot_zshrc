@@ -176,5 +176,5 @@ fi
 # stop homebrew from automatically upgrading everything
 HOMEBREW_NO_AUTO_UPDATE=1
 
-source $(brew --prefix)/opt/asdf/libexec/asdf.sh
+. /usr/local/opt/asdf/libexec/asdf.sh
 eval "$(starship init zsh)"
