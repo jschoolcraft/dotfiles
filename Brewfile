@@ -1,6 +1,5 @@
 tap "heroku/brew"
 tap "homebrew/bundle"
-tap "homebrew/cask-fonts"
 
 brew "antidote"
 brew "readline"
