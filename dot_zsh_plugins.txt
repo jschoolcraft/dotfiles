@@ -21,3 +21,6 @@ zsh-users/zsh-syntax-highlighting
 # https://github.com/wfxr/forgit
 # git utilities powered by fzf
 wfxr/forgit
+
+# better vi mode
+jeffreytse/zsh-vi-mode
