@@ -50,7 +50,8 @@ path=("$HOME/bin" $path)
 path=("$HOME/.fzf/bin" $path)
 path=("/usr/local/sbin" $path)
 path=("/usr/local/bin" $path)
-path=("/usr/local/opt/postgresql@15/bin" $path)
+path=("$(brew --prefix)/opt/postgresql@15/bin" $path)
+
 
 # Using the (N-/) glob qualifier we can remove paths that do not exist.
 path=($^path(N-/))
@@ -60,6 +61,10 @@ export ANDROID_HOME=$HOME/Library/Android/sdk
 export PATH=$PATH:$ANDROID_HOME/tools
 export PATH=$PATH:$ANDROID_HOME/tools/bin
 export PATH=$PATH:$ANDROID_HOME/platform-tools
+
+# Postgresql
+export LDFLAGS="-L$(brew --prefix)/opt/postgresql@15/lib"
+export CPPFLAGS="-I$(brew --prefix)/opt/postgresql@15/include"
 
 # Completion
 # ==========
