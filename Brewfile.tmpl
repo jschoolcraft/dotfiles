@@ -37,7 +37,14 @@ brew "wget"
 brew "youtube-dl"
 brew "zsh"
 
+{{- if eq .chezmoi.hostname "Naviss-MacBook-Pro" }}
+brew "awscli"
+brew "helm"
+brew "kubernetes-cli"
+
 cask "displaylink"
+{{- end }}
+
 cask "dropbox"
 cask "flameshot"
 cask "font-anonymous-pro"
