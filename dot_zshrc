@@ -52,7 +52,6 @@ path=("/usr/local/sbin" $path)
 path=("/usr/local/bin" $path)
 path=("$(brew --prefix)/opt/postgresql@15/bin" $path)
 
-
 # Using the (N-/) glob qualifier we can remove paths that do not exist.
 path=($^path(N-/))
 
@@ -148,9 +147,9 @@ antidote load
 # fzf
 # ===
 # fzf via Homebrew
-if [ -e /usr/local/opt/fzf/shell/completion.zsh ]; then
-    source /usr/local/opt/fzf/shell/key-bindings.zsh
-    source /usr/local/opt/fzf/shell/completion.zsh
+if [ -e $(brew --prefix)/opt/fzf/shell/completion.zsh ]; then
+    source $(brew --prefix)/opt/fzf/shell/key-bindings.zsh
+    source $(brew --prefix)/opt/fzf/shell/completion.zsh
 fi
 
 # fzf via local installation
