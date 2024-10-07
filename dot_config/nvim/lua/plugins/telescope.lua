@@ -35,7 +35,7 @@ return {
             ['<Esc>'] = require('telescope.actions').close
           },
         },
-        file_ignore_patterns = { 'node_modules' },
+        file_ignore_patterns = { 'node_modules', 'undodir' },
         extensions = {
           fzf = {
             fuzzy = true,
