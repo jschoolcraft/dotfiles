@@ -65,11 +65,11 @@ local mainScreen = hs.screen('KA272U %(3%)')
 local rightScreen = hs.screen('KA272U %(2%)')
 
 local base_layout = {
-  {"Slack", nil, rightScreen, nil, nil, nil},
-  {"Discord", nil, rightScreen, nil, nil, nil},
   {"Messages", nil, rightScreen, nil, nil, nil},
   {"Logseq", nil, rightScreen, hs.geometry.rect(.14, .11, .666, .75), nil, nil},
   {"Obsidian", nil, rightScreen, hs.geometry.rect(.15, .125, .666, .75), nil, nil},
+  {"Discord", nil, rightScreen, hs.geometry.rect(.16, .13, .666, .75), nil, nil},
+  {"Slack", nil, rightScreen, hs.geometry.rect(.17, .14, .666, .75), nil, nil},
   {"Kitty", nil, mainScreen, hs.layout.right50, nil, nil},
   {"Brave", nil, mainScreen, hs.layout.left70, nil, nil},
 }
