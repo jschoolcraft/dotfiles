@@ -71,7 +71,7 @@ local base_layout = {
   {"Discord", nil, rightScreen, hs.geometry.rect(.16, .13, .666, .75), nil, nil},
   {"Slack", nil, rightScreen, hs.geometry.rect(.17, .14, .666, .75), nil, nil},
   {"Kitty", nil, mainScreen, hs.layout.right50, nil, nil},
-  {"Brave", nil, mainScreen, hs.layout.left70, nil, nil},
+  {"Brave", nil, mainScreen, hs.layout.left75, nil, nil},
 }
 
 hs.hotkey.bind(hyper, "1", function()
