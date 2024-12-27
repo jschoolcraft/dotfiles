@@ -5,8 +5,6 @@ vim.g.maplocalleader = ';'
 -- things that i cba to categorize
 vim.o.backspace = "indent,eol,start"
 
--- vim.o.autoread = true
---
 -- tabs
 vim.o.autoindent = true
 vim.o.smartindent = true
@@ -76,12 +74,6 @@ vim.opt.listchars = "tab:→ ,trail:•,extends:»,precedes:«"
 -- copy and paste with OS clipboard
 vim.opt.clipboard = "unnamedplus"
 
--- -- folding
--- vim.o.foldenable = false
--- vim.o.foldmethod = "syntax"
--- vim.o.foldlevelstart = 2
--- vim.o.conceallevel = 2
---
 -- colorscheme
 vim.o.termguicolors = true
 vim.g.t_Co = 256
@@ -89,5 +81,5 @@ vim.g.onedark_terminal_italics = 2
 vim.o.background = "dark"
 
 -- better completion experience
-vim.g.completeopt="menu,menuone,noselect,noinsert"
+-- vim.g.completeopt="menu,menuone,noselect,noinsert"
 

@@ -3,9 +3,9 @@ local jschoolcraft_group = vim.api.nvim_create_augroup('jschoolcraft', { clear =
 -- Highlight on yank
 vim.api.nvim_create_autocmd('TextYankPost',  {
   callback = function()
-    vim.highlight.on_yank({ timeout = 200 })
+    vim.highlight.on_yank()
   end,
-  group = jschoolcraft_group,
+  group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
   pattern = '*',
 })
 
