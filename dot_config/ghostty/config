@@ -2,7 +2,8 @@ font-family = CaskaydiaCove Nerd Font Mono
 # font-family = VictorMono Nerd Font Mono
 font-size = 18
 
-# theme = light:Alabaster,dark:synthwave
 scrollback-limit = 32768
 copy-on-select = true
 mouse-hide-while-typing = true
+
+theme = light:OneHalfLight,dark:OneHalfDark
