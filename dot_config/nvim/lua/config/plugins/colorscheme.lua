@@ -17,8 +17,8 @@ return {
         -- You can configure multiple style with comma separated, For e.g., keywords = 'italic,bold'
         code_style = {
           comments = 'italic',
-          keywords = 'bold',
-          functions = 'bold',
+          keywords = 'none',
+          functions = 'none',
           strings = 'none',
           variables = 'none'
         },
