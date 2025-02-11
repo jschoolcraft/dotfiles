@@ -14,5 +14,9 @@ return {
       statuscolumn = { enabled = true },
       words = { enabled = true },
     },
+    keys = {
+      { "<leader>gb", function() Snacks.git.blame_line() end, desc = "[G]it [B]lame line" },
+      { "<leader>lg", function() Snacks.lazygit() end, desc = "[L]azy [G]it" },
+    },
   }
 }
