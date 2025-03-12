@@ -56,8 +56,18 @@ Install:andUse("WindowScreenLeftAndRight",
 
 hs.hotkey.bind(hyper, "8", function()
   local win = hs.window.focusedWindow()
+  if not win then return end
+
+  local screen = win:screen()
+  local screenFrame = screen:frame()
+
+  local newWidth = 1920
+  local newHeight = 1080
+  local newX = screenFrame.x + (screenFrame.w - newWidth) / 2
+  local newY = screenFrame.y + (screenFrame.h - newHeight) / 2
+
   hs.alert.show(hs.inspect(win:size()))
-  win:setSize(1920,1080)
+  win:setFrame({x = newX, y = newY, w = newWidth, h = newHeight})
 end)
 
 local leftScreen = hs.screen('KA272U %(1%)')
