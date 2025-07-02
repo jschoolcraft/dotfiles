@@ -182,3 +182,4 @@ export HOMEBREW_NO_AUTO_UPDATE=1
 
 eval "$(mise activate zsh)"
 eval "$(starship init zsh)"
+# bindkey "^[[27;2;13~" self-insert

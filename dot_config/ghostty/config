@@ -10,3 +10,4 @@ keybind = global:cmd+shift+w=toggle_quick_terminal
 quick-terminal-autohide = false
 quick-terminal-position = center
 window-inherit-working-directory = true
+keybind = shift+enter=text:\n
