@@ -1,4 +1,5 @@
 return {
+  -- source: https://copilotc-nvim.github.io/CopilotChat.nvim
   {
     "CopilotC-Nvim/CopilotChat.nvim",
     dependencies = {
