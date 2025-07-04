@@ -61,3 +61,65 @@ vim.api.nvim_create_autocmd('BufReadPost', {
   group = jschoolcraft_group,
   pattern = '*',
 })
+
+-- automatic theme switching based on system appearance
+local function detect_system_theme()
+  local handle = io.popen('defaults read -g AppleInterfaceStyle 2>/dev/null')
+  local result = handle:read('*a')
+  handle:close()
+
+  if result and result:match('Dark') then
+    return 'darker'
+  else
+    return 'light'
+  end
+end
+
+local function set_theme_based_on_system()
+  local system_theme = detect_system_theme()
+  local onedark = require('onedark')
+
+  if system_theme == 'darker' then
+    onedark.setup({
+      style = 'darker',
+      term_colors = true,
+      toggle_style_key = '<leader>ts',
+      toggle_style_list = {'light', 'darker'},
+      code_style = {
+        comments = 'italic',
+        keywords = 'none',
+        functions = 'none',
+        strings = 'none',
+        variables = 'none'
+      },
+    })
+  else
+    onedark.setup({
+      style = 'light',
+      term_colors = true,
+      toggle_style_key = '<leader>ts',
+      toggle_style_list = {'light', 'darker'},
+      code_style = {
+        comments = 'italic',
+        keywords = 'none',
+        functions = 'none',
+        strings = 'none',
+        variables = 'none'
+      },
+    })
+  end
+
+  onedark.load()
+end
+
+-- set theme on startup
+vim.api.nvim_create_autocmd('VimEnter', {
+  callback = set_theme_based_on_system,
+  group = jschoolcraft_group,
+})
+
+-- check for system theme changes when focus returns to nvim
+vim.api.nvim_create_autocmd('FocusGained', {
+  callback = set_theme_based_on_system,
+  group = jschoolcraft_group,
+})
