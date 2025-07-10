@@ -57,7 +57,7 @@
   pretty=format:%C(yellow)%h%Creset -%C(red)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset
 [user]
   name = Jeff Schoolcraft
-  email = {{ .email }}
+  email = {{ if .chezmoi.username | eq "jeffschoolcraft" }}jeffrey.schoolcraft@kaleris.com{{ else }}jeffrey.schoolcraft@gmail.com{{ end }}
   signingkey = 63ECA64FCF4E10F9
 [filter "media"]
   clean = git-media-clean %f
