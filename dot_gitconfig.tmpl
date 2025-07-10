@@ -1,10 +1,33 @@
 [github]
   user = jschoolcraft
   email = jeffrey.schoolcraft@gmail.com
+[column]
+  ui = auto
 [branch]
   autosetupmerge = true
+  sort = -committerdate
+[tag]
+  sort = version:refname
+[init]
+  defaultBranch = main
+[diff]
+  algorithm = histogram
+  colorMoved = plain
+  mnemonicPrefix = true
+  renames = true
 [push]
-  default = current
+  default = simple
+  autoSetupRemote = true
+  followTags = true
+[fetch]
+  prune = true
+  pruneTags = true
+  all = true
+
+[help]
+  autocorrect = prompt
+[commit]
+  verbose = true
 [color]
   ui = auto
   diff = auto
@@ -20,17 +43,21 @@
 [rerere]
   enabled = true
   autoupdate = true
+[rebase]
+  autoSquash = true
+  autoStash = true
+  updateRefs = true
+
 [merge]
   summary = true
   verbosity = 1
-  tool = p4merge
 [apply]
   whitespace = nowarn
 [format]
   pretty=format:%C(yellow)%h%Creset -%C(red)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset
 [user]
   name = Jeff Schoolcraft
-  email = jeffrey.schoolcraft@gmail.com
+  email = {{ .email }}
   signingkey = 63ECA64FCF4E10F9
 [filter "media"]
   clean = git-media-clean %f
@@ -105,7 +132,6 @@
   unstage = reset HEAD              # remove files from index (tracking)
   uncommit = reset --soft HEAD^     # go back before last commit, with files in uncommitted state
   filelog = log -u                  # show changes to a file
-  mt = mergetool                    # fire up the merge tool
 
   # stash
   ss = stash                        # stash changes
@@ -121,15 +147,3 @@
   # tag
   t = tag -n                        # show tags with <n> lines of each tag message
 
-  # svn helpers
-  svnr = svn rebase
-  svnd = svn dcommit
-  svnl = svn log --oneline --show-commit
-[difftool "sourcetree"]
-	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-	path =
-[mergetool "sourcetree"]
-	cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
-	trustExitCode = true
-[diff]
-	mnemonicprefix = true

@@ -1,0 +1,3 @@
+[data]
+work = {{ .chezmoi.username | eq "jeffschoolcraft" }}
+email = {{ if .chezmoi.username | eq "jeffschoolcraft" }}"jeffrey.schoolcraft@kaleris.com"{{ else }}"jeffrey.schoolcraft@gmail.com"{{ end }}
