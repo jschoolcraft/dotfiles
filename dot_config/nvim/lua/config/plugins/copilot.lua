@@ -5,7 +5,7 @@ return {
     event = "InsertEnter",
     config = function()
       require("copilot").setup({
-        copilot_node_command = vim.fn.expand("~/.local/share/mise/installs/node/20.17.0/bin/node"),
+        copilot_node_command = vim.fn.system("mise where node@20"):gsub("\n", "") .. "/bin/node",
       })
     end,
   }
