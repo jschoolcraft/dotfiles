@@ -6,7 +6,7 @@ Please follow the “Explore, Analyze, Build, Test, Report” workflow when you 
 
 🔍 Explore
 
-Start by comparing the current working branch (including uncommitted changes) to the beta branch.
+Start by comparing the current working branch (including uncommitted changes) to the main branch.
 Use Git diff tools and metadata to identify:
 	•	All modified, added, or deleted files
 	•	Which changes are committed vs uncommitted
@@ -74,5 +74,5 @@ Use commit hashes, file paths, or line numbers as needed.
 
 ⸻
 
-Now, run this workflow comparing the current branch to beta, build the project, and return a full analysis and manual testing guide.
+Now, run this workflow comparing the current branch to main, build the project, and return a full analysis and manual testing guide.
 
