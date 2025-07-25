@@ -4,7 +4,7 @@
 # Usage: wt <branch-name> [base-branch]
 
 # Script version
-VERSION="1.0.0"
+VERSION="1.1.0"
 
 # Default values
 DEFAULT_BASE_BRANCH="main"
@@ -49,14 +49,16 @@ Examples:
 Configuration:
     Project config: .wtconfig in git root
     User config: ~/.wtconfig
-    
+
     Config file format (YAML):
     copy_files:
       - .env
       - .env.local
+      - .mise.toml
     copy_dirs:
       - .vscode
       - .cursor
+      - config/credentials
 EOF
 }
 
@@ -64,15 +66,15 @@ EOF
 parse_config() {
     local config_file=$1
     local section=""
-    
+
     if [[ ! -f "$config_file" ]]; then
         return
     fi
-    
+
     while IFS= read -r line; do
         # Skip empty lines and comments
         [[ -z "$line" || "$line" =~ ^[[:space:]]*# ]] && continue
-        
+
         # Check for section headers
         if [[ "$line" =~ ^copy_files:[[:space:]]*$ ]]; then
             section="files"
@@ -97,20 +99,20 @@ parse_config() {
 get_files_to_copy() {
     local -a files=()
     local -a dirs=()
-    
-    # 1. Built-in defaults
-    local default_files=(.env .env.local .env.development .env.production)
-    local default_dirs=(.vscode .cursor .idea .fleet .zed .nova .sublime .devcontainer)
-    
+
+    # 1. Built-in defaults - expanded to include more common files
+    local default_files=(.env .env.local .env.development .env.production .env.test .mise.toml .envrc)
+    local default_dirs=(.vscode .cursor .idea .fleet .zed .nova .sublime .devcontainer config/credentials)
+
     # Add defaults if they exist
     for f in "${default_files[@]}"; do
         [[ -f "$project_dir/$f" ]] && files+=("$f")
     done
-    
+
     for d in "${default_dirs[@]}"; do
         [[ "$d" != ".git" && -d "$project_dir/$d" ]] && dirs+=("$d")
     done
-    
+
     # 2. Project config
     local project_config="$project_dir/.wtconfig"
     if [[ -f "$project_config" ]]; then
@@ -122,7 +124,7 @@ get_files_to_copy() {
             [[ "$d" != ".git" ]] && dirs+=("$d")
         done
     fi
-    
+
     # 3. User config
     local user_config="$HOME/.wtconfig"
     if [[ -f "$user_config" ]]; then
@@ -134,25 +136,25 @@ get_files_to_copy() {
             [[ "$d" != ".git" ]] && dirs+=("$d")
         done
     fi
-    
+
     # Remove duplicates
     local -A seen_files seen_dirs
     local unique_files=() unique_dirs=()
-    
+
     for f in "${files[@]}"; do
         if [[ -z "${seen_files[$f]}" ]]; then
             seen_files[$f]=1
             unique_files+=("$f")
         fi
     done
-    
+
     for d in "${dirs[@]}"; do
         if [[ -z "${seen_dirs[$d]}" && "$d" != ".git" ]]; then
             seen_dirs[$d]=1
             unique_dirs+=("$d")
         fi
     done
-    
+
     echo "FILES:${unique_files[*]}"
     echo "DIRS:${unique_dirs[*]}"
 }
@@ -164,7 +166,7 @@ main() {
     local base_branch="$DEFAULT_BASE_BRANCH"
     local no_copy=false
     local no_cursor=false
-    
+
     while [[ $# -gt 0 ]]; do
         case $1 in
             --no-copy)
@@ -202,37 +204,37 @@ main() {
                 ;;
         esac
     done
-    
+
     # Validate branch name
     if [[ -z "$branch_name" ]]; then
         print_color $RED "❌ No branch name provided"
         show_usage
         exit 1
     fi
-    
+
     # Check if we're in a git repository
     if ! git rev-parse --show-toplevel &> /dev/null; then
         print_color $RED "❌ Not in a git repository"
         exit 1
     fi
-    
+
     # Get project directory and name
     local project_dir=$(git rev-parse --show-toplevel)
     local project_name=$(basename "$project_dir")
-    
+
     # Define worktree paths
     local worktree_parent="${project_dir}/../${project_name}-worktrees"
     local worktree_path="${worktree_parent}/${branch_name}"
-    
+
     # Create parent directory
     mkdir -p "$worktree_parent"
-    
+
     # Check if worktree already exists
     if [[ -d "$worktree_path" ]]; then
         print_color $RED "❌ Worktree already exists at: $worktree_path"
         exit 1
     fi
-    
+
     # Create the worktree
     if git show-ref --verify --quiet "refs/heads/$branch_name"; then
         print_color $BLUE "🔄 Branch '$branch_name' already exists, creating worktree..."
@@ -245,16 +247,16 @@ main() {
         print_color $BLUE "🌿 Creating new branch '$branch_name' from '$base_branch'..."
         git -C "$project_dir" worktree add -b "$branch_name" "$worktree_path" "$base_branch"
     fi
-    
+
     # Copy files if not disabled
     if [[ "$no_copy" != true ]]; then
         local copy_result=$(get_files_to_copy)
         local files_line=$(echo "$copy_result" | grep "^FILES:")
         local dirs_line=$(echo "$copy_result" | grep "^DIRS:")
-        
+
         IFS=' ' read -A copy_files <<< "${files_line#FILES:}"
         IFS=' ' read -A copy_dirs <<< "${dirs_line#DIRS:}"
-        
+
         # Copy files (exclude .git)
         for file in "${copy_files[@]}"; do
             if [[ -n "$file" && "$file" != ".git" && -f "$project_dir/$file" ]]; then
@@ -262,22 +264,25 @@ main() {
                 print_color $GREEN "📄 Copied $file"
             fi
         done
-        
+
         # Copy directories (excluding .git)
         for dir in "${copy_dirs[@]}"; do
             if [[ -n "$dir" && "$dir" != ".git" && -d "$project_dir/$dir" ]]; then
-                cp -R "$project_dir/$dir" "$worktree_path/"
+                # Create parent directory structure if needed
+                local target_dir="$worktree_path/$(dirname "$dir")"
+                mkdir -p "$target_dir"
+                cp -R "$project_dir/$dir" "$target_dir/"
                 print_color $GREEN "📁 Copied $dir"
             fi
         done
     fi
-    
+
     # Open in Cursor if not disabled
     if [[ "$no_cursor" != true ]] && command -v cursor &> /dev/null; then
         cursor "$worktree_path" &
         print_color $GREEN "🚀 Opening in Cursor..."
     fi
-    
+
     # Success message
     print_color $GREEN "✅ Worktree '$branch_name' created at:"
     print_color $GREEN "   $worktree_path"
