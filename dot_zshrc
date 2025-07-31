@@ -1,6 +1,9 @@
 #	stolen from: https://github.com/davidtwco/dotfiles
 # ==================================================
 
+# Performance optimization: Cache brew prefix early
+export BREW_PREFIX="$(brew --prefix)"
+
 # Functions
 # =========
 _has() {
@@ -58,7 +61,7 @@ path=("$HOME/bin" $path)
 path=("$HOME/.fzf/bin" $path)
 path=("/usr/local/sbin" $path)
 path=("/usr/local/bin" $path)
-path=("$(brew --prefix)/opt/postgresql@15/bin" $path)
+path=("$BREW_PREFIX/opt/postgresql@15/bin" $path)
 
 # Using the (N-/) glob qualifier we can remove paths that do not exist.
 path=($^path(N-/))
@@ -69,21 +72,21 @@ export PATH=$PATH:$ANDROID_HOME/tools
 export PATH=$PATH:$ANDROID_HOME/tools/bin
 export PATH=$PATH:$ANDROID_HOME/platform-tools
 
-# Postgresql
-export LDFLAGS="-L$(brew --prefix)/opt/postgresql@15/lib"
-export CPPFLAGS="-I$(brew --prefix)/opt/postgresql@15/include"
+# Postgresql - use cached brew prefix
+export LDFLAGS="-L$BREW_PREFIX/opt/postgresql@15/lib"
+export CPPFLAGS="-I$BREW_PREFIX/opt/postgresql@15/include"
 
 # Completion
 # ==========
-# Use modern completion system.
+# Use modern completion system with optimization
 autoload -Uz compinit
 
-# caching stolen from https://blog.callstack.io/supercharge-your-terminal-with-zsh-8b369d689770
+# Performance: Skip security check on cached completion
 typeset -i updated_at=$(date +'%j' -r ~/.zcompdump 2>/dev/null || stat -f '%Sm' -t '%j' ~/.zcompdump 2>/dev/null)
 if [ $(date +'%j') != $updated_at ]; then
-  compinit -i
+  compinit -u  # -u skips security check for slight speedup
 else
-  compinit -C -i
+  compinit -C  # -C skips check for dumped file
 fi
 
 zmodload -i zsh/complist
@@ -92,27 +95,16 @@ setopt AUTO_LIST     # automatically list choices on ambiguous completion
 setopt AUTO_MENU     # automatically use menu completion
 setopt ALWAYS_TO_END # move cursor to end if word had one match
 
-zstyle ':completion:*' menu select # select completions with arrow keys
-zstyle ':completion:*' group-name '' # group results by category
-zstyle ':completion:::::' completer _expand _complete _ignored _approximate # enable approximate matches for completion
-
-zstyle ':completion:*' auto-description 'specify: %d'
-zstyle ':completion:*' completer _expand _complete _correct _approximate
-zstyle ':completion:*' format 'Completing %d'
+# Minimal completion configuration for performance
+zstyle ':completion:*' menu select
 zstyle ':completion:*' group-name ''
-# zstyle ':completion:*' menu select=2
+zstyle ':completion:*' completer _expand _complete _ignored _approximate
 zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
 zstyle ':completion:*' list-colors ''
-zstyle ':completion:*' list-prompt %SAt %p: Hit TAB for more, or the character to insert%s
 zstyle ':completion:*' matcher-list '' 'm:{a-z}={A-Z}' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=* l:|=*'
-# zstyle ':completion:*' menu select=long
-zstyle ':completion:*' select-prompt %SScrolling active: current selection at %p%s
-zstyle ':completion:*' use-compctl false
-zstyle ':completion:*' verbose true
 zstyle ':completion:*' accept-exact '*(N)'
 zstyle ':completion:*' use-cache on
 zstyle ':completion:*' cache-path $ZSH_CACHE_DIR
-
 zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
 zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 
@@ -139,28 +131,28 @@ setopt HIST_VERIFY               # Don't execute immediately upon history expans
 # Aliases
 # =======
 # Load our aliases.
-if [ -f ~/.shell/.aliases ]; then
-    . ~/.shell/.aliases
-fi
+[[ -f ~/.shell/.aliases ]] && source ~/.shell/.aliases
 
-source $(brew --prefix)/opt/antidote/share/antidote/antidote.zsh
+# Antidote plugin manager
+source $BREW_PREFIX/opt/antidote/share/antidote/antidote.zsh
 antidote load
 
-# fzf
-# ===
-# fzf via Homebrew
-if [ -e $(brew --prefix)/opt/fzf/shell/completion.zsh ]; then
-    source $(brew --prefix)/opt/fzf/shell/key-bindings.zsh
-    source $(brew --prefix)/opt/fzf/shell/completion.zsh
-fi
-
-# fzf via local installation
-if [ -f ~/.fzf.zsh ]; then
+# fzf - consolidated configuration
+# ================================
+# Only load fzf configuration once
+if [[ -e $BREW_PREFIX/opt/fzf/shell/completion.zsh ]]; then
+    source $BREW_PREFIX/opt/fzf/shell/key-bindings.zsh
+    source $BREW_PREFIX/opt/fzf/shell/completion.zsh
+elif [[ -f ~/.fzf.zsh ]]; then
     source ~/.fzf.zsh
 fi
 
-# fzf + ag configuration
-if _has fzf && _has ag; then
+# fzf configuration - prefer ripgrep over ag if available
+if _has fzf && _has rg; then
+    export FZF_DEFAULT_COMMAND='rg --files --hidden --follow -g "!{.git}" 2>/dev/null'
+    export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+    export FZF_DEFAULT_OPTS=''
+elif _has fzf && _has ag; then
     export FZF_DEFAULT_COMMAND='ag --nocolor -g ""'
     export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
     export FZF_ALT_C_COMMAND="$FZF_DEFAULT_COMMAND"
@@ -170,15 +162,11 @@ if _has fzf && _has ag; then
     '
 fi
 
-# fzf + ripgrep configuration
-if _has fzf && _has rg; then
-    export FZF_DEFAULT_COMMAND='rg --files --hidden --follow -g "!{.git}" 2>/dev/null'
-    export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-    export FZF_DEFAULT_OPTS=''
-fi
-
 # stop homebrew from automatically upgrading everything
 export HOMEBREW_NO_AUTO_UPDATE=1
 
+# Initialize mise (keeping it for language shims)
 eval "$(mise activate zsh)"
+
+# Initialize starship prompt
 eval "$(starship init zsh)"
