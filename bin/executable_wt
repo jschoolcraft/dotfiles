@@ -36,7 +36,7 @@ Arguments:
 
 Options:
     --no-copy           Don't copy any files to the worktree
-    --no-cursor         Don't open in Cursor editor
+    --cursor            Open in Cursor editor
     -h, --help          Show this help message
     -v, --version       Show version
 
@@ -44,7 +44,7 @@ Examples:
     wt feature-branch                    # Create worktree with given name from main
     wt feature-branch develop           # Create worktree from develop branch
     wt feature --no-copy                # Don't copy any files
-    wt feature --no-cursor              # Don't open in Cursor
+    wt feature --cursor                 # Open in Cursor
 
 Configuration:
     Project config: .wtconfig in git root
@@ -165,7 +165,7 @@ main() {
     local branch_name=""
     local base_branch="$DEFAULT_BASE_BRANCH"
     local no_copy=false
-    local no_cursor=false
+    local no_cursor=true
 
     while [[ $# -gt 0 ]]; do
         case $1 in
@@ -175,6 +175,10 @@ main() {
                 ;;
             --no-cursor)
                 no_cursor=true
+                shift
+                ;;
+            --cursor)
+                no_cursor=false
                 shift
                 ;;
             -h|--help)
@@ -275,6 +279,19 @@ main() {
                 print_color $GREEN "📁 Copied $dir"
             fi
         done
+    fi
+
+    # Create logs directory and touch development.log
+    mkdir -p "$worktree_path/logs"
+    touch "$worktree_path/logs/development.log"
+    print_color $GREEN "📝 Created logs/development.log"
+
+    # Run direnv allow && mise trust
+    if command -v direnv &> /dev/null && command -v mise &> /dev/null; then
+        cd "$worktree_path"
+        direnv allow && mise trust
+        print_color $GREEN "🔧 Ran direnv allow && mise trust"
+        cd - > /dev/null
     fi
 
     # Open in Cursor if not disabled
