@@ -54,10 +54,11 @@ Configuration:
     copy_files:
       - .env
       - .env.local
+      - .git/info/exclude
       - .mise.toml
     copy_dirs:
-      - .vscode
       - .cursor
+      - .vscode
       - config/credentials
 EOF
 }
