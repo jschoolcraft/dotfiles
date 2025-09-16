@@ -4,7 +4,7 @@ scrollback-limit = 25_000_000
 copy-on-select = true
 clipboard-trim-trailing-spaces = true
 mouse-hide-while-typing = true
-theme = light:OneHalfLight,dark:OneHalfDark
+theme = light:One Half Light,dark:One Half Dark
 quit-after-last-window-closed = true
 keybind = global:cmd+shift+w=toggle_quick_terminal
 quick-terminal-autohide = false
