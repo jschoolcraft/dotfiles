@@ -1,42 +1,12 @@
+# Custom format to show only: directory, git_branch, git_status, character
+format = """
+$directory\
+$git_branch\
+$git_status\
+$character"""
+
 # Inserts a blank line between shell prompts
 add_newline = false
-
-[line_break]
-disabled = true
-
-# Disable the package module, hiding it from the prompt completely
-[package]
-disabled = true
-
-[python]
-disabled = true
-
-[rust]
-disabled = true
-
-[nodejs]
-disabled = true
-
-[java]
-disabled = true
-
-[ruby]
-disabled = true
-
-[golang]
-disabled = true
-
-[aws]
-disabled = true
-
-[battery]
-disabled = true
-
-[lua]
-disabled = true
-
-[docker_context]
-disabled = true
 
 [cmd_duration]
 min_time = 10_000  # Show command duration over 10,000 milliseconds (=10 sec)
