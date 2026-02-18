@@ -15,7 +15,6 @@ local tab_size = 2
 vim.o.tabstop = tab_size
 vim.o.shiftwidth = tab_size
 vim.o.softtabstop = tab_size
-vim.o.tabstop = tab_size
 
 -- displaying text
 vim.o.wrap = false

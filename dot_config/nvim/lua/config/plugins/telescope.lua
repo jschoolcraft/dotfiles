@@ -44,7 +44,6 @@ return {
 
 
       vim.keymap.set('n', '<leader>tgf', require('telescope.builtin').git_files, { desc = 'Search [G]it [F]iles' })
-      vim.keymap.set('n', '<leader>tsf', require('telescope.builtin').find_files, { desc = '[S]earch [F]iles' })
       vim.keymap.set('n', '<leader>tsh', require('telescope.builtin').help_tags, { desc = '[S]earch [H]elp' })
       vim.keymap.set('n', '<leader>tsw', require('telescope.builtin').grep_string, { desc = '[S]earch current [W]ord' })
       vim.keymap.set('n', '<leader>tsg', require('telescope.builtin').live_grep, { desc = '[S]earch by [G]rep' })
