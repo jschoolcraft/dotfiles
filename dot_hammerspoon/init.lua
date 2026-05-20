@@ -98,7 +98,7 @@ end)
 local M1DDC = "/opt/homebrew/bin/m1ddc"
 
 local monitorSwitchHosts = {
-  ["Jeff's Mac Studio (92457)"] = {
+  ["Jeff’s Mac Studio (92457)"] = {
     uuid  = "5ECD1D41-64E1-45C9-844C-85A77EC85E0D",
     input = "17",
     label = "MacBook Pro",
