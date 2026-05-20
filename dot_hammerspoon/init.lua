@@ -88,3 +88,41 @@ hs.hotkey.bind(hyper, "1", function()
   hs.layout.apply(base_layout)
 end)
 
+-- ---------- Monitor input switching (Samsung Odyssey G95C via m1ddc) ----------
+-- m1ddc generates a different display UUID per machine (same physical monitor,
+-- different ID per Mac). Keyed by hs.host.localizedName() — to add a machine,
+-- run hs.host.localizedName() in the Hammerspoon console and m1ddc display list
+-- in a shell, then add an entry below.
+-- G95C VCP input codes: 15 = DisplayPort 1 (Mac Studio), 17 = HDMI 1 (MBP)
+
+local M1DDC = "/opt/homebrew/bin/m1ddc"
+
+local monitorSwitchHosts = {
+  ["Jeff's Mac Studio (92457)"] = {
+    uuid  = "5ECD1D41-64E1-45C9-844C-85A77EC85E0D",
+    input = "17",
+    label = "MacBook Pro",
+  },
+  ["USATL01-A2164 (3641)"] = {  -- MacBook Pro
+    uuid  = "4B2251B5-8BFE-4FBC-BA7A-3251B8D6DA2F",
+    input = "15",
+    label = "Mac Studio",
+  },
+}
+
+hs.hotkey.bind(hyper, "=", function()
+  local host = hs.host.localizedName()
+  local cfg  = monitorSwitchHosts[host]
+  if not cfg then
+    hs.alert.show("No monitor-switch config for host: " .. tostring(host))
+    return
+  end
+
+  local cmd = string.format("%s display %s set input %s", M1DDC, cfg.uuid, cfg.input)
+  local _, ok = hs.execute(cmd)
+  if ok then
+    hs.alert.show("Switching to " .. cfg.label)
+  else
+    hs.alert.show("m1ddc failed: " .. cmd)
+  end
+end)
