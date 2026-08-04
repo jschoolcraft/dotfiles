@@ -147,3 +147,10 @@
   # tag
   t = tag -n                        # show tags with <n> lines of each tag message
 
+[credential "https://github.com"]
+	helper =
+	helper = !/opt/homebrew/bin/gh auth git-credential
+[credential "https://gist.github.com"]
+	helper =
+	helper = !/opt/homebrew/bin/gh auth git-credential
+

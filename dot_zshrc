@@ -173,6 +173,12 @@ eval "$(starship init zsh)"
 [[ -f "$HOME/.local/bin/env" ]] && . "$HOME/.local/bin/env"
 
 # Added by LM Studio CLI (lms)
-export PATH="$PATH:/Users/jeffschoolcraft/.lmstudio/bin"
+export PATH="$PATH:$HOME/.lmstudio/bin"
 # End of LM Studio CLI section
+
+# User-local binaries (Claude Code native install, uv, etc.)
+export PATH="$HOME/.local/bin:$PATH"
+
+# Machine-local config — secrets and one-off setup live here, never in chezmoi
+[[ -f "$HOME/.zshrc.local" ]] && source "$HOME/.zshrc.local"
 
