@@ -1,0 +1,195 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+# opentabs — dump open browser tabs (zen, safari, chrome, brave) as JSON.
+#
+# Safari/Chrome/Brave are read live via AppleScript (only if running; never
+# launches them — first use needs one Automation permission grant per app).
+# Zen has no AppleScript, so its session store is decoded from disk and can
+# lag live tabs by a few seconds.
+#
+# Usage:
+#   opentabs                     # filtered JSON to stdout
+#   opentabs --all               # no filtering
+#   opentabs -b zen,brave        # subset of browsers
+#   opentabs -x 'reddit\.com'    # extra exclude pattern (repeatable)
+
+require "json"
+require "open3"
+require "optparse"
+require "time"
+
+BROWSERS = %w[zen safari chrome brave].freeze
+
+# URL patterns dropped by default: mail, retail, and browser-internal junk.
+DEFAULT_EXCLUDES = [
+  /mail\.google\.com/i,
+  /(^|\/\/)(www\.)?gmail\.com/i,
+  /accounts\.google\.com/i,
+  /amazon\./i,
+  /aliexpress/i,
+  /\bebay\./i,
+  /etsy\./i,
+  /walmart/i,
+  /target\.com/i,
+  /bestbuy/i,
+  /temu\./i,
+  /shein/i,
+  /costco/i,
+  /homedepot/i,
+  /lowes\.com/i,
+  /microcenter/i,
+  /wayfair/i,
+  /^about:/i,
+  /^chrome(-extension)?:/i,
+  /^brave:/i,
+  /^favorites:/i,
+  /^edge:/i
+].freeze
+
+FIELD_SEP = 31.chr # ASCII unit separator, between title and url
+RECORD_SEP = 30.chr # ASCII record separator, between tabs
+
+# --- Zen (Firefox session store) ---------------------------------------------
+
+# Minimal LZ4 block decompressor — enough for Mozilla's jsonlz4 files.
+def lz4_block_decompress(src)
+  dst = String.new(encoding: Encoding::BINARY)
+  bytes = src.bytes
+  i = 0
+  n = bytes.length
+  while i < n
+    token = bytes[i]
+    i += 1
+    lit_len = token >> 4
+    if lit_len == 15
+      loop do
+        b = bytes[i]
+        i += 1
+        lit_len += b
+        break if b != 255
+      end
+    end
+    dst << src.byteslice(i, lit_len)
+    i += lit_len
+    break if i >= n
+    offset = bytes[i] | (bytes[i + 1] << 8)
+    i += 2
+    match_len = token & 0xF
+    if match_len == 15
+      loop do
+        b = bytes[i]
+        i += 1
+        match_len += b
+        break if b != 255
+      end
+    end
+    match_len += 4
+    pos = dst.bytesize - offset
+    match_len.times do
+      dst << dst.getbyte(pos).chr
+      pos += 1
+    end
+  end
+  dst
+end
+
+def zen_tabs
+  files = Dir.glob(File.expand_path("~/Library/Application Support/zen/Profiles/*/sessionstore-backups/recovery.jsonlz4"))
+  file = files.max_by { |f| File.mtime(f) }
+  return [] unless file
+
+  raw = File.binread(file)
+  return [] unless raw.start_with?("mozLz40\0")
+
+  session = JSON.parse(lz4_block_decompress(raw.byteslice(12..)))
+  tabs = []
+  (session["windows"] || []).each do |window|
+    (window["tabs"] || []).each do |tab|
+      entries = tab["entries"] || []
+      next if entries.empty?
+
+      entry = entries[(tab["index"] || entries.length) - 1] || entries.last
+      tabs << { browser: "zen", title: entry["title"].to_s, url: entry["url"].to_s }
+    end
+  end
+  tabs
+rescue StandardError => e
+  warn "opentabs: zen: #{e.message}"
+  []
+end
+
+# --- AppleScript browsers -----------------------------------------------------
+
+def app_running?(app_name)
+  out, = Open3.capture2("osascript", "-e", %(application "#{app_name}" is running))
+  out.strip == "true"
+end
+
+def applescript_tabs(key, app_name, title_prop)
+  return [] unless app_running?(app_name)
+
+  script = <<~APPLESCRIPT
+    set _out to ""
+    tell application "#{app_name}"
+      repeat with w in windows
+        try
+          repeat with t in tabs of w
+            try
+              set _out to _out & (#{title_prop} of t) & (ASCII character 31) & (URL of t) & (ASCII character 30)
+            end try
+          end repeat
+        end try
+      end repeat
+    end tell
+    return _out
+  APPLESCRIPT
+
+  out, err, status = Open3.capture3("osascript", "-e", script)
+  unless status.success?
+    warn "opentabs: #{app_name}: #{err.strip} (Automation permission not granted?)"
+    return []
+  end
+
+  out.chomp.split(RECORD_SEP).filter_map do |record|
+    title, url = record.split(FIELD_SEP, 2)
+    next if url.nil? || url.empty?
+
+    { browser: key, title: title.to_s, url: url }
+  end
+end
+
+READERS = {
+  "zen" => -> { zen_tabs },
+  "safari" => -> { applescript_tabs("safari", "Safari", "name") },
+  "chrome" => -> { applescript_tabs("chrome", "Google Chrome", "title") },
+  "brave" => -> { applescript_tabs("brave", "Brave Browser", "title") }
+}.freeze
+
+# --- CLI -----------------------------------------------------------------------
+
+options = { all: false, excludes: [], browsers: BROWSERS, compact: false }
+OptionParser.new do |o|
+  o.banner = "Usage: opentabs [options]"
+  o.on("-a", "--all", "Skip default filters (gmail, amazon, retail, browser junk)") { options[:all] = true }
+  o.on("-x", "--exclude REGEX", "Extra exclude pattern, matched against URL (repeatable)") { |p| options[:excludes] << Regexp.new(p, Regexp::IGNORECASE) }
+  o.on("-b", "--browsers LIST", "Comma-separated subset of: #{BROWSERS.join(',')}") do |list|
+    options[:browsers] = list.split(",").map(&:strip)
+    unknown = options[:browsers] - BROWSERS
+    abort "opentabs: unknown browser(s): #{unknown.join(', ')}" unless unknown.empty?
+  end
+  o.on("-c", "--compact", "Single-line JSON output") { options[:compact] = true }
+  o.on("-h", "--help", "Show this help") do
+    puts o
+    exit
+  end
+end.parse!
+
+excludes = options[:all] ? [] : DEFAULT_EXCLUDES.dup
+excludes.concat(options[:excludes])
+
+tabs = options[:browsers].flat_map { |b| READERS.fetch(b).call }
+tabs.reject! { |t| excludes.any? { |re| t[:url].match?(re) } }
+
+result = { exportedAt: Time.now.utc.iso8601, tabCount: tabs.length, tabs: tabs }
+puts options[:compact] ? JSON.generate(result) : JSON.pretty_generate(result)

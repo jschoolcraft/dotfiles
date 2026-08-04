@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+for entry in '28405|Wilmington, NC' '20619|California, MD' 'Dumfries,VA|Dumfries, VA' 'Williamsburg,VA|Williamsburg, VA' 'Manassas,VA|Manassas, VA'; do IFS='|' read -r q label <<< "$entry"; printf '%-18s %s\n' "$label:" "$(curl -s "https://wttr.in/${q}?format=%t+%C+(%h)")"; done
