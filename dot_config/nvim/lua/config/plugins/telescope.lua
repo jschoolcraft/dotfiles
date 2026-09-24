@@ -1,6 +1,8 @@
 return {
   {
-    'nvim-telescope/telescope.nvim', tag = '0.1.8',
+    -- master, not 0.1.x: 0.1.8's previewer calls nvim-treesitter's old
+    -- parsers.ft_to_lang(), removed in the main-branch rewrite we run.
+    'nvim-telescope/telescope.nvim', branch = 'master',
     dependencies = {
       'nvim-lua/plenary.nvim',
       {

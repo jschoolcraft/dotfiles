@@ -18,9 +18,11 @@ return {
 
       vim.lsp.config('lua_ls', { capabilities = capabilities })
       vim.lsp.config('ruby_lsp', { capabilities = capabilities })
+      vim.lsp.config('expert', { capabilities = capabilities })
 
       vim.lsp.enable('lua_ls')
       vim.lsp.enable('ruby_lsp')
+      vim.lsp.enable('expert')
     end,
   }
 }

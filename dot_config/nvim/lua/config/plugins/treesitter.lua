@@ -8,9 +8,9 @@ return {
       vim.opt.runtimepath:prepend(vim.fn.stdpath("data") .. "/site")
 
       require("nvim-treesitter").install({
-        "bash", "c", "cmake", "cpp", "css", "diff", "dockerfile", "fish",
-        "gitignore", "go", "graphql", "html", "javascript", "jsdoc",
-        "json", "jsonc", "lua", "markdown", "markdown_inline", "python",
+        "bash", "c", "cmake", "cpp", "css", "diff", "dockerfile", "eex", "elixir", "fish",
+        "gitignore", "go", "graphql", "heex", "html", "javascript", "jsdoc",
+        "json", "lua", "markdown", "markdown_inline", "python",
         "query", "regex", "ruby", "scss", "sql", "toml", "typescript", "vim",
         "vimdoc", "vue", "yaml",
       })
