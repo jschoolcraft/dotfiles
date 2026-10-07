@@ -11,6 +11,7 @@ vim.api.nvim_create_autocmd('TextYankPost',  {
 
 vim.api.nvim_create_autocmd('BufEnter', {
   callback = function()
+    vim.opt_local.suffixesadd:append('.md')
     vim.opt_local.spell = true
     vim.opt_local.number = false
     vim.opt_local.relativenumber = false
