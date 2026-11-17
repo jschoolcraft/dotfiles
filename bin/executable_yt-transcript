@@ -1,0 +1,61 @@
+#!/usr/bin/env bash
+# yt-transcript — print a YouTube video's captions as clean, deduped text.
+#
+# Usage:
+#   yt-transcript <URL-or-ID>              # transcript to stdout
+#   yt-transcript -t <URL-or-ID>           # with [m:ss] markers about once a minute
+#
+# Prefers original-language English auto-captions (en-orig), then en / en-US,
+# manual or auto. Exits non-zero with a message on stderr if no captions came
+# back (none exist, age-gated, region-locked, or YouTube rate-limited with 429).
+set -euo pipefail
+
+timestamps=0
+if [[ "${1:-}" == "-t" ]]; then timestamps=1; shift; fi
+if [[ $# -ne 1 ]]; then
+  echo "usage: yt-transcript [-t] <URL-or-ID>" >&2
+  exit 2
+fi
+
+command -v yt-dlp >/dev/null || { echo "yt-transcript: yt-dlp not found" >&2; exit 1; }
+
+tmp=$(mktemp -d)
+trap 'rm -rf "$tmp"' EXIT
+
+yt-dlp -q --no-warnings --skip-download \
+  --write-subs --write-auto-subs \
+  --sub-langs "en-orig,en,en-US" --sub-format vtt \
+  -o "$tmp/sub.%(ext)s" -- "$1" >&2 || true
+
+vtt=""
+for lang in en-orig en en-US; do
+  if [[ -s "$tmp/sub.$lang.vtt" ]]; then vtt="$tmp/sub.$lang.vtt"; break; fi
+done
+if [[ -z "$vtt" ]]; then
+  echo "yt-transcript: no English captions for $1 (none, gated, or rate-limited — retry later)" >&2
+  exit 1
+fi
+
+# Auto-captions repeat each line across rolling cues; strip tags and keep first occurrences.
+python3 -I - "$vtt" "$timestamps" <<'PY'
+import re, sys
+path, stamps = sys.argv[1], sys.argv[2] == "1"
+seen, out, ts, last = set(), [], None, -999
+for line in open(path, encoding="utf-8"):
+    line = line.rstrip("\n")
+    m = re.match(r"(\d\d):(\d\d):(\d\d)\.\d+ -->", line)
+    if m:
+        ts = int(m[1]) * 3600 + int(m[2]) * 60 + int(m[3])
+        continue
+    if not line or line.startswith(("WEBVTT", "Kind:", "Language:")) or line.isdigit():
+        continue
+    text = re.sub(r"<[^>]+>", "", line).strip()
+    if not text or text in seen:
+        continue
+    seen.add(text)
+    if stamps and ts is not None and ts - last >= 60:
+        out.append(f"\n[{ts // 60}:{ts % 60:02d}] ")
+        last = ts
+    out.append(text + " ")
+print("".join(out).strip())
+PY
