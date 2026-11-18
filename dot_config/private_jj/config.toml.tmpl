@@ -1,0 +1,5 @@
+#:schema https://docs.jj-vcs.dev/latest/config-schema.json
+
+[user]
+name = "Jeff Schoolcraft"
+email = "{{ if .chezmoi.username | eq "jeffschoolcraft" }}jeffrey.schoolcraft@kaleris.com{{ else }}jeffrey.schoolcraft@gmail.com{{ end }}"

@@ -1,0 +1,6 @@
+[tools]
+codex = "latest"
+ruby = "3.4"
+
+[settings]
+idiomatic_version_file_enable_tools = []
