@@ -1,0 +1,17 @@
+# Home machines. Tailscale (MagicDNS) names work anywhere; -lan aliases skip Tailscale.
+
+Host gatekeeper
+  HostName gatekeeper.tail94e9e6.ts.net
+
+Host gatekeeper-lan
+  HostName gatekeeper.local
+
+Host trashintosh media
+  HostName trashintosh.tail94e9e6.ts.net
+
+Host trashintosh-lan media-lan
+  HostName 192.168.1.131
+
+Host *
+  ServerAliveInterval 30
+  ServerAliveCountMax 4
