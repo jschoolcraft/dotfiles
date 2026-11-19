@@ -4,6 +4,17 @@ return {
     dependencies = {
       "saghen/blink.cmp",
       {
+        "mason-org/mason.nvim",
+        opts = {},
+      },
+      {
+        "mason-org/mason-lspconfig.nvim",
+        opts = {
+          ensure_installed = { "lua_ls", "ruby_lsp" },
+          automatic_enable = false,
+        },
+      },
+      {
         "folke/lazydev.nvim",
         ft = "lua",
         opts = {

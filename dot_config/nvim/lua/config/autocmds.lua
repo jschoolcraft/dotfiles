@@ -9,7 +9,7 @@ vim.api.nvim_create_autocmd('TextYankPost',  {
   pattern = '*',
 })
 
-vim.api.nvim_create_autocmd('BufEnter', {
+vim.api.nvim_create_autocmd('FileType', {
   callback = function()
     vim.opt_local.suffixesadd:append('.md')
     vim.opt_local.spell = true
@@ -17,10 +17,9 @@ vim.api.nvim_create_autocmd('BufEnter', {
     vim.opt_local.relativenumber = false
     vim.opt_local.wrap = true
     vim.opt_local.textwidth = 108
-    vim.opt_local.syntax = 'markdown.pandoc'
   end,
   group = jschoolcraft_group,
-  pattern = '*.md',
+  pattern = 'markdown',
 })
 
 -- set textwidth all text files
@@ -41,10 +40,26 @@ vim.api.nvim_create_autocmd('FileType', {
   pattern = 'text',
 })
 
--- remove trailing whitespace on save
-vim.api.nvim_create_autocmd('BufWritePre', {
+-- pick up files changed by agents and other external tools
+vim.api.nvim_create_autocmd({ 'FocusGained', 'BufEnter', 'CursorHold' }, {
   callback = function()
-    vim.cmd([[%s/\s\+$//e]])
+    if vim.fn.mode() ~= 'c' then
+      vim.cmd('checktime')
+    end
+  end,
+  group = jschoolcraft_group,
+})
+
+-- remove trailing whitespace on save, except where it is meaningful (Markdown, diffs)
+vim.api.nvim_create_autocmd('BufWritePre', {
+  callback = function(args)
+    if not vim.bo[args.buf].modifiable or vim.tbl_contains({ 'markdown', 'diff' }, vim.bo[args.buf].filetype) then
+      return
+    end
+
+    local view = vim.fn.winsaveview()
+    vim.cmd([[silent! keepjumps keeppatterns %s/\s\+$//e]])
+    vim.fn.winrestview(view)
   end,
   group = jschoolcraft_group,
   pattern = '*',
@@ -66,51 +81,39 @@ vim.api.nvim_create_autocmd('BufReadPost', {
 -- automatic theme switching based on system appearance
 local function detect_system_theme()
   local handle = io.popen('defaults read -g AppleInterfaceStyle 2>/dev/null')
+  if not handle then
+    return 'darker'
+  end
+
   local result = handle:read('*a')
   handle:close()
-
-  if result and result:match('Dark') then
-    return 'darker'
-  else
-    return 'light'
-  end
+  return result and result:match('Dark') and 'darker' or 'light'
 end
+
+local current_system_theme
 
 local function set_theme_based_on_system()
   local system_theme = detect_system_theme()
-  local onedark = require('onedark')
-
-  if system_theme == 'darker' then
-    onedark.setup({
-      style = 'darker',
-      term_colors = true,
-      toggle_style_key = '<leader>ts',
-      toggle_style_list = {'light', 'darker'},
-      code_style = {
-        comments = 'italic',
-        keywords = 'none',
-        functions = 'none',
-        strings = 'none',
-        variables = 'none'
-      },
-    })
-  else
-    onedark.setup({
-      style = 'light',
-      term_colors = true,
-      toggle_style_key = '<leader>ts',
-      toggle_style_list = {'light', 'darker'},
-      code_style = {
-        comments = 'italic',
-        keywords = 'none',
-        functions = 'none',
-        strings = 'none',
-        variables = 'none'
-      },
-    })
+  if system_theme == current_system_theme then
+    return
   end
 
+  local onedark = require('onedark')
+  onedark.setup({
+    style = system_theme,
+    term_colors = true,
+    toggle_style_key = '<leader>ts',
+    toggle_style_list = { 'light', 'darker' },
+    code_style = {
+      comments = 'italic',
+      keywords = 'none',
+      functions = 'none',
+      strings = 'none',
+      variables = 'none',
+    },
+  })
   onedark.load()
+  current_system_theme = system_theme
 end
 
 -- set theme on startup

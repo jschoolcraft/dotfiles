@@ -1,8 +1,12 @@
 local keymap = vim.keymap
 local opts = { noremap = true, silent = true }
 
--- Clear search buffer on return
-keymap.set('n', '<CR>', ':nohlsearch<CR>', opts)
+-- Clear search highlighting without replacing normal-mode Enter movement
+keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>', opts)
+
+-- buffers
+keymap.set('n', '[b', '<cmd>bprevious<cr>', { desc = 'Previous buffer' })
+keymap.set('n', ']b', '<cmd>bnext<cr>', { desc = 'Next buffer' })
 
 -- quickfix list
 -- https://vonheikemen.github.io/devlog/tools/vim-and-the-quickfix-list/

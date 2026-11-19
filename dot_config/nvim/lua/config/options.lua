@@ -40,20 +40,24 @@ vim.o.mouse = 'a'
 -- don't abandon unloaded buffers
 vim.o.hidden = true
 
+-- reload files changed by external tools when the buffer is unmodified
+vim.o.autoread = true
+
+-- prompt before an operation that would discard unsaved changes
+vim.o.confirm = true
+
 -- no swap files
 vim.o.backup = false
 vim.o.swapfile = false
 vim.o.writebackup = false
 
 -- persistent undo
-vim.o.undodir = os.getenv("HOME") .. "/.config/nvim/undodir"
+local undo_dir = vim.fn.stdpath("state") .. "/undo"
+vim.fn.mkdir(undo_dir, "p")
+vim.o.undodir = undo_dir
 vim.o.undofile = true
 vim.o.undolevels = 100
 vim.o.undoreload = 1000
-
--- backup
-vim.o.backupdir = os.getenv("HOME") .. "/.config/nvim/undodir"
-vim.o.directory = os.getenv("HOME") .. "/.config/nvim/undodir"
 
 -- enable break indent.
 vim.o.breakindent = true
