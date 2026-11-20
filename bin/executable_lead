@@ -1,0 +1,28 @@
+#!/bin/zsh
+# lead — start or resume Jeff's personal lead session with the Telegram channel.
+#
+# The Telegram plugin is disabled in ~/.claude/settings.json so ordinary Claude
+# sessions don't start their own bot poller and steal messages. This launcher
+# turns it back on for the lead session only.
+#
+#   lead           resume the session named "lead" (picker if none matches)
+#   lead --new     start a fresh lead session
+#   lead <args>    extra args are passed through to claude
+
+cd ~/code/holocron || exit 1
+
+plugin_on='{"enabledPlugins":{"telegram@claude-plugins-official":true}}'
+common=(
+  --name lead
+  --channels plugin:telegram@claude-plugins-official
+  --settings "$plugin_on"
+  --append-system-prompt-file .claude/lead/LEAD.md
+  --permission-mode auto
+)
+
+if [[ "$1" == "--new" ]]; then
+  shift
+  exec claude "${common[@]}" "$@"
+else
+  exec claude "${common[@]}" --resume lead "$@"
+fi
